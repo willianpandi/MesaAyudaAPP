@@ -1,5 +1,17 @@
 /*//////////////////////////////////////////////////////////////////
+
+
 [ FONT ]*/
+
+/* Propias */
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-divider {
+  background-color: rgba(41, 41, 41, 0.3);
+}
 
 @font-face {
   font-family: Poppins-Regular;
@@ -28,8 +40,9 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    font-family: Poppins-Bold;
+    font-family: Poppins-Regular;
 }
+
 
 body, html {
     height: 100%;
@@ -60,7 +73,7 @@ a:hover {
 
 /*---------------------------------------------*/
 h1,h2,h3,h4,h5,h6 {
-    margin: 0px;
+  margin: 0px;
 }
 
 p {
@@ -94,9 +107,9 @@ textarea:focus, input:focus {
 
 /*---------------------------------------------*/
 button {
-    outline: none !important;
-    border: none;
-    background: transparent;
+  outline: none !important;
+  border: none;
+  background: transparent;
 }
 
 button:hover {
@@ -149,9 +162,32 @@ button:hover {
   background-position: center;
   background-size: cover;
 }
+.container-login101 {
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
 
 .wrap-login100 {
   width: 450px;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.wrap-login101 {
+  width: 700px;
   background: #fff;
   border-radius: 20px;
   overflow: hidden;
@@ -166,11 +202,16 @@ button:hover {
   height: 100%;
 }
 
+.login101-form {
+  width: 100%;
+  height: 100%;
+}
+
 
 .login100-form-title {
   display: block;
   font-family: Poppins-Bold;
-  font-size: 39px;
+  font-size: 30px;
   color: #333333;
   line-height: 1.2;
   text-align: center;
@@ -185,11 +226,12 @@ button:hover {
   width: 100%;
   position: relative;
   border-bottom: 2px solid #d9d9d9;
+  display: flex; align-items: center;
 }
 
 .label-input100 {
-  font-family: Poppins-Regular;
-  font-size: 14px;
+  font-family: Poppins-Medium;
+  font-size: 16px;
   color: #333333;
   line-height: 1.5;
   padding-left: 7px;
@@ -197,15 +239,15 @@ button:hover {
 
 .input100 {
   font-family: Poppins-Medium;
-  font-size: 16px;
+  font-size: 14px;
   color: #333333;
   line-height: 1.2;
 
-  display: block;
-  width: 100%;
-  height: 55px;
+  display:block;
+  width:95%;
+  height: 45px;
   background: transparent;
-  padding: 0 7px 0 43px;
+  padding: 0 0 0 15px;
 }
 
 
@@ -341,8 +383,9 @@ button:hover {
   left: 0;
 }
 
+/* Color de boton */
 .login100-form-btn:disabled {
-  background-color: grey;
+  background-color: rgb(207, 83, 83);
 }
 
 
@@ -2905,3 +2948,6 @@ flex-direction: column;
 -ms-align-items: center;
 align-items: center;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

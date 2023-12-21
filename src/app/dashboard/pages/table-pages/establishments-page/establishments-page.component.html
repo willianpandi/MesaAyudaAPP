@@ -1,0 +1,26 @@
+<mat-toolbar>
+  <span>TABLA  DE  ESTABLECIMIENTOS</span>
+</mat-toolbar>
+<mat-divider></mat-divider>
+
+<div class="grid">
+  <div class="col-12 ">
+    <mat-card>
+
+      <mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-fab extended color="primary" (click)="estableishmentDialog()">
+              <mat-icon>add_circle</mat-icon> Nuevo Establecimiento
+            </button>
+        </mat-card-actions>
+
+        <app-table [data]="establecimientosList"
+                    [columns]="tableColumnsEstablecimientos"
+                    [config]="tableConfig"
+                    (action)="onTableAction($event)"
+        ></app-table>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

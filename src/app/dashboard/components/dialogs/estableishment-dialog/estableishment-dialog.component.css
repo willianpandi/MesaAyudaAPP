@@ -1,0 +1,13 @@
+mat-form-field{
+  width: 100%;
+}
+
+mat-divider{
+  margin-top: 5px;
+  margin-bottom: 30px;
+}
+
+mat-label {
+  font-family: Poppins-SemiBold;
+  font-size: 16px;
+}

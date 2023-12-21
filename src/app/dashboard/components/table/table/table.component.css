@@ -1,0 +1,35 @@
+:host{
+  display: block;
+  overflow: auto;
+}
+mat-form-field{
+  display: block;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+mat-form-field {
+  margin-top: 10px;
+  display: flex;
+}
+
+th {
+  font-family: Poppins-SemiBold;
+  font-size: 16px;
+  color: black;
+}
+
+td {
+  font-family: Poppins-Regular;
+  font-size: 14px;
+  color: black;
+}
+
+.button-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,76 @@
+<mat-toolbar>
+  <span>AJUSTES</span>
+</mat-toolbar>
+<mat-divider></mat-divider>
+<div class="grid">
+
+  <div class="col-12 md:col-12 lg:col-6">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <mat-card-title> <span>Cuenta</span> </mat-card-title>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-divider></mat-divider>
+        <h5>Gestiona tu perfil e información privada</h5>
+      </mat-card-content>
+      <span>{{user()?.usuario}}</span>
+      <span>{{user()?.nombre}}</span>
+      <span>{{user()?.sexo}}</span>
+      <span>{{user()?.nivel_institucional}}</span>
+      <span>{{user()?.itinerancia}}</span>
+      <span>{{user()?.profesion}}</span>
+      <span>{{user()?.etnia}}</span>
+      <span>{{user()?.fecha_nacimiento}}</span>
+      <span>{{user()?.telefono}}</span>
+      <span>{{user()?.direccion}}</span>
+      <span>{{user()?.correo_institucional}}</span>
+      <span>{{user()?.correo_personal}}</span>
+      <span>{{user()?.nombramiento}}</span>
+      <span>{{user()?.area_laboral}}</span>
+      <span>{{user()?.fecha_ingreso}}</span>
+      <span>{{user()?.estableishment?.nombre}}</span>
+    </mat-card>
+  </div>
+
+  <div class="col-12 md:col-12 lg:col-6">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <mat-card-title> <span>Seguridad</span> </mat-card-title>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+
+        <mat-divider></mat-divider>
+        <h5>Administre su contraseña</h5>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="col-12 md:col-12 lg:col-6">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <mat-card-title> <span>Cambiar Logo</span> </mat-card-title>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+
+        <mat-divider></mat-divider>
+        <button
+        mat-fab extended color="accent"
+        (click)="image()"
+        >
+        <mat-icon>image</mat-icon>
+          Cambiar Imagen
+        </button>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+
+</div>

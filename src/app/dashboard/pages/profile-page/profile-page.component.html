@@ -1,0 +1,40 @@
+<mat-toolbar>
+  <span>MI PERFIL</span>
+</mat-toolbar>
+<mat-divider></mat-divider>
+
+<div class="grid">
+    <div class="col-12">
+      <mat-card>
+        <mat-card-header>
+          <mat-toolbar>
+            <mat-card-title> <span>Datos Personales</span> </mat-card-title>
+          </mat-toolbar>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-divider></mat-divider>
+
+        </mat-card-content>
+
+                <span>Cedula: {{user()?.usuario}}</span>
+                <span>Nombre completo: {{user()?.nombre}}</span>
+                <span>{{user()?.sexo}}</span>
+                <span>{{user()?.nivel_institucional}}</span>
+                <span>{{user()?.itinerancia}}</span>
+                <span>{{user()?.profesion}}</span>
+                <span>{{user()?.etnia}}</span>
+                <span>{{user()?.fecha_nacimiento}}</span>
+                <span>{{user()?.telefono}}</span>
+                <span>{{user()?.direccion}}</span>
+                <span>{{user()?.correo_institucional}}</span>
+                <span>{{user()?.correo_personal}}</span>
+                <span>{{user()?.nombramiento}}</span>
+                <span>{{user()?.area_laboral}}</span>
+                <span>{{user()?.fecha_ingreso}}</span>
+                <span>{{user()?.estableishment?.nombre}}</span>
+
+
+      </mat-card>
+    </div>
+
+</div>

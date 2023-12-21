@@ -1,0 +1,62 @@
+
+mat-toolbar {
+  background-color:#a6aeb4;
+}
+
+mat-sidenav {
+  margin: 16px;
+  width: 275px;
+  border-right: none;
+  background-color:  #dcdfe1;
+  border-radius: 15px;
+  padding: 25px;
+  text-align: center;
+}
+
+.content {
+  margin: 16px;
+  margin-left: 32px;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+}
+
+mat-sidenav-container {
+  height: calc(100vh - 65px);
+}
+
+.menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  font-size: 16px;
+}
+
+.menu-button mat-icon {
+  margin-right: 16px;
+}
+
+mat-divider {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+button mat-icon {
+  font-size: 25px;
+  height: 25px;
+  width: 25px;
+}
+
+span {
+    font-family: Poppins-Bold;
+    letter-spacing: -0.2px;
+    font-size: 18px;
+}
+
+
+
+

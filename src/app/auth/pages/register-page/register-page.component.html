@@ -1,70 +1,152 @@
-<img [src]="'assets/images/logo.png'" alt="mesa_ayuda" style="object-fit: cover; width: 100%; height: 100%;">
-
-  <form class="login100-form p-l-55 p-r-55 p-b-20"
-    autocomplete="off">
-
-    <span class="login100-form-title p-t-20 p-b-20">
-      Registrate
-    </span>
-
-    <div class="wrap-input100 m-b-25">
-      <span class="label-input100">Identificación:</span>
-      <input class="input100"
+<div mat-dialog-content>
+  <span class="login100-form-title p-t-10">Registrate</span>
+  <mat-divider></mat-divider>
+  <form [formGroup]="formRegisterUser">
+    <div class="grid">
+      <div class="col-12 md:col-4 lg:col-4">
+        <mat-form-field appearance="outline">
+          <mat-label><strong>Usuario</strong> </mat-label>
+          <input
+            matInput
+            formControlName="usuario"
             type="text"
-            placeholder="Numero de cedula">
-      <span class="focus-input100"></span>
-    </div>
+            placeholder="N° de Cédula"
+            #input
+            maxlength="10"
+            autocomplete="username"
+          />
+          <mat-hint *ngIf="isValidField('usuario')">{{
+            getFieldError("usuario")
+          }}</mat-hint>
+          <mat-hint class="hint" align="end"
+            >{{ input.value.length }}/10</mat-hint
+          >
+          <mat-icon matSuffix>credit_card</mat-icon>
+        </mat-form-field>
+      </div>
 
-    <div class="wrap-input100 m-b-25">
-      <span class="label-input100">Nombres:</span>
-      <input class="input100"
-            type="text"
-            placeholder="Nombres">
-      <span class="focus-input100"></span>
-    </div>
+      <div class="col-12 md:col-8 lg:col-8">
+        <mat-form-field appearance="outline">
+          <mat-label><strong>Nombre Completo</strong> </mat-label>
+          <input
+            matInput
+            formControlName="nombre"
+            placeholder="Nombres y Apellidos"
+            autocomplete="nombre"
+          />
+          <!-- style="text-transform: uppercase;" -->
+          <mat-hint *ngIf="isValidField('nombre')">{{
+            getFieldError("nombre")
+          }}</mat-hint>
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+      </div>
 
-    <div class="wrap-input100 m-b-25">
-      <span class="label-input100">Apellidos:</span>
-      <input class="input100"
-            type="text"
-            placeholder="Apellidos">
-      <span class="focus-input100"></span>
-    </div>
-
-    <div class="wrap-input100">
-      <span class="label-input100">Correo electronico:</span>
-      <input class="input100"
-            type="text"
-            placeholder="Email">
-      <span class="focus-input100"></span>
-    </div>
-
-    <div class="wrap-input100">
-      <span class="label-input100">Contraseña:</span>
-      <input class="input100"
-            type="text"
-            placeholder="Ingrese su contraseña">
-      <span class="focus-input100"></span>
-    </div>
-
-    <div class="text-right p-t-8 p-b-10"></div>
-    <div class="container-login100-form-btn">
-      <div class="wrap-login100-form-btn">
-        <div class="login100-form-bgbtn"></div>
-          <button class="login100-form-btn"
-                  type="submit">
-                  registrar
+      <div class="col-12 md:col-6 lg:col-6">
+        <mat-form-field appearance="outline">
+          <mat-label><strong>Contraseña</strong> </mat-label>
+          <input
+            autocomplete="new-password"
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            formControlName="contrasenia"
+            placeholder="Ingrese una contraseña"
+          />
+          <mat-hint *ngIf="isValidField('contrasenia')">{{
+            getFieldError("contrasenia")
+          }}</mat-hint>
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
           </button>
-        </div>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 md:col-6 lg:col-6">
+        <mat-form-field appearance="outline">
+          <mat-label><strong>Confirmar la Contraseña</strong> </mat-label>
+          <input
+            autocomplete="new-password"
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            formControlName="contrasenia2"
+            placeholder="Vuelva a escribir su contraseña"
+          />
+          <mat-hint *ngIf="isValidField('contrasenia2')">{{
+            getFieldError("contrasenia2")
+          }}</mat-hint>
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12">
+        <mat-form-field appearance="outline">
+          <mat-label><strong>Distrito</strong></mat-label>
+          <mat-select
+            formControlName="district"
+            placeholder="Elija un distrito"
+          >
+            <mat-option *ngFor="let item of listaDistrict" [value]="item.id">
+              {{ item.nombre }}
+              <hr>
+            </mat-option>
+          </mat-select>
+          <mat-hint *ngIf="isValidField('district')">{{
+            getFieldError("district")
+          }}</mat-hint>
+          <mat-icon matSuffix>business</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12" *ngIf="estableishmetsByDistrict.length > 0">
+        <mat-form-field appearance="outline">
+          <mat-label><strong>Establecimiento</strong> </mat-label>
+          <mat-select
+            formControlName="estableishment"
+            placeholder="Elija un establecimiento"
+          >
+            <mat-option
+              *ngFor="let item of estableishmetsByDistrict"
+              [value]="item.code"
+            >
+            {{ item.nombre }}
+            <hr>
+            </mat-option>
+          </mat-select>
+          <mat-hint *ngIf="isValidField('estableishment')">{{
+            getFieldError("estableishment")
+          }}</mat-hint>
+          <mat-icon matSuffix>business</mat-icon>
+        </mat-form-field>
+      </div>
     </div>
-
-    <div class="flex-col-c p-t-50">
-      <a routerLink="/auth/login" class="txt2">
-          atras
-      </a>
-    </div>
-
-
-
-
   </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-fab extended mat-dialog-close color="warn">
+    <mat-icon>cancel</mat-icon> <strong>Cancelar</strong>
+  </button>
+  <button
+    mat-fab
+    extended
+    color="primary"
+    [disabled]="formRegisterUser.invalid"
+    (click)="onSave()"
+  >
+    <mat-icon>person_add</mat-icon>
+    <strong>Registrarse</strong>
+  </button>
+</div>

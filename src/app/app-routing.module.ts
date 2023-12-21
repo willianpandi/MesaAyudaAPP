@@ -1,20 +1,32 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { Error404PageComponent } from './shared/pages/error404-page/error404-page.component';
+import { isAuthenticatedGuard } from './auth/guards/isAuthenticated.guard';
+import { isNotAuthenticatedGuard } from './auth/guards/isNotAuthenticated.guard';
 
 const routes: Routes = [
   {
     path: 'auth',
-    //guards
+    canActivate: [ isNotAuthenticatedGuard ],
     loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule ),
   },
   {
     path: 'dashboard',
-    //guards
+    canActivate: [ isAuthenticatedGuard ],
     loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardModule ),
   },
   {
+    path: '404',
+    component: Error404PageComponent,
+  },
+  {
+    path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full'
+  },
+  {
     path: '**',
-    redirectTo: 'auth'
+    redirectTo: '404'
   },
 
 ];

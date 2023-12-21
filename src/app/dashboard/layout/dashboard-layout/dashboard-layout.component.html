@@ -1,1 +1,106 @@
-<p>dashboard-layout works!</p>
+
+  <!-- NAVBAR -->
+  <mat-toolbar>
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon *ngIf="!sidenav.opened">
+        menu
+      </mat-icon>
+      <mat-icon *ngIf="sidenav.opened">
+        close
+      </mat-icon>
+    </button>
+
+    <span class="spacer"></span>
+
+    <!-- ICONO Y NOMBRE DE USUARIO  -->
+    <span>{{user()?.nombre}}</span>
+
+    &nbsp;
+
+    <!-- OPCIONES DE USUARIO -->
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+      <!-- <mat-icon>account_circle</mat-icon> -->
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item
+        (click)="ticketDialog()">
+        <mat-icon>add_box</mat-icon>
+        <span>Nuevo Ticket</span>
+      </button>
+      <button mat-menu-item
+              *ngFor="let item of headerItems"
+              [routerLink]="item.url"
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span>{{ item.label }}</span>
+      </button>
+      <button mat-menu-item
+              (click)="onLogout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Cerrar Sesión</span>
+      </button>
+    </mat-menu>
+
+
+
+  </mat-toolbar>
+
+  <!-- SIDENAVBAR -->
+
+  <mat-sidenav-container>
+
+    <mat-sidenav #sidenav="matSidenav" >
+
+      <div>
+        <img [src]="imageUrl" alt="mesa_ayuda" style="object-fit: cover; width: 100%; height: 100%;">
+      </div>
+
+      <mat-divider></mat-divider>
+      <span>Coordinación Zonal 3 Salud</span>
+
+      <mat-divider></mat-divider>
+
+      <button mat-button
+              class="menu-button"
+              *ngFor="let item of sidebarItems"
+              [routerLink]="item.url"
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span>{{ item.label }}</span>
+
+      </button>
+
+      <mat-divider></mat-divider>
+      <button mat-button disabled="">
+        <span>TABLAS</span>
+      </button>
+
+      <button mat-button
+              class="menu-button"
+              *ngFor="let item of tableItems"
+              [routerLink]="item.url"
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span>{{ item.label }}</span>
+
+      </button>
+
+
+    </mat-sidenav>
+
+
+    <!-- CONTENIDO HOME -->
+    <mat-sidenav-content>
+      <div class="content">
+        <router-outlet></router-outlet>
+
+        <div class="footer">
+          <img [src]="'assets/images/Pie_logos_GDE..png'" alt="logo" style="object-fit: contain; width: 50%; height: 10%;">
+
+        </div>
+      </div>
+
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
