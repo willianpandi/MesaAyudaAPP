@@ -33,7 +33,7 @@ export class AppComponent {
         this.router.navigateByUrl('/dashboard');
         return;
 
-        case AuthStatus.notAuthenticated:
+      case AuthStatus.notAuthenticated:
         this.router.navigateByUrl('/auth/login');
         return;
 

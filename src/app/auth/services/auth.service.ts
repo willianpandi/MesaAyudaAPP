@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   login(usuario: string, contrasenia: string): Observable<boolean> {
-    const url = `${this.baseUrl}/users/login`;
+    const url = `${this.baseUrl}/auth/login`;
     const body = { usuario, contrasenia };
 
     return this.http.post<LoginResponse>(url, body).pipe(
@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   checkAuthStatus(): Observable<boolean> {
-    const url = `${this.baseUrl}/users/check-token`;
+    const url = `${this.baseUrl}/auth/check-token`;
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -70,7 +70,7 @@ export class AuthService {
 
 
   register(body: any): Observable<User> {
-    return this.http.post<User>(`${this.baseUrl}/users/register`, body)
+    return this.http.post<User>(`${this.baseUrl}/auth/register`, body)
       .pipe(
         catchError((err) => throwError(() => err.error.message))
       );

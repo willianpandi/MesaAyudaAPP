@@ -7,6 +7,7 @@ export interface Profile {
   usuario:              string;
   contrasenia:          string;
   rol:                  ROLES;
+  estado:               boolean;
   token:                string;
   nombre:               string;
   sexo:                 string;
@@ -15,7 +16,7 @@ export interface Profile {
   profesion:            string;
   etnia:                string;
   fecha_nacimiento:     string;
-  telefono:             number;
+  telefono:             string;
   direccion:            string;
   correo_institucional: string;
   correo_personal:      string;

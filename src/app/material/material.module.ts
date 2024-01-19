@@ -21,6 +21,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { MomentDateModule } from '@angular/material-moment-adapter';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   exports: [
@@ -46,6 +47,7 @@ import { MomentDateModule } from '@angular/material-moment-adapter';
     MatNativeDateModule,
     MatAutocompleteModule,
     MomentDateModule,
+  MatExpansionModule,
   ]
 })
 export class MaterialModule { }

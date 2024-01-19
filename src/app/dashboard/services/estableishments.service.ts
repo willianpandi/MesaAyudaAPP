@@ -24,6 +24,10 @@ export class EstablecimientoService {
         );
     }
 
+    public count(): Observable<{totalCountEstableishments: number}>{
+      return this.httpClient.get<any>(`${this.estableishmentURL}count`);
+    }
+
     public detail(id: string): Observable<Estableishment> {
         return this.httpClient.get<Estableishment>(`${this.estableishmentURL}${id}`)
         .pipe(
@@ -52,36 +56,9 @@ export class EstablecimientoService {
         );
     }
 
+    public getCount(): Observable<number> {
+      return this.httpClient.get<number>(`${this.estableishmentURL}allnum`);
+    }
 
 
-    // confirmDelete(message: string, callback: any){
-    //     Swal.fire({
-    //       icon: 'question',
-    //       title:  'ADVERTENCIA',
-    //       html: message,
-    //       showCancelButton: true,
-    //       focusConfirm: false,
-    //       reverseButtons: true,
-    //       confirmButtonText:
-    //         '<span class="ion-padding-horizontal"></span> Si <span class="ion-padding-horizontal"></span> ',
-    //       confirmButtonAriaLabel: 'Si',
-    //       cancelButtonText:
-    //         '<span class="ion-padding-horizontal"></span>  No <span class="ion-padding-horizontal"></span> ',
-    //       cancelButtonAriaLabel: 'No',
-    //       heightAuto: false,
-    //     }).then((result) => {
-    //       if (result.isConfirmed) {
-    //         callback();
-    //       }
-    //     });
-    //   }
-
-    // messageApi(title: string, message: string, type: 'warning' | 'success' | 'error' | 'info' | 'question') {
-    //     Swal.fire({
-    //       icon: type,
-    //       title,
-    //       html: message,
-    //       confirmButtonText: 'Aceptar'
-    //     })
-    // }
 }

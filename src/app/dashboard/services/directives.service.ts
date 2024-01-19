@@ -21,6 +21,10 @@ export class DirectivaService {
         );
     }
 
+    public count(): Observable<{totalCountDirectives: number}>{
+      return this.httpClient.get<any>(`${this.directiveURL}count`);
+    }
+
     public detail(id: string): Observable<Directive> {
         return this.httpClient.get<Directive>(`${this.directiveURL}${id}`)
         .pipe(
@@ -49,34 +53,4 @@ export class DirectivaService {
         );
     }
 
-//     confirmDelete(message: string, callback: any){
-//         Swal.fire({
-//           icon: 'question',
-//           title:  'ADVERTENCIA',
-//           html: message,
-//           showCancelButton: true,
-//           focusConfirm: false,
-//           reverseButtons: true,
-//           confirmButtonText:
-//             '<span class="ion-padding-horizontal"></span> Si <span class="ion-padding-horizontal"></span> ',
-//           confirmButtonAriaLabel: 'Si',
-//           cancelButtonText:
-//             '<span class="ion-padding-horizontal"></span>  No <span class="ion-padding-horizontal"></span> ',
-//           cancelButtonAriaLabel: 'No',
-//           heightAuto: false,
-//         }).then((result) => {
-//           if (result.isConfirmed) {
-//             callback();
-//           }
-//         });
-//       }
-
-//     messageApi(title: string, message: string, type: 'warning' | 'success' | 'error' | 'info' | 'question') {
-//         Swal.fire({
-//           icon: type,
-//           title,
-//           html: message,
-//           confirmButtonText: 'Aceptar'
-//         })
-//     }
 }

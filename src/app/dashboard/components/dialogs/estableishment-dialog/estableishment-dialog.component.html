@@ -6,7 +6,7 @@
       <div class="col-12 md:col-12 lg:col-4">
         <mat-form-field appearance="outline">
           <mat-label>Código</mat-label>
-          <input matInput formControlName="codigo" autocomplete="off" />
+          <input matInput formControlName="codigo" />
           <mat-icon matSuffix>bookmark</mat-icon>
         </mat-form-field>
       </div>
@@ -14,7 +14,7 @@
       <div class="col-12 md:col-12 lg:col-8">
         <mat-form-field appearance="outline">
           <mat-label>Nombre de establecimiento</mat-label>
-          <input matInput formControlName="nombre" autocomplete="off" />
+          <input matInput formControlName="nombre" />
           <mat-icon matSuffix>business</mat-icon>
         </mat-form-field>
       </div>
@@ -22,7 +22,10 @@
       <div class="col-12 md:col-12 lg:col-6">
         <mat-form-field appearance="outline">
           <mat-label>Institucion</mat-label>
-          <input matInput formControlName="institucion" autocomplete="off" />
+          <mat-select formControlName="institucion">
+            <mat-option value="MSP">MSP</mat-option>
+            <mat-option value="SNAI">SNAI</mat-option>
+          </mat-select>
           <mat-icon matSuffix>account_balance</mat-icon>
         </mat-form-field>
       </div>
@@ -42,15 +45,31 @@
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-12 lg:col-6">
+      <div class="col-12 md:col-12 lg:col-8">
         <mat-form-field appearance="outline">
-          <mat-label>Tipologia</mat-label>
-          <input matInput formControlName="tipologia" autocomplete="off" />
+          <mat-label>Tipología</mat-label>
+          <mat-select formControlName="tipologia">
+            <mat-option value="CENTRO DE SALUD TIPO A">CENTRO DE SALUD TIPO A</mat-option>
+            <mat-option value="CENTRO DE SALUD TIPO B">CENTRO DE SALUD TIPO B</mat-option>
+            <mat-option value="CENTRO DE SALUD TIPO C">CENTRO DE SALUD TIPO C</mat-option>
+            <mat-option value="CENTRO ESPECIALIZADO">CENTRO ESPECIALIZADO</mat-option>
+            <mat-option value="HOSPITAL BASICO">HOSPITAL BASICO</mat-option>
+            <mat-option value="HOSPITAL ESPECIALIZADO">HOSPITAL ESPECIALIZADO</mat-option>
+            <mat-option value="HOSPITAL GENERAL">HOSPITAL GENERAL</mat-option>
+            <mat-option value="HOSPITAL MOVIL">HOSPITAL MOVIL</mat-option>
+            <mat-option value="PUESTO DE SALUD">PUESTO DE SALUD</mat-option>
+            <mat-option value="AMBULANCIA DE SOPORTE VITAL AVANZADO">AMBULANCIA DE SOPORTE VITAL AVANZADO</mat-option>
+            <mat-option value="AMBULANCIA DE SOPORTE VITAL BASICO">AMBULANCIA DE SOPORTE VITAL BASICO</mat-option>
+            <mat-option value="AMBULANCIA DE TRANSPORTE SIMPLE">AMBULANCIA DE TRANSPORTE SIMPLE</mat-option>
+            <mat-option value="VEHICULO DE ASISTENCIA Y EVALUACION RAPIDA">VEHICULO DE ASISTENCIA Y EVALUACION RAPIDA</mat-option>
+            <mat-option value="UNIDAD MOVIL GENERAL">UNIDAD MOVIL GENERAL</mat-option>
+            <mat-option value="UNIDAD MOVIL QUIRURGICA">UNIDAD MOVIL QUIRURGICA</mat-option>
+          </mat-select>
           <mat-icon matSuffix>tune</mat-icon>
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-12 lg:col-6">
+      <div class="col-12 md:col-12 lg:col-4">
         <mat-form-field appearance="outline">
           <mat-label>Provincia</mat-label>
           <mat-select formControlName="provincia">
@@ -66,7 +85,7 @@
       <div class="col-12 md:col-12 lg:col-5">
         <mat-form-field appearance="outline">
           <mat-label>Canton</mat-label>
-          <input matInput formControlName="canton" autocomplete="off" />
+          <input matInput formControlName="canton" />
           <mat-icon matSuffix>pin_drop</mat-icon>
         </mat-form-field>
       </div>
@@ -74,7 +93,7 @@
       <div class="col-12 md:col-12 lg:col-7">
         <mat-form-field appearance="outline">
           <mat-label>Parroquia</mat-label>
-          <input matInput formControlName="parroquia" autocomplete="off" />
+          <input matInput formControlName="parroquia" />
           <mat-icon matSuffix>location_city</mat-icon>
         </mat-form-field>
       </div>
@@ -84,8 +103,8 @@
           <mat-label>Distrito</mat-label>
           <mat-select formControlName="district">
             <mat-option *ngFor="let item of listaDistrict" [value]="item.id">
-              <hr />
               {{ item.nombre }}
+              <hr />
             </mat-option>
           </mat-select>
           <mat-icon matSuffix>map</mat-icon>

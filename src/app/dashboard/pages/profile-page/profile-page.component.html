@@ -4,37 +4,234 @@
 <mat-divider></mat-divider>
 
 <div class="grid">
-    <div class="col-12">
-      <mat-card>
-        <mat-card-header>
-          <mat-toolbar>
-            <mat-card-title> <span>Datos Personales</span> </mat-card-title>
-          </mat-toolbar>
-        </mat-card-header>
+  <div class="col-12 md:col-12 lg:col-6">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <mat-card-title><span>Información Básica</span></mat-card-title>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-divider></mat-divider>
+
+        <mat-accordion>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Número de Cédula</span></mat-panel-title>
+              <mat-panel-description>{{user()?.usuario}}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Nombre Completo</span></mat-panel-title>
+              <mat-panel-description>{{user()?.nombre}}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Sexo</span></mat-panel-title>
+              <mat-panel-description>{{user()?.sexo}}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Etnia</span></mat-panel-title>
+              <mat-panel-description>{{user()?.etnia}}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Fecha de Nacimiento</span></mat-panel-title>
+              <mat-panel-description>{{user()?.fecha_nacimiento}}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Nivel de Instruccion</span></mat-panel-title>
+              <mat-panel-description>{{user()?.nivel_institucional}}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Profesion</span></mat-panel-title>
+              <mat-panel-description>{{user()?.profesion}}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+
+        </mat-accordion>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+
+  <div class="col-12 md:col-12 lg:col-6">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <mat-card-title><span>Información de Contacto</span></mat-card-title>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-divider></mat-divider>
+
+        <mat-accordion>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Correo Personal</span></mat-panel-title>
+              <mat-panel-description>{{user()?.correo_personal}}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Correo Institucional</span></mat-panel-title>
+              <mat-panel-description>{{user()?.correo_institucional}}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Número Celular</span></mat-panel-title>
+              <mat-panel-description>{{user()?.telefono}}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+
+        </mat-accordion>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-divider></mat-divider>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <mat-card-title><span>Dirección</span></mat-card-title>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-divider></mat-divider>
+
+        <mat-accordion>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Dirección Domiciliario</span></mat-panel-title>
+              <mat-panel-description>{{user()?.direccion}}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <mat-card-title><span>Información Laboral</span></mat-card-title>
+        </mat-toolbar>
+      </mat-card-header>
+
+      <div class="grid">
+        <div class="col-12 md:col-12 lg:col-5">
         <mat-card-content>
           <mat-divider></mat-divider>
 
+          <mat-accordion>
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>Área Laboral</span></mat-panel-title>
+                <mat-panel-description>{{user()?.area_laboral}}</mat-panel-description>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>Modalidad</span></mat-panel-title>
+                <mat-panel-description>{{user()?.modalidad_laboral}}</mat-panel-description>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>Régimen Laboral</span></mat-panel-title>
+                <mat-panel-description>{{user()?.regimen_laboral}}</mat-panel-description>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>Fecha de Ingreso</span></mat-panel-title>
+                <mat-panel-description>{{user()?.fecha_ingreso}}</mat-panel-description>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>Tipo de Nombramiento</span></mat-panel-title>
+                <mat-panel-description>{{user()?.nombramiento}}</mat-panel-description>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+
+          </mat-accordion>
         </mat-card-content>
+        </div>
 
-                <span>Cedula: {{user()?.usuario}}</span>
-                <span>Nombre completo: {{user()?.nombre}}</span>
-                <span>{{user()?.sexo}}</span>
-                <span>{{user()?.nivel_institucional}}</span>
-                <span>{{user()?.itinerancia}}</span>
-                <span>{{user()?.profesion}}</span>
-                <span>{{user()?.etnia}}</span>
-                <span>{{user()?.fecha_nacimiento}}</span>
-                <span>{{user()?.telefono}}</span>
-                <span>{{user()?.direccion}}</span>
-                <span>{{user()?.correo_institucional}}</span>
-                <span>{{user()?.correo_personal}}</span>
-                <span>{{user()?.nombramiento}}</span>
-                <span>{{user()?.area_laboral}}</span>
-                <span>{{user()?.fecha_ingreso}}</span>
-                <span>{{user()?.estableishment?.nombre}}</span>
+        <div class="col-12 md:col-12 lg:col-7">
+          <mat-card-content>
+            <mat-divider></mat-divider>
 
+            <mat-accordion>
+              <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title><span>Nombre de Establecimiento</span></mat-panel-title>
+                  <mat-panel-description>{{user()!.estableishment!.nombre}}</mat-panel-description>
+                </mat-expansion-panel-header>
+              </mat-expansion-panel>
 
-      </mat-card>
-    </div>
+              <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title><span>Código Distrito</span></mat-panel-title>
+                  <mat-panel-description>{{user()!.estableishment!.district!.codigo}}</mat-panel-description>
+                </mat-expansion-panel-header>
+              </mat-expansion-panel>
 
+              <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title><span>Provincia</span></mat-panel-title>
+                  <mat-panel-description>{{user()!.estableishment!.provincia}}</mat-panel-description>
+                </mat-expansion-panel-header>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title><span>Cantón</span></mat-panel-title>
+                  <mat-panel-description>{{user()!.estableishment!.canton}}</mat-panel-description>
+                </mat-expansion-panel-header>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title><span>Parroquia</span></mat-panel-title>
+                  <mat-panel-description>{{user()!.estableishment!.parroquia}}</mat-panel-description>
+                </mat-expansion-panel-header>
+              </mat-expansion-panel>
+
+            </mat-accordion>
+          </mat-card-content>
+        </div>
+
+      </div>
+
+    </mat-card>
+  </div>
 </div>

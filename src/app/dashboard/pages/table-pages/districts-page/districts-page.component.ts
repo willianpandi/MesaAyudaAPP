@@ -43,10 +43,10 @@ export class DistrictsPageComponent implements OnInit {
 
   setData(): void {
     this.distritoService.lista().subscribe(
-      data => {
+      (data)=> {
         this.distritosList = data;
       },
-      err => {
+      (err) => {
         console.log(err)
       }
     );

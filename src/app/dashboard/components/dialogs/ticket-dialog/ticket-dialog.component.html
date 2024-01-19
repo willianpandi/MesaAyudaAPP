@@ -3,7 +3,7 @@
   <mat-divider></mat-divider>
   <form [formGroup]="formTicket">
     <div class="grid">
-      <div class="col-12 md:col-12 lg:col-9">
+      <div class="col-12 md:col-12 lg:col-12" *ngIf="!mostrarInput">
         <mat-form-field>
           <mat-label>Nombre de Directiva - Problema</mat-label>
           <mat-select formControlName="directive">
@@ -16,19 +16,32 @@
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-12 lg:col-3">
+      <div class="col-12 md:col-12 lg:col-9" *ngIf="mostrarInput">
+        <mat-form-field>
+          <mat-label>Nombre de Directiva - Problema</mat-label>
+          <mat-select formControlName="directive">
+            <mat-option *ngFor="let item of listaDirective" [value]="item.id">
+              <hr />
+              {{ item.nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix>event_note</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 md:col-12 lg:col-3" *ngIf="mostrarInput">
         <mat-form-field appearance="outline">
           <mat-label>Estado</mat-label>
           <mat-select formControlName="estado">
-            <mat-option value="NUEVO">Nuevo</mat-option>
-            <mat-option value="EN PROCESO">En Proceso</mat-option>
-            <mat-option value="FINALIZADO">Finalizado</mat-option>
+            <mat-option value="NUEVO">NUEVO</mat-option>
+            <mat-option value="EN PROCESO">EN PROCESO</mat-option>
+            <mat-option value="FINALIZADO">FINALIZADO</mat-option>
           </mat-select>
           <mat-icon matSuffix>check_circle</mat-icon>
         </mat-form-field>
       </div>
 
-<div class="col-12 md:col-7 lg:col-7">
+      <!-- <div class="col-12 md:col-7 lg:col-7">
         <mat-form-field appearance="outline">
           <mat-label>Nombre de Usuario</mat-label>
           <mat-select formControlName="user">
@@ -39,7 +52,7 @@
           </mat-select>
           <mat-icon matSuffix>person</mat-icon>
         </mat-form-field>
-      </div>
+      </div> -->
 
       <div class="col-12 md:col-5 lg:col-5">
         <mat-form-field appearance="outline">
@@ -99,8 +112,16 @@
         </mat-form-field>
       </div>
 
-<div class="col-12 md:col-6 lg:col-6">
-        <button
+      <div class="col-12 md:col-12 lg:col-6">
+
+        <input type="file" #fileInput style="display:none" formControlName="archivo" (change)="handleFileInput($event)">
+        <button mat-fab extended
+        color="accent" (click)="fileInput.click()">
+        <strong>Cargar Archivo</strong>
+        <mat-icon>upload</mat-icon>
+        </button>
+        <span class="file-name" *ngIf="selectedFileName !== null">{{ selectedFileName }}</span>
+        <!-- <button
           type="button"
           mat-stroked-button
           color="primary"
@@ -113,9 +134,9 @@
           (change)="onFileSelected($event)"
           #fileInput
           type="file"
-          formControlName="archivo"
+
         />
-        <span class="file-name">{{ selectedFile?.name }}</span>
+        <span class="file-name">{{ selectedFile?.name }}</span> -->
       </div>
 
 

@@ -14,7 +14,7 @@ export interface Ticket {
   piso:          string;
   n_sala:        string;
   n_consultorio: string;
-  estado:        string;
+  estado?:        string;
   user:          Profile;
   // estableishment:Estableishment;
   directive:     Directive;

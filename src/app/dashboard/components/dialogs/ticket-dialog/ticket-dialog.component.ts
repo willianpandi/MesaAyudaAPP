@@ -29,13 +29,18 @@ export class TicketDialogComponent implements OnInit{
   listaUser: Profile[] = [];
   listaDirective: Directive[] = [];
   iconAccion: string = 'add_circle';
+  mostrarInput = false;
 
-  selectedFile: any = null;
+  selectedFileName: any = null;
 
-onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0] ?? null;
-
-}
+ handleFileInput(event: any): void {
+  const files = event.target.files;
+  if (files && files.length > 0) {
+    this.selectedFileName = files[0].name;
+    // Realiza las acciones necesarias con los archivos seleccionados
+    console.log(files);
+    }
+  }
 
   constructor(
     private dialogReferencia: MatDialogRef<TicketDialogComponent>,
@@ -49,40 +54,33 @@ onFileSelected(event: any): void {
   ){
     this.formTicket = this.fb.group({
       descripcion: ["", Validators.required],
-      archivo:[""],
-      area:  ["", Validators.required],
-      piso: ["", Validators.required],
-      n_sala: ["", Validators.required],
-      n_consultorio: ["", Validators.required],
-      estado:   ["NUEVO",Validators.required],
-      user:    ["", Validators.required],
-      // estableishment:["", Validators.required],
-      directive:  ["", Validators.required],
+      archivo:[''],
+      area:  ['', Validators.required],
+      piso: ['', Validators.required],
+      n_sala: ['', Validators.required],
+      n_consultorio: ['', Validators.required],
+      estado:   [''],
+      // user:    ['', Validators.required],
+      directive:  ['', Validators.required],
       // sarvey:    [""],
     })
     this.userService.lista().subscribe(
-      data => {
+      (data) => {
         this.listaUser = data;
       },
-      err => {
-
-      }
+      (err) => {}
     );
     this.directiveService.lista().subscribe(
-      data => {
+      (data) => {
         this.listaDirective = data;
       },
-      err => {
-
-      }
+      (err) => {}
     );
     this.estableishmentService.lista().subscribe(
-      data => {
+      (data) => {
         this.listaEstableishment = data;
       },
-      err => {
-
-      }
+      (err) => {}
     );
   }
 
@@ -91,7 +89,7 @@ onFileSelected(event: any): void {
       directive: this.formTicket.value.directive,
       descripcion: this.formTicket.value.descripcion,
       archivo: this.formTicket.value.archivo,
-      user: this.formTicket.value.user,
+      // user: this.formTicket.value.user,
       area: this.formTicket.value.area,
       piso: this.formTicket.value.piso,
       n_sala: this.formTicket.value.n_sala,
@@ -101,7 +99,7 @@ onFileSelected(event: any): void {
     }
 
     if (this.dataTickets === null) {
-      this.ticketsService.save(modelo.user, modelo.directive, modelo).subscribe({
+      this.ticketsService.save(modelo).subscribe({
         next: (data)=> {
           Swal.fire({
             position: 'bottom-end',
@@ -151,7 +149,7 @@ onFileSelected(event: any): void {
         directive: this.dataTickets.directive.id,
         descripcion: this.dataTickets.descripcion,
         archivo: this.dataTickets.archivo,
-        user: this.dataTickets.user.id,
+        // user: this.dataTickets.user.id,
         area: this.dataTickets.area,
         piso: this.dataTickets.piso,
         n_sala: this.dataTickets.n_sala,
@@ -162,6 +160,7 @@ onFileSelected(event: any): void {
       this.tituloAccion="Editar";
       this.botonAccion="Actualizar";
       this.iconAccion = 'edit';
+      this.mostrarInput = true;
     }
   }
 

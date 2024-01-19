@@ -21,18 +21,28 @@ export class UsuarioService {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-      return this.httpClient.get<Profile[]>(`${this.profileURL}all`, {headers});
+    return this.httpClient.get<Profile[]>(`${this.profileURL}all`, {headers});
+  }
+
+  public count(): Observable<{totalCountUsers: number}>{
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.get<any>(`${this.profileURL}count`, {headers});
   }
 
   public detail(id: string): Observable<Profile> {
-      return this.httpClient.get<Profile>(`${this.profileURL}${id}`)
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.httpClient.get<Profile>(`${this.profileURL}${id}`, {headers})
       .pipe(
         catchError((err) => throwError(() => err.error.message))
       );
   }
 
   public save(id: string, body: any): Observable<Profile> {
-      return this.httpClient.post<Profile>(`${this.profileURL}create/${id}`, body)
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.httpClient.post<Profile>(`${this.profileURL}create/${id}`, body, {headers})
       .pipe(
         catchError((err) => throwError(() => err.error.message))
       );
@@ -40,52 +50,22 @@ export class UsuarioService {
 
 
   public update(id: string, body: any): Observable<Profile> {
-      return this.httpClient.patch<Profile>(`${this.profileURL}edit/${id}`, body)
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.httpClient.patch<Profile>(`${this.profileURL}edit/${id}`, body, {headers})
       .pipe(
         catchError((err) => throwError(() => err.error.message))
       );
   }
 
   public delete(id: string): Observable<any> {
-      return this.httpClient.delete<any>(`${this.profileURL}delete/${id}`)
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.httpClient.delete<any>(`${this.profileURL}delete/${id}`,{headers})
       .pipe(
         catchError((err) => throwError(() => err.error.message))
       );
   }
 
 
-  // login(user: any): Observable<any> {
-  //   return this.httpClient.post<any>(`${this.profileURL}`, user);
-  // }
-
-  // confirmDelete(message: string, callback: any){
-  //     Swal.fire({
-  //       icon: 'question',
-  //       title:  'ADVERTENCIA',
-  //       html: message,
-  //       showCancelButton: true,
-  //       focusConfirm: false,
-  //       reverseButtons: true,
-  //       confirmButtonText:
-  //         '<span class="ion-padding-horizontal"></span> Si <span class="ion-padding-horizontal"></span> ',
-  //       confirmButtonAriaLabel: 'Si',
-  //       cancelButtonText:
-  //         '<span class="ion-padding-horizontal"></span>  No <span class="ion-padding-horizontal"></span> ',
-  //       cancelButtonAriaLabel: 'No',
-  //       heightAuto: false,
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         callback();
-  //       }
-  //     });
-  //   }
-
-  // messageApi(title: string, message: string, type: 'warning' | 'success' | 'error' | 'info' | 'question') {
-  //     Swal.fire({
-  //       icon: type,
-  //       title,
-  //       html: message,
-  //       confirmButtonText: 'Aceptar'
-  //     })
-  // }
 }

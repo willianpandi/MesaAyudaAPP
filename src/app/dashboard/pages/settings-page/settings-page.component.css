@@ -19,3 +19,20 @@ h5 {
   font-family: Poppins-Regular;
   font-size: 15px;
 }
+
+
+mat-form-field{
+  width: 100%;
+}
+
+mat-label {
+  font-family: Poppins-SemiBold;
+  font-size: 16px;
+}
+
+button{
+  width: 100%;
+}
+.hint{
+  color: black;
+}

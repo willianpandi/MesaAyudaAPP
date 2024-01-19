@@ -14,3 +14,10 @@ mat-divider{
 mat-card{
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
+
+.mat-mdc-form-field + .mat-mdc-form-field {
+  margin-left: 8px;
+}
+mat-panel-description{
+  color: black;
+}

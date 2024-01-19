@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 export class ProfilePageComponent {
 
   private authService = inject( AuthService);
-
   public user = computed(()=> this.authService.currentUser());
+  panelOpenState = true;
 
 }

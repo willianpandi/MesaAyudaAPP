@@ -57,10 +57,10 @@ export class TicketsPageComponent implements OnInit {
 
   setData(): void {
     this.ticketsService.lista().subscribe(
-      data => {
+      (data) => {
         this.ticketList = data;
       },
-      err => {
+      (err) => {
         console.log(err)
       }
     );

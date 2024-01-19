@@ -35,13 +35,15 @@ export class UsersPageComponent implements OnInit{
 
   setTableColumns() {
     this.tableColumnsUsuarios = [
+      { label: 'Estado', def: 'estado', dataKey: 'estado', isSticky: true, dataType: 'boolean'},
       { label: 'N° Cédula', def: 'usuario', dataKey: 'usuario', isSticky: true },
       { label: 'Nombre Completo', def: 'nombre', dataKey: 'nombre', isSticky: true },
+      { label: 'Étnia', def: 'etnia', dataKey: 'etnia' },
+      { label: 'Rol', def: 'rol', dataKey: 'rol' },
       { label: 'Sexo', def: 'sexo', dataKey: 'sexo' },
-      { label: 'Nivel Institucional', def: 'nivel_institucional', dataKey: 'nivel_institucional' },
+      { label: 'Nivel de Instrucción', def: 'nivel_institucional', dataKey: 'nivel_institucional' },
       { label: 'Itinerancia', def: 'itinerancia', dataKey: 'itinerancia' },
       { label: 'Profesión', def: 'profesion', dataKey: 'profesion' },
-      { label: 'Étnia', def: 'etnia', dataKey: 'etnia' },
       { label: 'F. Nacimiento', def: 'fecha_nacimiento', dataKey: 'fecha_nacimiento', dataType: 'date', formatt: 'dd/MM/yyyy'},
       { label: 'N° Teléfono', def: 'telefono', dataKey: 'telefono' },
       { label: 'Dirección', def: 'direccion', dataKey: 'direccion' },
@@ -53,7 +55,7 @@ export class UsersPageComponent implements OnInit{
       { label: 'Nombramiento', def: 'nombramiento', dataKey: 'nombramiento' },
       { label: 'F. Ingreso', def: 'fecha_ingreso', dataKey: 'fecha_ingreso', dataType: 'date', formatt: 'dd/MM/yyyy' },
       { label: 'Establecimiento', def: 'estableishment', dataKey: 'estableishment.nombre', dataType: 'object' },
-      // { label: 'Establecimiento', def: 'estableishmentname', dataKey: 'estableishmentname.nombre', dataType:'object'},
+      { label: 'Distrito', def: 'estableishmentname', dataKey: 'estableishment.district.codigo', dataType:'object'},
       { label: 'Creado en', def: 'createdAt', dataKey: 'createdAt', dataType: 'date', formatt: 'HH:mm - dd/MM/yyyy '},
       { label: 'Actualizado en', def: 'apdateAt', dataKey: 'apdateAt', dataType: 'date', formatt: 'HH:mm - dd/MM/yyyy'},
     ];
@@ -61,10 +63,10 @@ export class UsersPageComponent implements OnInit{
 
   setData(): void {
     this.usuarioService.lista().subscribe(
-      data => {
+      (data) => {
         this.usuariosList = data;
       },
-      err => {
+      (err) => {
         console.log(err)
       }
     );
@@ -86,6 +88,7 @@ export class UsersPageComponent implements OnInit{
         break;
     }
   }
+
 
   userDialog() {
     this.dialog.open(UserDialogComponent, {

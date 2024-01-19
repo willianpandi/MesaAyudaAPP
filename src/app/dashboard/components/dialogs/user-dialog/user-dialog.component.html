@@ -43,6 +43,7 @@
             matInput
             [matDatepicker]="pickerNacimiento"
             formControlName="fecha_nacimiento"
+            [max]="maxDate"
           />
           <mat-datepicker-toggle
             matSuffix
@@ -90,10 +91,14 @@
       <div class="col-12 md:col-12 lg:col-4">
         <mat-form-field appearance="outline">
           <mat-label>N° de Celular</mat-label>
-          <input matInput formControlName="telefono" type="number" />
+          <input matInput formControlName="telefono" type="text" #input
+          maxlength="10" />
           <mat-hint *ngIf="isValidField('telefono')">{{
             getFieldError("telefono")
           }}</mat-hint>
+          <mat-hint class="hint" align="end"
+          >{{ input.value.length }}/10</mat-hint
+        >
           <mat-icon matSuffix>phone</mat-icon>
         </mat-form-field>
       </div>
@@ -241,6 +246,7 @@
             matInput
             [matDatepicker]="pickerIngreso"
             formControlName="fecha_ingreso"
+            [max]="maxDate"
           >
           <mat-datepicker-toggle
             matSuffix
@@ -269,7 +275,7 @@
           <mat-label>Establecimiento</mat-label>
           <mat-select formControlName="estableishment">
             <mat-option
-              *ngFor="let item of listaEstableishment"
+              *ngFor="let item of listaEstableishments"
               [value]="item.id"
             >
               <hr />
@@ -280,6 +286,34 @@
             getFieldError("estableishment")
           }}</mat-hint>
           <mat-icon matSuffix>business</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 md:col-4 lg:col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Estado de Usuario</mat-label>
+          <mat-select formControlName="estado">
+            <mat-option *ngFor="let opcion of opcionesEstado" [value]="opcion.valor">
+              {{ opcion.etiqueta }}
+            </mat-option>
+          </mat-select>
+          <mat-hint *ngIf="isValidField('estado')">{{ getFieldError("estado") }}</mat-hint>
+          <mat-icon matSuffix>highlight_off</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 md:col-4 lg:col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Rol de Usuario</mat-label>
+          <mat-select formControlName="rol">
+            <mat-option value="BASICO">BASICO</mat-option>
+            <mat-option value="SISTEMAS">SISTEMAS</mat-option>
+            <mat-option value="ADMINISTRADOR">ADMINISTRADOR</mat-option>
+          </mat-select>
+          <mat-hint *ngIf="isValidField('rol')">{{
+            getFieldError("rol")
+          }}</mat-hint>
+          <mat-icon matSuffix>supervisor_account</mat-icon>
         </mat-form-field>
       </div>
     </div>

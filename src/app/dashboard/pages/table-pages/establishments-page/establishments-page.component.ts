@@ -53,10 +53,10 @@ export class EstablishmentsPageComponent implements OnInit {
 
   setData(): void {
     this.establecimientoService.lista().subscribe(
-      data => {
+      (data) => {
         this.establecimientosList = data;
       },
-      err => {
+      (err) => {
         console.log(err)
       }
     );

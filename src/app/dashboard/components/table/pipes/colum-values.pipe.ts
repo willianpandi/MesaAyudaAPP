@@ -6,6 +6,8 @@ import { DatePipe } from '@angular/common';
   name: 'columValue',
 })
 export class ColumValuePipe implements PipeTransform {
+  constructor(){}
+
   transform(row: any, column: TableColumn): unknown {
     let displayValue = row[column.dataKey];
 
@@ -29,6 +31,11 @@ export class ColumValuePipe implements PipeTransform {
           currentValue = currentValue[key];
         });
         displayValue = currentValue;
+        break;
+
+        case 'boolean':
+          const display = row[column.dataKey] ? 'ACTIVO' : 'INACTIVO';
+          displayValue = display;
         break;
 
       default:

@@ -3,7 +3,7 @@ import { Component, OnInit, Inject, inject, computed } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import * as moment from 'moment';
 
 import { Profile } from 'src/app/dashboard/interfaces/users';
@@ -12,6 +12,9 @@ import { EstablecimientoService } from '../../../services/estableishments.servic
 
 import Swal from 'sweetalert2'
 import { ValidatorsService } from 'src/app/shared/service/validators.service';
+import { District, SmallDistrict } from 'src/app/dashboard/interfaces/districts';
+import { DistritoService } from 'src/app/dashboard/services/districts.service';
+import { switchMap } from 'rxjs';
 
 
 export const MY_FORMATS = {
@@ -37,15 +40,18 @@ export class UserDialogComponent implements OnInit {
   tituloAccion: string = 'Nuevo';
   botonAccion: string = 'Guardar';
   iconAccion: string = 'add_circle';
-  listaEstableishment: Estableishment[] = [];
+  listaEstableishments: Estableishment[] = [];
   private validatorsService = inject(ValidatorsService);
+  inputHabilitado = true;
+  maxDate: Date;
 
   constructor(
     private dialogReferencia: MatDialogRef<UserDialogComponent>,
     private fb: FormBuilder,
     private userService: UsuarioService,
     private estableishmentService: EstablecimientoService,
-    @Inject(MAT_DIALOG_DATA) public dataUsuario: Profile
+    @Inject(MAT_DIALOG_DATA) public dataUsuario: Profile,
+    private dateAdapter: DateAdapter<Date>,
   ) {
 
 
@@ -68,13 +74,17 @@ export class UserDialogComponent implements OnInit {
       area_laboral: ['', Validators.required],
       fecha_ingreso: ['', Validators.required],
       estableishment: ['', Validators.required],
+      estado: ['', Validators.required],
+      rol: ['', Validators.required],
     });
     this.estableishmentService.lista().subscribe(
       (data) => {
-        this.listaEstableishment = data;
+        this.listaEstableishments = data;
       },
       (err) => {}
     );
+    this.dateAdapter.setLocale('es');
+    this.maxDate = new Date();
   }
 
   isValidField( field: string ): boolean | null{
@@ -89,11 +99,11 @@ export class UserDialogComponent implements OnInit {
     console.log(this.formUser.value);
     const modelo = {
       usuario: this.formUser.value.usuario,
-      nombre: this.formUser.value.nombre,
+      nombre: this.formUser.value.nombre.toUpperCase(),
       sexo: this.formUser.value.sexo,
       nivel_institucional: this.formUser.value.nivel_institucional,
       itinerancia: this.formUser.value.itinerancia.toUpperCase(),
-      profesion: this.formUser.value.profesion.toUpperCase,
+      profesion: this.formUser.value.profesion.toUpperCase(),
       etnia: this.formUser.value.etnia,
       fecha_nacimiento: moment(this.formUser.value.fecha_nacimiento).format('YYYY-MM-DD'),
       telefono: this.formUser.value.telefono,
@@ -106,6 +116,8 @@ export class UserDialogComponent implements OnInit {
       area_laboral: this.formUser.value.area_laboral.toUpperCase(),
       fecha_ingreso: moment(this.formUser.value.fecha_ingreso).format('YYYY-MM-DD'),
       estableishment: this.formUser.value.estableishment,
+      estado: this.formUser.value.estado,
+      rol: this.formUser.value.rol,
     };
 
     if (this.dataUsuario === null) {
@@ -176,10 +188,18 @@ export class UserDialogComponent implements OnInit {
         area_laboral: this.dataUsuario.area_laboral,
         fecha_ingreso: moment(this.dataUsuario.fecha_ingreso, 'YYYY-MM-DD'),
         estableishment: this.dataUsuario.estableishment.id,
+        estado: this.dataUsuario.estado,
+        rol: this.dataUsuario.rol,
       });
       this.tituloAccion = 'Editar';
       this.botonAccion = 'Actualizar';
       this.iconAccion = 'edit';
-    }
+      this.inputHabilitado = false;
+    };
   }
+
+  opcionesEstado = [
+    { valor: true, etiqueta: 'ACTIVO' },
+    { valor: false, etiqueta: 'INACTIVO' }
+  ];
 }

@@ -73,7 +73,7 @@
           <input
             autocomplete="new-password"
             matInput
-            [type]="hide ? 'password' : 'text'"
+            [type]="hide2 ? 'password' : 'text'"
             formControlName="contrasenia2"
             placeholder="Vuelva a escribir su contraseña"
           />
@@ -83,11 +83,11 @@
           <button
             mat-icon-button
             matSuffix
-            (click)="hide = !hide"
+            (click)="hide2 = !hide2"
             [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide"
+            [attr.aria-pressed]="hide2"
           >
-            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            <mat-icon>{{ hide2 ? "visibility_off" : "visibility" }}</mat-icon>
           </button>
         </mat-form-field>
       </div>

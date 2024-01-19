@@ -20,6 +20,7 @@ import { switchMap, tap } from 'rxjs';
 })
 export class RegisterPageComponent implements OnInit {
   hide = true;
+  hide2 = true;
   // hide2 = true;
   estableishmetsByDistrict: SmallDistrict[] = [];
   listaDistrict: District[] = [];
@@ -74,12 +75,6 @@ export class RegisterPageComponent implements OnInit {
       },
       (err) => {}
     );
-    // this.districtService.detail().subscribe(
-    //   (data) => {
-    //     this.listaEstableishment = data;
-    //   },
-    //   (err) => {}
-    // );
   }
   ngOnInit(): void {
     this.onDistrictChanged();
@@ -95,8 +90,6 @@ export class RegisterPageComponent implements OnInit {
         this.estableishmetsByDistrict = estableishments;
       });
   }
-
-
 
   onSave(): void {
     const modelo = {
