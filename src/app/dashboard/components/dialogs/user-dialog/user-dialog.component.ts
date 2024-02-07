@@ -12,7 +12,7 @@ import { EstablecimientoService } from '../../../services/estableishments.servic
 
 import Swal from 'sweetalert2'
 import { ValidatorsService } from 'src/app/shared/service/validators.service';
-import { District, SmallDistrict } from 'src/app/dashboard/interfaces/districts';
+import { District } from 'src/app/dashboard/interfaces/districts';
 import { DistritoService } from 'src/app/dashboard/services/districts.service';
 import { switchMap } from 'rxjs';
 
@@ -45,6 +45,8 @@ export class UserDialogComponent implements OnInit {
   inputHabilitado = true;
   maxDate: Date;
 
+  mostrarNombramiento = false;
+
   constructor(
     private dialogReferencia: MatDialogRef<UserDialogComponent>,
     private fb: FormBuilder,
@@ -54,10 +56,10 @@ export class UserDialogComponent implements OnInit {
     private dateAdapter: DateAdapter<Date>,
   ) {
 
-
     this.formUser = this.fb.group({
       usuario: ['', [Validators.required,Validators.minLength(10)] ],
-      nombre: ['', [Validators.required, Validators.pattern(this.validatorsService.firstNameAndLastnamePattern)]],
+      // nombre: ['', [Validators.required, Validators.pattern(this.validatorsService.firstNameAndLastnamePattern)]], // con 4  nombres
+      nombre: ['', [Validators.required]],
       sexo: ['', Validators.required],
       itinerancia: [''],
       nivel_institucional: ['', Validators.required],
@@ -70,13 +72,17 @@ export class UserDialogComponent implements OnInit {
       correo_personal: ['', [Validators.required, Validators.pattern(this.validatorsService.emailPattern)]],
       regimen_laboral: ['', Validators.required],
       modalidad_laboral: ['', Validators.required],
-      nombramiento: ['', Validators.required],
+      nombramiento: [''],
       area_laboral: ['', Validators.required],
       fecha_ingreso: ['', Validators.required],
       estableishment: ['', Validators.required],
       estado: ['', Validators.required],
       rol: ['', Validators.required],
     });
+
+    this.mostrarNombramiento = this.formUser.get('modalidad_laboral')!.value === 'NOMBRAMIENTO';
+
+
     this.estableishmentService.lista().subscribe(
       (data) => {
         this.listaEstableishments = data;
@@ -168,6 +174,11 @@ export class UserDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.formUser.get('modalidad_laboral')!.valueChanges.subscribe((value) => {
+      this.mostrarNombramiento = value === 'NOMBRAMIENTO';
+    });
+
     if (this.dataUsuario) {
       this.formUser.patchValue({
         usuario: this.dataUsuario.usuario,

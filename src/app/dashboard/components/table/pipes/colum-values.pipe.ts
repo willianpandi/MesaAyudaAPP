@@ -8,7 +8,7 @@ import { DatePipe } from '@angular/common';
 export class ColumValuePipe implements PipeTransform {
   constructor(){}
 
-  transform(row: any, column: TableColumn): unknown {
+  transform(row: any, column: TableColumn): string {
     let displayValue = row[column.dataKey];
 
     switch (column.dataType) {

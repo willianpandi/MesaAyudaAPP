@@ -7,6 +7,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { MaterialModule } from '../material/material.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { MaterialModule } from '../material/material.module';
     AuthRoutingModule,
     ReactiveFormsModule,
     MaterialModule,
+    PipesModule
   ]
 })
 export class AuthModule { }

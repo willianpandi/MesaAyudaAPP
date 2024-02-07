@@ -15,10 +15,10 @@ const routes: Routes = [
     canActivate: [ isAuthenticatedGuard ],
     loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardModule ),
   },
-  {
-    path: '404',
-    component: Error404PageComponent,
-  },
+  // {
+  //   path: '404',
+  //   component: Error404PageComponent,
+  // },
   {
     path: '',
     redirectTo: 'auth',
@@ -26,13 +26,13 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '404'
+    component: Error404PageComponent,
   },
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes),],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

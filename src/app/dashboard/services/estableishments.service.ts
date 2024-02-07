@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environments';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable, catchError, throwError } from 'rxjs';
 import { Estableishment } from '../interfaces/estableishments';
 
@@ -17,7 +17,13 @@ export class EstablecimientoService {
 
     constructor(private httpClient: HttpClient) { }
 
+    private getHeaders(): HttpHeaders {
+      const token = localStorage.getItem('token');
+      return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    }
+
     public lista(): Observable<Estableishment[]> {
+
         return this.httpClient.get<Estableishment[]>(`${this.estableishmentURL}all`)
         .pipe(
           catchError((err) => throwError(() => err.error.message))
@@ -25,32 +31,42 @@ export class EstablecimientoService {
     }
 
     public count(): Observable<{totalCountEstableishments: number}>{
-      return this.httpClient.get<any>(`${this.estableishmentURL}count`);
+      const headers = this.getHeaders();
+
+      return this.httpClient.get<any>(`${this.estableishmentURL}count`, {headers});
     }
 
     public detail(id: string): Observable<Estableishment> {
-        return this.httpClient.get<Estableishment>(`${this.estableishmentURL}${id}`)
+      const headers = this.getHeaders();
+
+        return this.httpClient.get<Estableishment>(`${this.estableishmentURL}${id}`, {headers})
         .pipe(
           catchError((err) => throwError(() => err.error.message))
         );
     }
 
     public save(establecimiento: any): Observable<Estableishment> {
-        return this.httpClient.post<Estableishment>(`${this.estableishmentURL}create`, establecimiento)
+          const headers = this.getHeaders();
+
+        return this.httpClient.post<Estableishment>(`${this.estableishmentURL}create`, establecimiento, {headers})
         .pipe(
           catchError((err) => throwError(() => err.error.message))
         );
     }
 
     public update(id: string, body: any): Observable<Estableishment> {
-        return this.httpClient.patch<Estableishment>(`${this.estableishmentURL}edit/${id}`, body)
+          const headers = this.getHeaders();
+
+        return this.httpClient.patch<Estableishment>(`${this.estableishmentURL}edit/${id}`, body, {headers})
         .pipe(
           catchError((err) => throwError(() => err.error.message))
         );
     }
 
     public delete(id: string): Observable<any> {
-        return this.httpClient.delete<any>(`${this.estableishmentURL}delete/${id}`)
+          const headers = this.getHeaders();
+
+        return this.httpClient.delete<any>(`${this.estableishmentURL}delete/${id}`, {headers})
         .pipe(
           catchError((err) => throwError(() => err.error.message))
         );

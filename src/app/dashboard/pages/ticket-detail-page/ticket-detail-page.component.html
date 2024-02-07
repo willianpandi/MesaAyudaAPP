@@ -1,0 +1,154 @@
+<div class="grid">
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <mat-card-title
+            ><span> Ticket {{ ticketSelect.codigo }}</span></mat-card-title
+          >
+        </mat-toolbar>
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-chip-listbox>
+          <mat-chip-option color="primary" selected>
+            <span>{{ ticketSelect.estado }}</span></mat-chip-option
+          >
+          <mat-chip-option color="accent" selected>
+            <span>{{ ticketSelect.user.nombre }}</span></mat-chip-option
+          >
+          <mat-chip-option color="warn" selected
+            ><span>{{ ticketSelect.createdAt | date }}</span></mat-chip-option
+          >
+        </mat-chip-listbox>
+        <mat-divider></mat-divider>
+
+        <mat-accordion class="grid">
+          <mat-expansion-panel hideToggle class="col-12">
+            <mat-expansion-panel-header>
+              <mat-panel-title
+                ><span>Categoria de problema</span></mat-panel-title
+              >
+              <mat-panel-description>{{
+                ticketSelect.directive.nombre
+              }}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+          <mat-expansion-panel hideToggle class="col-12">
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Titulo de Problema</span></mat-panel-title>
+              <mat-panel-description>{{
+                ticketSelect.titulo
+              }}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+          <mat-expansion-panel hideToggle class="col-3">
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Area</span></mat-panel-title>
+              <mat-panel-description>{{
+                ticketSelect.area
+              }}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+          <mat-expansion-panel hideToggle class="col-3">
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>N° de Piso</span></mat-panel-title>
+              <mat-panel-description>{{
+                ticketSelect.piso
+              }}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+          <mat-expansion-panel hideToggle class="col-3">
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>N° de Sala</span></mat-panel-title>
+              <mat-panel-description>{{
+                ticketSelect.n_sala
+              }}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+          <mat-expansion-panel hideToggle class="col-3">
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>N° de Consultorio</span></mat-panel-title>
+              <mat-panel-description>{{
+                ticketSelect.n_consultorio
+              }}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-divider></mat-divider>
+        <div class="col-12">
+          <quill-editor [readOnly]="quillEditorReadOnly"></quill-editor>
+        </div>
+        <div class="col-12">
+          <span style="padding-left: 20px">Archivo Adjunto:</span>
+          <mat-divider></mat-divider>
+          <div class="file-container">
+            <ng-container *ngFor="let file of archivos">
+              <div class="file-item">
+                <ng-container *ngIf="isImage(file.archivo)">
+                  <img
+                    [src]="file.archivo"
+                    alt="Imagen"
+                    width="200"
+                    (click)="openImageDialog(file.archivo)"
+                  />
+                </ng-container>
+                <ng-container *ngIf="!isImage(file.archivo)">
+                  <a [href]="file.archivo" target="_blank">{{
+                    file.archivo
+                  }}</a>
+                </ng-container>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <mat-card-title><span> Seguimiento del Ticket</span></mat-card-title>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="grid" *ngFor="let item of ticketDetalle">
+          <div class="col-2">
+            <span>{{ item.createdAt | date }}</span>
+          </div>
+          <div class="col-10">
+            <span>{{ item.detalle }}</span>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <form class="grid" [formGroup]="formTicketDetalle">
+          <div class="col-12">
+            <quill-editor formControlName="detalle"></quill-editor>
+          </div>
+          <div class="col-12 md:col-3 lg:col-3">
+            <button mat-fab extended color="accent" routerLink="/dashboard/reports">
+              <mat-icon>arrow_back</mat-icon> <strong>Volver</strong>
+            </button>
+          </div>
+          <div class="col-12 md:col-3 lg:col-3">
+            <button mat-fab extended color="primary" [disabled]="formTicketDetalle.invalid" (click)="responderTicket()">
+              <mat-icon>reply</mat-icon> <strong>Responder</strong>
+            </button>
+          </div>
+          <div class="col-12 md:col-3 lg:col-3">
+            <button mat-fab extended color="warn" (click)="cerrarTicket()">
+              <mat-icon>launch</mat-icon> <strong>Reabrir Ticket</strong>
+            </button>
+          </div>
+          <div class="col-12 md:col-3 lg:col-3">
+            <button mat-fab extended color="warn" (click)="cerrarTicket()">
+              <mat-icon>close</mat-icon> <strong>Cerrar Ticket</strong>
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>

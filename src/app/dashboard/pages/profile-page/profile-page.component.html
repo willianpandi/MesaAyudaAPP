@@ -1,7 +1,3 @@
-<mat-toolbar>
-  <span>MI PERFIL</span>
-</mat-toolbar>
-<mat-divider></mat-divider>
 
 <div class="grid">
   <div class="col-12 md:col-12 lg:col-6">
@@ -15,55 +11,12 @@
         <mat-divider></mat-divider>
 
         <mat-accordion>
-          <mat-expansion-panel hideToggle>
+          <mat-expansion-panel hideToggle *ngFor="let item of informacionBasica">
             <mat-expansion-panel-header>
-              <mat-panel-title><span>Número de Cédula</span></mat-panel-title>
-              <mat-panel-description>{{user()?.usuario}}</mat-panel-description>
+              <mat-panel-title><span>{{ item.label }}</span></mat-panel-title>
+              <mat-panel-description>{{ item.data }}</mat-panel-description>
             </mat-expansion-panel-header>
           </mat-expansion-panel>
-
-          <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>Nombre Completo</span></mat-panel-title>
-              <mat-panel-description>{{user()?.nombre}}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>Sexo</span></mat-panel-title>
-              <mat-panel-description>{{user()?.sexo}}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>Etnia</span></mat-panel-title>
-              <mat-panel-description>{{user()?.etnia}}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>Fecha de Nacimiento</span></mat-panel-title>
-              <mat-panel-description>{{user()?.fecha_nacimiento}}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>Nivel de Instruccion</span></mat-panel-title>
-              <mat-panel-description>{{user()?.nivel_institucional}}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>Profesion</span></mat-panel-title>
-              <mat-panel-description>{{user()?.profesion}}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-
         </mat-accordion>
 
       </mat-card-content>
@@ -82,27 +35,12 @@
         <mat-divider></mat-divider>
 
         <mat-accordion>
-          <mat-expansion-panel hideToggle>
+          <mat-expansion-panel hideToggle *ngFor="let item of informacionContacto">
             <mat-expansion-panel-header>
-              <mat-panel-title><span>Correo Personal</span></mat-panel-title>
-              <mat-panel-description>{{user()?.correo_personal}}</mat-panel-description>
+              <mat-panel-title><span>{{ item.label}}</span></mat-panel-title>
+              <mat-panel-description>{{ item.data}}</mat-panel-description>
             </mat-expansion-panel-header>
           </mat-expansion-panel>
-
-          <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>Correo Institucional</span></mat-panel-title>
-              <mat-panel-description>{{user()?.correo_institucional}}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>Número Celular</span></mat-panel-title>
-              <mat-panel-description>{{user()?.telefono}}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-
         </mat-accordion>
       </mat-card-content>
     </mat-card>
@@ -119,10 +57,10 @@
         <mat-divider></mat-divider>
 
         <mat-accordion>
-          <mat-expansion-panel hideToggle>
+          <mat-expansion-panel hideToggle [expanded]="true" *ngFor="let item of informacionDireccion">
             <mat-expansion-panel-header>
-              <mat-panel-title><span>Dirección Domiciliario</span></mat-panel-title>
-              <mat-panel-description>{{user()?.direccion}}</mat-panel-description>
+              <mat-panel-title><span>{{ item.label }}</span></mat-panel-title>
+              <mat-panel-description>{{ item.data }}</mat-panel-description>
             </mat-expansion-panel-header>
           </mat-expansion-panel>
         </mat-accordion>
@@ -147,41 +85,12 @@
           <mat-divider></mat-divider>
 
           <mat-accordion>
-            <mat-expansion-panel hideToggle>
+            <mat-expansion-panel hideToggle *ngFor="let item of informacionLaboral">
               <mat-expansion-panel-header>
-                <mat-panel-title><span>Área Laboral</span></mat-panel-title>
-                <mat-panel-description>{{user()?.area_laboral}}</mat-panel-description>
+                <mat-panel-title><span>{{ item.label }}</span></mat-panel-title>
+                <mat-panel-description>{{ item.data }}</mat-panel-description>
               </mat-expansion-panel-header>
             </mat-expansion-panel>
-
-            <mat-expansion-panel hideToggle>
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Modalidad</span></mat-panel-title>
-                <mat-panel-description>{{user()?.modalidad_laboral}}</mat-panel-description>
-              </mat-expansion-panel-header>
-            </mat-expansion-panel>
-
-            <mat-expansion-panel hideToggle>
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Régimen Laboral</span></mat-panel-title>
-                <mat-panel-description>{{user()?.regimen_laboral}}</mat-panel-description>
-              </mat-expansion-panel-header>
-            </mat-expansion-panel>
-
-            <mat-expansion-panel hideToggle>
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Fecha de Ingreso</span></mat-panel-title>
-                <mat-panel-description>{{user()?.fecha_ingreso}}</mat-panel-description>
-              </mat-expansion-panel-header>
-            </mat-expansion-panel>
-
-            <mat-expansion-panel hideToggle>
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Tipo de Nombramiento</span></mat-panel-title>
-                <mat-panel-description>{{user()?.nombramiento}}</mat-panel-description>
-              </mat-expansion-panel-header>
-            </mat-expansion-panel>
-
           </mat-accordion>
         </mat-card-content>
         </div>
@@ -189,43 +98,13 @@
         <div class="col-12 md:col-12 lg:col-7">
           <mat-card-content>
             <mat-divider></mat-divider>
-
             <mat-accordion>
-              <mat-expansion-panel hideToggle>
+              <mat-expansion-panel hideToggle *ngFor="let item of informacionEstablecimiento">
                 <mat-expansion-panel-header>
-                  <mat-panel-title><span>Nombre de Establecimiento</span></mat-panel-title>
-                  <mat-panel-description>{{user()!.estableishment!.nombre}}</mat-panel-description>
+                  <mat-panel-title><span>{{item.label}}</span></mat-panel-title>
+                  <mat-panel-description>{{item.data}}</mat-panel-description>
                 </mat-expansion-panel-header>
               </mat-expansion-panel>
-
-              <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header>
-                  <mat-panel-title><span>Código Distrito</span></mat-panel-title>
-                  <mat-panel-description>{{user()!.estableishment!.district!.codigo}}</mat-panel-description>
-                </mat-expansion-panel-header>
-              </mat-expansion-panel>
-
-              <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header>
-                  <mat-panel-title><span>Provincia</span></mat-panel-title>
-                  <mat-panel-description>{{user()!.estableishment!.provincia}}</mat-panel-description>
-                </mat-expansion-panel-header>
-              </mat-expansion-panel>
-
-              <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header>
-                  <mat-panel-title><span>Cantón</span></mat-panel-title>
-                  <mat-panel-description>{{user()!.estableishment!.canton}}</mat-panel-description>
-                </mat-expansion-panel-header>
-              </mat-expansion-panel>
-
-              <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header>
-                  <mat-panel-title><span>Parroquia</span></mat-panel-title>
-                  <mat-panel-description>{{user()!.estableishment!.parroquia}}</mat-panel-description>
-                </mat-expansion-panel-header>
-              </mat-expansion-panel>
-
             </mat-accordion>
           </mat-card-content>
         </div>

@@ -5,7 +5,7 @@ export interface District {
   codigo:          string;
   nombre:          string;
   provincia:       Provincia;
-  estableishments: Estableishment;
+  estableishments: Estableishment[];
 }
 
 export enum Provincia {
@@ -16,6 +16,6 @@ export enum Provincia {
 }
 
 export interface SmallDistrict {
-  code: string;
+  id: string;
   nombre: string;
 }

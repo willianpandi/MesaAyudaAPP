@@ -12,11 +12,6 @@ export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  // Swal.fire({
-  //   icon: 'error',
-  //   text: 'Se ha caducado la sesion, por favor ingrese nuevamente',
-  // });
-
   router.navigateByUrl('/auth/login');
 
   return false;

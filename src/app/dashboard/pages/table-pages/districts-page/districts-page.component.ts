@@ -36,8 +36,8 @@ export class DistrictsPageComponent implements OnInit {
       { label: 'Código', def: 'codigo', dataKey: 'codigo' },
       { label: 'Nombre', def: 'nombre', dataKey: 'nombre' },
       { label: 'Provincia', def: 'provincia', dataKey: 'provincia' },
-      { label: 'Creado en', def: 'createdAt', dataKey: 'createdAt', dataType: 'date', formatt: 'HH:mm - dd/MM/yyyy' },
-      { label: 'Actualizado en', def: 'apdateAt', dataKey: 'apdateAt', dataType: 'date', formatt: 'HH:mm - dd/MM/yyyy' },
+      { label: 'Creado en', def: 'createdAt', dataKey: 'createdAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm' },
+      { label: 'Actualizado en', def: 'apdateAt', dataKey: 'apdateAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm' },
     ];
   }
 
@@ -125,7 +125,7 @@ export class DistrictsPageComponent implements OnInit {
             }
           },
           error: (message) => {
-            Swal.fire('Error', message, 'error');
+            Swal.fire('Error', 'No se ha eliminado el distrito, por que mantiene una relacion con otro dato', 'error');
           },
         });
       }

@@ -2,8 +2,8 @@ import { Estableishment } from "./estableishments";
 
 export interface Profile {
   id:                   string;
-  // createdAt:            string;
-  // apdateAt:             string;
+  createdAt:            string;
+  apdateAt:             string;
   usuario:              string;
   contrasenia:          string;
   rol:                  ROLES;
@@ -22,14 +22,14 @@ export interface Profile {
   correo_personal:      string;
   regimen_laboral:      string;
   modalidad_laboral:    string;
-  nombramiento:         string;
+  nombramiento?:         string;
   area_laboral:         string;
   fecha_ingreso:        string;
   estableishment:       Estableishment;
 }
 
 export enum ROLES {
-  BASIC = 'BASICO',
-  SISTEM = 'SISTEMAS',
-  ADMIN = 'ADMINISTRADOR',
+  USUARIO = 'USUARIO',
+  SOPORTE = 'SOPORTE',
+  ADMINISTRADOR = 'ADMINISTRADOR',
 }

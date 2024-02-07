@@ -51,14 +51,14 @@ export class DirectivesPageComponent implements OnInit {
         def: 'createdAt',
         dataKey: 'createdAt',
         dataType: 'date',
-        formatt: 'HH:mm - dd/MM/yyyy',
+        formatt: 'dd/MM/yyyy - HH:mm',
       },
       {
         label: 'Actualizado en',
         def: 'apdateAt',
         dataKey: 'apdateAt',
         dataType: 'date',
-        formatt: 'HH:mm - dd/MM/yyyy',
+        formatt: 'dd/MM/yyyy - HH:mm',
       },
     ];
   }
@@ -150,7 +150,7 @@ export class DirectivesPageComponent implements OnInit {
             }
           },
           error: (message) => {
-            Swal.fire('Error', message, 'error');
+            Swal.fire('Error', 'No se ha eliminado la directiva, por que mantiene una relacion con otro dato', 'error');
           },
         });
       }

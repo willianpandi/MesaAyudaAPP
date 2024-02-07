@@ -44,9 +44,9 @@ export class EstablishmentsPageComponent implements OnInit {
       { label: 'Cantón', def: 'canton', dataKey: 'canton' },
       { label: 'Parroquia', def: 'parroquia', dataKey: 'parroquia' },
       { label: 'Codigo Distrito', def: 'districtcode', dataKey: 'district.codigo', dataType: 'object' },
-      { label: 'Distrito', def: 'districts', dataKey: 'district.nombre', dataType: 'object' },
-      { label: 'Creado en', def: 'createdAt', dataKey: 'createdAt', dataType: 'date', formatt: 'HH:mm - dd/MM/yyyy' },
-      { label: 'Actualizado en', def: 'apdateAt', dataKey: 'apdateAt', dataType: 'date', formatt: 'HH:mm - dd/MM/yyyy' },
+      // { label: 'Distrito', def: 'districts', dataKey: 'district.nombre', dataType: 'object' },
+      { label: 'Creado en', def: 'createdAt', dataKey: 'createdAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm' },
+      { label: 'Actualizado en', def: 'apdateAt', dataKey: 'apdateAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm' },
 
     ];
   }
@@ -134,7 +134,7 @@ export class EstablishmentsPageComponent implements OnInit {
             }
           },
           error: (message) => {
-            Swal.fire('Error', message, 'error');
+            Swal.fire('Error', 'No se ha eliminado el establecimiento, por que mantiene una relacion con otro dato', 'error');
           },
         });
       }

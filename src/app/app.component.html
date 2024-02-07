@@ -1,9 +1,13 @@
-
+<!--
 <div class="spinner" *ngIf="!finishedAuthCheck()">
   <h1>
     CARGANDO ...
   </h1>
   <mat-spinner></mat-spinner>
+</div> -->
+<div class="loader-container" *ngIf="!finishedAuthCheck()">
+  <div class="loader"></div>
+  <div class="loader-text">Cargando...</div>
 </div>
 
 <router-outlet *ngIf="finishedAuthCheck()"></router-outlet>

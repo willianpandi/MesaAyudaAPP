@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Estableishment } from 'src/app/dashboard/interfaces/estableishments';
+import { Estableishment} from 'src/app/dashboard/interfaces/estableishments';
 import { EstablecimientoService } from 'src/app/dashboard/services/estableishments.service';
 
 import Swal from 'sweetalert2';
@@ -31,27 +31,19 @@ export class RegisterPageComponent implements OnInit {
   formRegisterUser: FormGroup = this.fb.group(
     {
       usuario: ['', [Validators.required, Validators.minLength(10)]],
-      nombre: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            this.validatorsService.firstNameAndLastnamePattern
-          ),
-        ],
-      ],
+      // nombre: ['',[Validators.required,Validators.pattern(this.validatorsService.firstNameAndLastnamePattern)]],
+      nombre: ['',[Validators.required]],
       contrasenia: ['', [Validators.required, Validators.minLength(6)]],
       contrasenia2: ['', [Validators.required]],
       district: ['', [Validators.required]],
       estableishment: ['', [Validators.required]],
     },
     {
-      validators: [
+      validators:
         this.validatorsService.isFielOneEqualFieldTwo(
           'contrasenia',
           'contrasenia2'
         ),
-      ],
     }
   );
 
@@ -81,7 +73,7 @@ export class RegisterPageComponent implements OnInit {
   }
 
   onDistrictChanged(): void{
-    this.formRegisterUser.get('district')!.valueChanges
+    this.formRegisterUser.get('district')?.valueChanges
       .pipe(
         // tap( ()=> this.formRegisterUser.get('estableishment')!.setValue('') ),
         switchMap( district => this.districtService.detail(district)),
@@ -94,7 +86,7 @@ export class RegisterPageComponent implements OnInit {
   onSave(): void {
     const modelo = {
       usuario: this.formRegisterUser.value.usuario,
-      nombre: this.formRegisterUser.value.nombre.toUpperCase(),
+      nombre: this.formRegisterUser.value.nombre,
       contrasenia: this.formRegisterUser.value.contrasenia,
       estableishment: this.formRegisterUser.value.estableishment,
     };

@@ -56,8 +56,8 @@ export class UsersPageComponent implements OnInit{
       { label: 'F. Ingreso', def: 'fecha_ingreso', dataKey: 'fecha_ingreso', dataType: 'date', formatt: 'dd/MM/yyyy' },
       { label: 'Establecimiento', def: 'estableishment', dataKey: 'estableishment.nombre', dataType: 'object' },
       { label: 'Distrito', def: 'estableishmentname', dataKey: 'estableishment.district.codigo', dataType:'object'},
-      { label: 'Creado en', def: 'createdAt', dataKey: 'createdAt', dataType: 'date', formatt: 'HH:mm - dd/MM/yyyy '},
-      { label: 'Actualizado en', def: 'apdateAt', dataKey: 'apdateAt', dataType: 'date', formatt: 'HH:mm - dd/MM/yyyy'},
+      { label: 'Creado en', def: 'createdAt', dataKey: 'createdAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm'},
+      { label: 'Actualizado en', def: 'apdateAt', dataKey: 'apdateAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm'},
     ];
   }
 
@@ -147,7 +147,7 @@ export class UsersPageComponent implements OnInit{
             }
           },
           error: (message) => {
-            Swal.fire('Error', message, 'error');
+            Swal.fire('Error', 'No se ha eliminado el usuario, por que mantiene una relacion con otro dato', 'error');
           },
         });
       }

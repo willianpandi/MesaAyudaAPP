@@ -1,14 +1,14 @@
 
-mat-toolbar {
-  background-color:#a6aeb4;
-  height:fit-content;
+.mat-toolbar-first {
+  background-color: #F9F9F9;
+  min-height: 65px;
 }
 
 mat-sidenav {
   margin: 16px;
   width: 275px;
   border-right: none;
-  background-color:  #dcdfe1;
+  background-color:  #F9F9F9;
   border-radius: 15px;
   padding: 25px;
   text-align: center;
@@ -26,6 +26,7 @@ mat-sidenav {
 
 mat-sidenav-container {
   height: calc(100vh - 65px);
+  background-color: #dcdfe1;
 }
 
 .menu-button {
@@ -58,6 +59,21 @@ span {
     font-size: 18px;
 }
 
+.nombre{
+  font-family: Poppins-SemiBold;
+  font-size: 16px;
+}
 
+.titulo{
+  font-family: Poppins-Bold;
+  align-items: center;
+  text-align: center;
+  font-size: 30px;
+}
 
+.mat-toolbar-second {
+  border-radius: 15px;
+  background-color: #dcdfe1;
+  /* height:fit-content; */
 
+}

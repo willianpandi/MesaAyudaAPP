@@ -6,18 +6,36 @@ import { Profile } from "./users";
 
 export interface Ticket {
   id:            string;
-  // createdAt:     string;
-  // apdateAt:      string;
+  codigo:         number;
+  createdAt:     string;
+  apdateAt:      string;
   descripcion:   string;
-  archivo:       null;
+  titulo:        string;
+  files:         Files;
   area:          string;
   piso:          string;
   n_sala:        string;
   n_consultorio: string;
   estado?:        string;
   user:          Profile;
+  soporteUser:   Profile;
   // estableishment:Estableishment;
   directive:     Directive;
-  sarvey?:        null;
+  satisfaccion: string;
+  sugerencias: string;
+  ticketdetalle: TicketDetalle;
+}
 
+export interface Files {
+  id:        string;
+  createdAt: string;
+  apdateAt:  string;
+  archivo:   string;
+}
+
+export interface TicketDetalle{
+  id:        string;
+  createdAt: string;
+  apdateAt:  string;
+  detalle:   string;
 }

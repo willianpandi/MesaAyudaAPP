@@ -1,0 +1,6 @@
+img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto; /* Ancho deseado para la imagen */
+  height:700px; /* Alto deseado para la imagen */
+}

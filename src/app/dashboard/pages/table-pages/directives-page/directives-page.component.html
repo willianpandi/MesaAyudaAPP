@@ -1,32 +1,22 @@
-<mat-toolbar >
+<div class="grid">
+  <div class="col-12">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-fab extended color="primary" (click)="directiveDialog()">
+            <mat-icon>add_circle</mat-icon>
+            Nueva Directiva
+          </button>
+        </mat-card-actions>
 
-    <span>TABLA  DE  DIRECTIVAS</span>
-
-  </mat-toolbar>
-  <mat-divider></mat-divider>
-
-  <div class="grid">
-
-    <div class="col-12">
-      <mat-card>
-
-        <mat-card-content>
-          <mat-card-actions align="end">
-            <button mat-fab extended color="primary" (click)="directiveDialog()">
-              <mat-icon>add_circle</mat-icon>
-              Nueva Directiva
-            </button>
-          </mat-card-actions>
-
-        <app-table [data]="directivasList"
-                    [columns]="tableColumnsDirectivas"
-                    [config]="tableConfig"
-                    (action)="onTableAction($event)"
+        <app-table
+          [data]="directivasList"
+          [columns]="tableColumnsDirectivas"
+          [config]="tableConfig"
+          (action)="onTableAction($event)"
         >
         </app-table>
-
       </mat-card-content>
-
     </mat-card>
   </div>
 </div>

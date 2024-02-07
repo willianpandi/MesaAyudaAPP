@@ -1,107 +1,160 @@
+<div class="grid">
+  <div class="col-12">
+    <div *ngIf="user()?.rol === 'USUARIO'" class="grid">
+      <div class="col-12 md:col-6 lg:col-4">
+        <mat-card>
+          <mat-card-content>
+            <mat-card-title-group>
+              <mat-card-title
+                ><h2>{{ ticketsList.length }}</h2></mat-card-title
+              >
+              <mat-card-subtitle><h4>Tickets</h4></mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-icon>view_list</mat-icon>
+          </mat-card-content>
+        </mat-card>
+      </div>
 
-  <mat-toolbar>
-    <span>INICIO</span>
-  </mat-toolbar>
-  <mat-divider></mat-divider>
+      <div class="col-12 md:col-6 lg:col-4 ">
+        <mat-card>
+          <mat-card-content>
+            <mat-card-title-group>
+              <mat-card-title><h2>{{ establecimientosList.length }}</h2></mat-card-title>
+              <mat-card-subtitle><h4>Establecimientos</h4></mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-icon>business</mat-icon>
+          </mat-card-content>
+        </mat-card>
+      </div>
 
-  <div class="grid">
-
-    <div class="col-12 md:col-6 lg:col-3">
-      <mat-card>
-        <mat-card-content>
-          <mat-card-title-group>
-            <mat-card-title><h2>{{totalCountTickets}}</h2></mat-card-title>
-            <mat-card-subtitle><h4>Tickets</h4></mat-card-subtitle>
-          </mat-card-title-group>
-          <mat-icon>view_list</mat-icon>
-        </mat-card-content>
-      </mat-card>
+      <div class="col-12 md:col-6 lg:col-4">
+        <mat-card>
+          <mat-card-content>
+            <mat-card-title-group>
+              <mat-card-title
+                ><h2>{{ directivasList.length }}</h2></mat-card-title
+              >
+              <mat-card-subtitle><h4>Directivas</h4></mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-icon>list_alt</mat-icon>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
 
-    <div class="col-12 md:col-6 lg:col-3">
-      <mat-card>
-        <mat-card-content>
-          <mat-card-title-group>
-            <mat-card-title><h2>{{ totalCountUsers }}</h2></mat-card-title>
-            <mat-card-subtitle><h4>Usuarios</h4></mat-card-subtitle>
-          </mat-card-title-group>
-          <mat-icon>supervisor_account</mat-icon>
-        </mat-card-content>
-      </mat-card>
+    <div
+      *ngIf="user()?.rol === 'SOPORTE' || user()?.rol === 'ADMINISTRADOR'"
+      class="grid"
+    >
+      <div class="col-12 md:col-6 lg:col-3">
+        <mat-card>
+          <mat-card-content>
+            <mat-card-title-group>
+              <mat-card-title
+                ><h2>{{ ticketsList.length }}</h2></mat-card-title
+              >
+              <mat-card-subtitle><h4>Tickets</h4></mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-icon>view_list</mat-icon>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="col-12 md:col-6 lg:col-3">
+        <mat-card>
+          <mat-card-content>
+            <mat-card-title-group>
+              <mat-card-title
+                ><h2>{{ userCount }}</h2></mat-card-title
+              >
+              <mat-card-subtitle><h4>Usuarios</h4></mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-icon>supervisor_account</mat-icon>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="col-12 md:col-6 lg:col-3">
+        <mat-card>
+          <mat-card-content>
+            <mat-card-title-group>
+              <mat-card-title
+                ><h2>{{ estableishmentCount }}</h2></mat-card-title
+              >
+              <mat-card-subtitle><h4>Establecimientos</h4></mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-icon>business</mat-icon>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="col-12 md:col-6 lg:col-3">
+        <mat-card>
+          <mat-card-content>
+            <mat-card-title-group>
+              <mat-card-title
+                ><h2>{{ directivasList.length }}</h2></mat-card-title
+              >
+              <mat-card-subtitle><h4>Directivas</h4></mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-icon>list_alt</mat-icon>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
+  </div>
 
-    <div class="col-12 md:col-6 lg:col-3">
-      <mat-card>
-        <mat-card-content>
-          <mat-card-title-group>
-            <mat-card-title><h2>{{ totalCountEstableishment }}</h2></mat-card-title>
-            <mat-card-subtitle><h4>Establecimientos</h4></mat-card-subtitle>
-          </mat-card-title-group>
-          <mat-icon>business</mat-icon>
-        </mat-card-content>
-      </mat-card>
-    </div>
+  <!-- TABLAS  -->
 
-    <div class="col-12 md:col-6 lg:col-3">
-      <mat-card>
-        <mat-card-content>
-          <mat-card-title-group>
-            <mat-card-title><h2> {{ totalCountDirectives }} </h2></mat-card-title>
-            <mat-card-subtitle><h4>Directivas</h4></mat-card-subtitle>
-          </mat-card-title-group>
-          <mat-icon>list_alt</mat-icon>
-        </mat-card-content>
-      </mat-card>
-    </div>
+  <div class="col-12 md:col-12 lg:col-6">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Lista de Distritos</span>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <app-table
+          [data]="distritosList"
+          [columns]="tableColumnsDistritos"
+        ></app-table>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
-    <!-- TABLAS  -->
+  <div class="col-12 md:col-12 lg:col-6">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Lista de Directivas</span>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <app-table
+          [data]="directivasList"
+          [columns]="tableColumnsDirectivas"
+        ></app-table>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
-    <div class="col-12 md:col-12 lg:col-6">
-      <mat-card>
-        <mat-card-header>
-          <mat-toolbar>
-            <span>Lista de Distritos</span>
-          </mat-toolbar>
-        </mat-card-header>
-        <mat-card-content>
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Lista de Establecimientos</span>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <app-table
+          [data]="establecimientosList"
+          [columns]="tableColumnsEstablecimientos"
+        ></app-table>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
-          <app-table [data]="distritosList" [columns]="tableColumnsDistritos"></app-table>
-
-        </mat-card-content>
-      </mat-card>
-    </div>
-
-    <div class="col-12 md:col-12 lg:col-6">
-      <mat-card>
-        <mat-card-header>
-          <mat-toolbar>
-            <span>Lista de Directivas</span>
-          </mat-toolbar>
-        </mat-card-header>
-        <mat-card-content>
-
-          <app-table [data]="directivasList" [columns]="tableColumnsDirectivas"></app-table>
-
-        </mat-card-content>
-      </mat-card>
-    </div>
-
-    <div class="col-12 ">
-      <mat-card>
-        <mat-card-header>
-          <mat-toolbar>
-            <span>Lista de Establecimientos</span>
-          </mat-toolbar>
-        </mat-card-header>
-        <mat-card-content>
-
-          <app-table [data]="establecimientosList" [columns]="tableColumnsEstablecimientos"></app-table>
-
-        </mat-card-content>
-      </mat-card>
-    </div>
-
-    <div class="col-12 ">
+  <!-- <div class="col-12  ">
       <mat-card>
         <mat-card-header>
           <mat-toolbar >
@@ -113,7 +166,5 @@
 
         </mat-card-content>
       </mat-card>
-    </div>
-
-  </div>
-
+    </div> -->
+</div>

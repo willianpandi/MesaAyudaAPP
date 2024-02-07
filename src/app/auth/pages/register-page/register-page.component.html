@@ -99,7 +99,8 @@
             formControlName="district"
             placeholder="Elija un distrito"
           >
-            <mat-option *ngFor="let item of listaDistrict" [value]="item.id">
+            <mat-option *ngFor="let item of listaDistrict | order: 'nombre'"
+            [value]="item.id">
               {{ item.nombre }}
               <hr>
             </mat-option>
@@ -119,8 +120,8 @@
             placeholder="Elija un establecimiento"
           >
             <mat-option
-              *ngFor="let item of estableishmetsByDistrict"
-              [value]="item.code"
+              *ngFor="let item of estableishmetsByDistrict | order: 'nombre'"
+              [value]="item.id"
             >
             {{ item.nombre }}
             <hr>

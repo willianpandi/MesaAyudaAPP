@@ -18,6 +18,7 @@ export class AuthService {
   private _authStatus = signal<AuthStatus>(AuthStatus.checking);
 
   //!AL MUNDO EXTERIOR
+
   public currentUser = computed(() => this._currentUser());
   public authStatus = computed(() => this._authStatus());
 
@@ -67,12 +68,9 @@ export class AuthService {
     this._authStatus.set(AuthStatus.notAuthenticated);
   }
 
-
-
   register(body: any): Observable<User> {
-    return this.http.post<User>(`${this.baseUrl}/auth/register`, body)
-      .pipe(
-        catchError((err) => throwError(() => err.error.message))
-      );
-}
+    return this.http
+      .post<User>(`${this.baseUrl}/auth/register`, body)
+      .pipe(catchError((err) => throwError(() => err.error.message)));
+  }
 }

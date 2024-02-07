@@ -188,6 +188,18 @@
 
       <div class="col-12 md:col-12 lg:col-6">
         <mat-form-field appearance="outline">
+          <mat-label>Área Laboral</mat-label>
+          <input matInput formControlName="area_laboral" />
+          <mat-hint *ngIf="isValidField('area_laboral')">{{
+            getFieldError("area_laboral")
+          }}</mat-hint>
+          <mat-icon matSuffix>event_seat</mat-icon>
+        </mat-form-field>
+      </div>
+
+
+      <div class="col-12 md:col-12 lg:col-6">
+        <mat-form-field appearance="outline">
           <mat-label>Modalidad Laboral</mat-label>
           <mat-select formControlName="modalidad_laboral">
             <mat-option value="CONTRATO INDEFINIDO"
@@ -215,7 +227,7 @@
       </div>
 
       <div class="col-12 md:col-12 lg:col-6">
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" *ngIf="mostrarNombramiento">
           <mat-label>Tipo de Nombramiento</mat-label>
           <mat-select formControlName="nombramiento">
             <mat-option value="DEFINITIVO">DEFINITIVO</mat-option>
@@ -228,16 +240,6 @@
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-12 lg:col-6">
-        <mat-form-field appearance="outline">
-          <mat-label>Área Laboral</mat-label>
-          <input matInput formControlName="area_laboral" />
-          <mat-hint *ngIf="isValidField('area_laboral')">{{
-            getFieldError("area_laboral")
-          }}</mat-hint>
-          <mat-icon matSuffix>event_seat</mat-icon>
-        </mat-form-field>
-      </div>
 
       <div class="col-12 md:col-12 lg:col-5">
         <mat-form-field appearance="outline">
@@ -275,7 +277,7 @@
           <mat-label>Establecimiento</mat-label>
           <mat-select formControlName="estableishment">
             <mat-option
-              *ngFor="let item of listaEstableishments"
+              *ngFor="let item of listaEstableishments | order: 'nombre'"
               [value]="item.id"
             >
               <hr />
@@ -306,8 +308,8 @@
         <mat-form-field appearance="outline">
           <mat-label>Rol de Usuario</mat-label>
           <mat-select formControlName="rol">
-            <mat-option value="BASICO">BASICO</mat-option>
-            <mat-option value="SISTEMAS">SISTEMAS</mat-option>
+            <mat-option value="USUARIO">USUARIO</mat-option>
+            <mat-option value="SOPORTE">SOPORTE</mat-option>
             <mat-option value="ADMINISTRADOR">ADMINISTRADOR</mat-option>
           </mat-select>
           <mat-hint *ngIf="isValidField('rol')">{{

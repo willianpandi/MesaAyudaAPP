@@ -31,6 +31,7 @@ export const MY_FORMATS = {
   providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }],
 })
 export class SettingsPageComponent implements OnInit {
+
   private imageService = inject( ImageService);
   imageUrl: string = '';
   hide = true;
@@ -38,6 +39,7 @@ export class SettingsPageComponent implements OnInit {
   hide3 = true;
   formSettingsUser: FormGroup;
   user: any;
+  adminUser!: boolean;
   listaEstableishment: Estableishment[] = [];
   private validatorsService = inject(ValidatorsService);
   private fb = inject(FormBuilder)
@@ -47,6 +49,11 @@ export class SettingsPageComponent implements OnInit {
   // public user = computed(()=> this.authService.currentUser());
 
   private estableishmentService = inject( EstablecimientoService );
+
+  selectedFileName: any = null;
+  archivo!: File;
+
+
 
     formUpdatePassword: FormGroup = this.fb.group({
       contrasenia: ['', [Validators.required]],
@@ -74,9 +81,13 @@ export class SettingsPageComponent implements OnInit {
 
   ){
     this.user = this.authService.currentUser();
+    if (this.user.rol === 'ADMINISTRADOR') {
+      this.adminUser = true;
+    }
     this.formSettingsUser = this.fb.group({
-      usuario: [this.user?.usuario, [Validators.required,Validators.minLength(10)]],
-      nombre: [this.user?.nombre, [Validators.required, Validators.pattern(this.validatorsService.firstNameAndLastnamePattern)]],
+      // usuario: [ this.user?.usuario, {disabled: true} , [Validators.required,Validators.minLength(10)]],
+      // nombre: [this.user?.nombre, [Validators.required, Validators.pattern(this.validatorsService.firstNameAndLastnamePattern)]],
+      nombre: [this.user?.nombre, [Validators.required]],
       sexo: [this.user?.sexo, Validators.required],
       itinerancia: [this.user?.itinerancia],
       nivel_institucional: [this.user?.nivel_institucional, Validators.required],
@@ -95,6 +106,8 @@ export class SettingsPageComponent implements OnInit {
       estableishment: [this.user?.estableishment?.id, Validators.required],
     });
 
+    this.mostrarNombramiento = this.formSettingsUser.get('modalidad_laboral')!.value === 'NOMBRAMIENTO';
+
     this.estableishmentService.lista().subscribe(
       (data) => {
         this.listaEstableishment = data;
@@ -103,33 +116,26 @@ export class SettingsPageComponent implements OnInit {
     );
 
   }
-  ngOnInit(): void {
-    // this.image();
-    // this.user = this.authService.currentUser();
-    // this.formSettingsUser = this.fb.group({
-    //   usuario: [this.user?.usuario, [Validators.required,Validators.minLength(10)]],
-    //   nombre: [this.user?.nombre, [Validators.required, Validators.pattern(this.validatorsService.firstNameAndLastnamePattern)]],
-    //   sexo: [this.user?.sexo, Validators.required],
-    //   itinerancia: [this.user?.itinerancia],
-    //   nivel_institucional: [this.user?.nivel_institucional, Validators.required],
-    //   profesion: [this.user?.profesion, Validators.required],
-    //   etnia: [this.user?.etnia, Validators.required],
-    //   fecha_nacimiento: [this.user?.fecha_nacimiento, Validators.required],
-    //   telefono: [this.user?.telefono, Validators.required],
-    //   direccion: [this.user?.direccion, Validators.required],
-    //   correo_institucional: [this.user?.correo_institucional, Validators.required, Validators.pattern(this.validatorsService.emailPattern)],
-    //   correo_personal: [this.user?.correo_personal, Validators.required, Validators.pattern(this.validatorsService.emailPattern)],
-    //   regimen_laboral: [this.user?.regimen_laboral, Validators.required],
-    //   modalidad_laboral: [this.user?.modalidad_laboral, Validators.required],
-    //   nombramiento: [this.user?.nombramiento],
-    //   area_laboral: [this.user?.area_laboral, Validators.required],
-    //   fecha_ingreso: [this.user?.fecha_ingreso, Validators.required],
-    //   estableishment: [this.user?.estableishment?.id, Validators.required],
-    // });
+
+  isValidFieldUser(field: string) {
+    return this.validatorsService.isValidField(this.formSettingsUser, field);
   }
 
+  getFieldErrorUser(field: string) {
+    return this.validatorsService.getFieldError(this.formSettingsUser, field);
+  }
+
+  mostrarNombramiento = false;
+  ngOnInit(): void {
+    this.formSettingsUser.get('modalidad_laboral')!.valueChanges.subscribe((value) => {
+      this.mostrarNombramiento = value === 'NOMBRAMIENTO';
+    });
+
+  }
+
+
   image(){
-    this.imageService.setImageUrl('assets/images/mesa_ayuda.jpg')
+    // this.imageService.setImageUrl('assets/images/mesa_ayuda.jpg')
   }
 
 
@@ -137,7 +143,7 @@ export class SettingsPageComponent implements OnInit {
     console.log(this.formSettingsUser.value);
 
     const modelo = {
-      usuario: this.formSettingsUser.value.usuario,
+      // usuario: this.formSettingsUser.value.usuario,
       nombre: this.formSettingsUser.value.nombre,
       sexo: this.formSettingsUser.value.sexo,
       nivel_institucional: this.formSettingsUser.value.nivel_institucional,
@@ -181,7 +187,65 @@ export class SettingsPageComponent implements OnInit {
 
   }
   UpdatePassword(){
+    const modelo = {
+      contrasenia: this.formUpdatePassword.value.contrasenia,
+      newContrasenia: this.formUpdatePassword.value.newcontrasenia,
+    };
+    this.userService.updatePassword(modelo).subscribe({
+      next: (data) => {
+        Swal.fire({
+          position: 'bottom-end',
+          icon: 'success',
+          text: 'Contraseña cambiada correctamente',
+          showConfirmButton: false,
+          timer: 2500,
+        });
+        this.formUpdatePassword.reset();
+      },
+      error: (message) => {
+        Swal.fire({
+          position: 'bottom-end',
+          icon: 'error',
+          text: 'No se pudo cambiar la contraseña. ' + message,
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      },
+    })
 
+
+  }
+
+  handleFileInput(event: any): void {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      this.selectedFileName = files[0].name;
+      this.archivo = files[0];
+    }
+  }
+
+  guardarLogo() {
+    this.imageService.saveLogo(this.archivo).subscribe({
+      next: (data) => {
+        Swal.fire({
+          position: 'bottom-end',
+          icon: 'success',
+          text: 'Logo guardado correctamente, actualice la página',
+          showConfirmButton: false,
+          timer: 2500,
+        });
+        this.selectedFileName = null;
+      },
+      error: (e) => {
+        Swal.fire({
+          position: 'bottom-end',
+          icon: 'error',
+          text: 'No se pudo guardar el cambio de logo. Por favor revise que sean una imagen "PNG"',
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      },
+    })
   }
 
 

@@ -5,4 +5,5 @@ export interface TableColumn {
   formatt?: string;
   dataType?: 'date'  | 'object' | 'boolean';
   isSticky?: boolean;
+  isStikyEnd? : boolean;
 }

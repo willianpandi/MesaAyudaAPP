@@ -19,7 +19,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EstableishmentDialogComponent } from './components/dialogs/estableishment-dialog/estableishment-dialog.component';
 import { DistrictDialogComponent } from './components/dialogs/district-dialog/district-dialog.component';
 import { DirectiveDialogComponent } from './components/dialogs/directive-dialog/directive-dialog.component';
-import { TicketDialogComponent } from './components/dialogs/ticket-dialog/ticket-dialog.component';
+import { PipesModule } from '../pipes/pipes.module';
+import { TicketPageComponent } from './pages/ticket-page/ticket-page.component';
+import { FilesDialogComponent } from './components/dialogs/files-dialog/files-dialog.component';
+import { ImageDialogComponent } from './components/dialogs/image-dialog/image-dialog.component';
+import { QuillModule } from 'ngx-quill';
+import { TicketDetailPageComponent } from './pages/ticket-detail-page/ticket-detail-page.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +42,11 @@ import { TicketDialogComponent } from './components/dialogs/ticket-dialog/ticket
     EstableishmentDialogComponent,
     DistrictDialogComponent,
     DirectiveDialogComponent,
-    TicketDialogComponent,
+    TicketPageComponent,
+    FilesDialogComponent,
+    ImageDialogComponent,
+    TicketDetailPageComponent,
+
 
   ],
   imports: [
@@ -46,6 +55,8 @@ import { TicketDialogComponent } from './components/dialogs/ticket-dialog/ticket
     MaterialModule,
     TableModule,
     ReactiveFormsModule,
+    PipesModule,
+    QuillModule,
   ]
 })
 export class DashboardModule { }

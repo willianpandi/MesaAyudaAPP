@@ -1,7 +1,4 @@
-<mat-toolbar>
-  <span>AJUSTES</span>
-</mat-toolbar>
-<mat-divider></mat-divider>
+
 <div class="grid">
   <div class="col-12 md:col-12 lg:col-7">
     <mat-card>
@@ -15,7 +12,7 @@
         <h5>Gestiona tu perfil e información privada</h5>
         <mat-divider></mat-divider>
         <form class="grid p-t-20" [formGroup]="formSettingsUser" autocomplete="off">
-          <div class="col-12 md:col-12 lg:col-4">
+          <!-- <div class="col-12 md:col-12 lg:col-4">
             <mat-form-field appearance="outline">
               <mat-label>N° de Cedula</mat-label>
               <input
@@ -28,14 +25,16 @@
               <mat-hint class="hint" align="end"
                 >{{ input.value.length }}/10</mat-hint
               >
+              <mat-hint *ngIf="isValidFieldUser('usuario')">{{ getFieldErrorUser("usuario") }}</mat-hint>
               <mat-icon matSuffix>credit_card</mat-icon>
             </mat-form-field>
-          </div>
+          </div> -->
 
-          <div class="col-12 md:col-12 lg:col-8">
+          <div class="col-12 md:col-12 lg:col-12">
             <mat-form-field appearance="outline">
               <mat-label>Nombre Completo</mat-label>
               <input matInput formControlName="nombre" />
+              <mat-hint *ngIf="isValidFieldUser('nombre')">{{ getFieldErrorUser("nombre") }}</mat-hint>
               <mat-icon matSuffix>person</mat-icon>
             </mat-form-field>
           </div>
@@ -53,6 +52,7 @@
                 [for]="pickerNacimiento"
               ></mat-datepicker-toggle>
               <mat-datepicker #pickerNacimiento></mat-datepicker>
+              <mat-hint *ngIf="isValidFieldUser('fecha_nacimiento')">{{ getFieldErrorUser("fecha_nacimiento") }}</mat-hint>
             </mat-form-field>
           </div>
 
@@ -67,7 +67,7 @@
                 <mat-option value="MONTUBIO">MONTUBIO</mat-option>
                 <mat-option value="OTROS">OTROS</mat-option>
               </mat-select>
-
+              <mat-hint *ngIf="isValidFieldUser('etnia')">{{ getFieldErrorUser("etnia") }}</mat-hint>
               <mat-icon matSuffix>people_alt</mat-icon>
             </mat-form-field>
           </div>
@@ -79,6 +79,7 @@
                 <mat-option value="MASCULINO">M</mat-option>
                 <mat-option value="FEMENINO">F</mat-option>
               </mat-select>
+              <mat-hint *ngIf="isValidFieldUser('sexo')">{{ getFieldErrorUser("sexo") }}</mat-hint>
               <mat-icon matSuffix>wc</mat-icon>
             </mat-form-field>
           </div>
@@ -87,6 +88,7 @@
             <mat-form-field appearance="outline">
               <mat-label>N° de Celular</mat-label>
               <input matInput formControlName="telefono" type="number" />
+              <mat-hint *ngIf="isValidFieldUser('telefono')">{{ getFieldErrorUser("telefono") }}</mat-hint>
               <mat-icon matSuffix>phone</mat-icon>
             </mat-form-field>
           </div>
@@ -95,6 +97,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Direccion</mat-label>
               <input matInput formControlName="direccion" />
+              <mat-hint *ngIf="isValidFieldUser('direccion')">{{ getFieldErrorUser("direccion") }}</mat-hint>
               <mat-icon matSuffix>location_on</mat-icon>
             </mat-form-field>
           </div>
@@ -109,6 +112,7 @@
                 <mat-option value="TERCER NIVEL">TERCER NIVEL</mat-option>
                 <mat-option value="CUARTO NIVEL">CUARTO NIVEL</mat-option>
               </mat-select>
+              <mat-hint *ngIf="isValidFieldUser('nivel_institucional')">{{ getFieldErrorUser("nivel_institucional") }}</mat-hint>
               <mat-icon matSuffix>domain</mat-icon>
             </mat-form-field>
           </div>
@@ -117,6 +121,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Profesion</mat-label>
               <input matInput formControlName="profesion" />
+              <mat-hint *ngIf="isValidFieldUser('profesion')">{{ getFieldErrorUser("profesion") }}</mat-hint>
               <mat-icon matSuffix>work</mat-icon>
             </mat-form-field>
           </div>
@@ -129,6 +134,7 @@
                 formControlName="correo_institucional"
                 placeholder="Ex. cz3s@ejemplo.com"
               />
+              <mat-hint *ngIf="isValidFieldUser('correo_institucional')">{{ getFieldErrorUser("correo_institucional") }}</mat-hint>
               <mat-icon matSuffix>email</mat-icon>
             </mat-form-field>
           </div>
@@ -137,6 +143,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Correo Personal</mat-label>
               <input matInput formControlName="correo_personal" />
+              <mat-hint *ngIf="isValidFieldUser('correo_personal')">{{ getFieldErrorUser("correo_personal") }}</mat-hint>
               <mat-icon matSuffix>email</mat-icon>
             </mat-form-field>
           </div>
@@ -152,11 +159,30 @@
                   >CÓDIGO DEL TRABAJO</mat-option
                 >
               </mat-select>
+              <mat-hint *ngIf="isValidFieldUser('regimen_laboral')">{{ getFieldErrorUser("regimen_laboral") }}</mat-hint>
               <mat-icon matSuffix>business_center</mat-icon>
             </mat-form-field>
           </div>
 
           <div class="col-12 md:col-12 lg:col-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha de Ingreso</mat-label>
+              <input
+                matInput
+                [matDatepicker]="pickerIngreso"
+                formControlName="fecha_ingreso"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="pickerIngreso"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #pickerIngreso></mat-datepicker>
+              <mat-hint *ngIf="isValidFieldUser('fecha_ingreso')">{{ getFieldErrorUser("fecha_ingreso") }}</mat-hint>
+            </mat-form-field>
+          </div>
+
+
+          <div class="col-12 md:col-12 lg:col-7">
             <mat-form-field appearance="outline">
               <mat-label>Modalidad Laboral</mat-label>
               <mat-select formControlName="modalidad_laboral">
@@ -177,49 +203,39 @@
                 >
                 <mat-option value="NOMBRAMIENTO">NOMBRAMIENTO</mat-option>
               </mat-select>
+              <mat-hint *ngIf="isValidFieldUser('modalidad_laboral')">{{ getFieldErrorUser("modalidad_laboral") }}</mat-hint>
               <mat-icon matSuffix>airline_seat_recline_normal</mat-icon>
             </mat-form-field>
           </div>
 
-          <div class="col-12 md:col-12 lg:col-5">
+          <div class="col-12 md:col-12 lg:col-5" *ngIf="mostrarNombramiento">
             <mat-form-field appearance="outline">
               <mat-label>Tipo de Nombramiento</mat-label>
               <mat-select formControlName="nombramiento">
+                <mat-option>NINGUNO</mat-option>
                 <mat-option value="DEFINITIVO">DEFINITIVO</mat-option>
                 <mat-option value="PROVICIONAL">PROVICIONAL</mat-option>
               </mat-select>
+              <mat-hint *ngIf="isValidFieldUser('nombramiento')">{{ getFieldErrorUser("nombramiento") }}</mat-hint>
               <mat-icon matSuffix>assignment_turned_in</mat-icon>
             </mat-form-field>
           </div>
 
-          <div class="col-12 md:col-12 lg:col-7">
+          <div class="col-12 md:col-12 lg:col-6">
             <mat-form-field appearance="outline">
               <mat-label>Área Laboral</mat-label>
               <input matInput formControlName="area_laboral" />
+              <mat-hint *ngIf="isValidFieldUser('area_laboral')">{{ getFieldErrorUser("area_laboral") }}</mat-hint>
               <mat-icon matSuffix>event_seat</mat-icon>
             </mat-form-field>
           </div>
 
-          <div class="col-12 md:col-12 lg:col-5">
-            <mat-form-field appearance="outline">
-              <mat-label>Fecha de Ingreso</mat-label>
-              <input
-                matInput
-                [matDatepicker]="pickerIngreso"
-                formControlName="fecha_ingreso"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="pickerIngreso"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #pickerIngreso></mat-datepicker>
-            </mat-form-field>
-          </div>
 
-          <div class="col-12 md:col-12 lg:col-7">
+          <div class="col-12 md:col-12 lg:col-6">
             <mat-form-field appearance="outline">
               <mat-label>Itinerancia</mat-label>
               <input matInput formControlName="itinerancia" />
+              <mat-hint *ngIf="isValidFieldUser('itinerancia')">{{ getFieldErrorUser("itinerancia") }}</mat-hint>
               <mat-icon matSuffix>data_usage</mat-icon>
             </mat-form-field>
           </div>
@@ -229,19 +245,20 @@
               <mat-label>Establecimiento</mat-label>
               <mat-select formControlName="estableishment">
                 <mat-option
-                  *ngFor="let item of listaEstableishment"
+                  *ngFor="let item of listaEstableishment | order: 'nombre'"
                   [value]="item.id"
                 >
                   <hr />
                   {{ item.nombre }}
                 </mat-option>
               </mat-select>
+              <mat-hint *ngIf="isValidFieldUser('estableishment')">{{ getFieldErrorUser("estableishment") }}</mat-hint>
               <mat-icon matSuffix>business</mat-icon>
             </mat-form-field>
           </div>
           <div class="col-12 md:col-6 lg:col-6"></div>
           <div class="col-12 md:col-6 lg:col-6">
-            <button mat-fab extended color="primary" (click)="UpdateUser()">
+            <button mat-fab extended color="primary" [disabled]="formSettingsUser.invalid" (click)="UpdateUser()">
               <mat-icon>edit</mat-icon>
               <strong>Actualizar Datos</strong>
             </button>
@@ -347,22 +364,50 @@
         </form>
       </mat-card-content>
     </mat-card>
+    <div *ngIf="adminUser">
+      <mat-divider></mat-divider>
+      <mat-card>
+            <mat-card-header>
+              <mat-toolbar>
+                <mat-card-title> <span>Cambiar Logo</span> </mat-card-title>
+              </mat-toolbar>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-divider></mat-divider>
+              <h5>Cambie el Logo de la página, recuerde subir un archivo "PNG"</h5>
+              <mat-divider></mat-divider>
+              <div class="grid">
+                <div class="col-12 md:col-12 lg:col-4">
+                  <input
+                        type="file"
+                        style="display: none"
+                        #fileInput
+                        (change)="handleFileInput($event)"
+                      />
+                      <button mat-fab extended color="accent" (click)="fileInput.click()">
+                        <mat-icon>upload</mat-icon>
+                        <strong>Cargar</strong>
+                      </button>
+                </div>
+                <div class="col-12 md:col-12 lg:col-8">
+                  <span *ngIf="selectedFileName !== null">{{ selectedFileName }}</span>
+                </div>
+                <button
+                      mat-fab
+                      extended
+                      color="primary"
+                      [disabled]="selectedFileName === null"
+                      (click)="guardarLogo()"
+                    >
+                      <!-- <mat-icon></mat-icon> -->
+                      <strong>Subir Logo</strong>
+                    </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+    </div>
 
-    <mat-divider></mat-divider>
 
-    <mat-card>
-      <mat-card-header>
-        <mat-toolbar>
-          <mat-card-title> <span>Cambiar Logo</span> </mat-card-title>
-        </mat-toolbar>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-divider></mat-divider>
-        <button mat-fab extended color="accent" (click)="image()">
-          <mat-icon>image</mat-icon>
-          Cambiar Imagen
-        </button>
-      </mat-card-content>
-    </mat-card>
+
   </div>
 </div>

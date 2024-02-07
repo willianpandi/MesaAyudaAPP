@@ -1,11 +1,18 @@
-<mat-toolbar>
-  <span>REPORTES</span>
-</mat-toolbar>
-<mat-divider></mat-divider>
-
 
 <div class="grid">
-  <mat-card>
-    Reporte
-  </mat-card>
+  <div class="col-12">
+    <mat-card>
+      <mat-card-content>
+
+        <app-table-detail
+        [data]="ticketList"
+        [columns]="tableColumnsTickets"
+        [config]="tableConfig"
+        (action)="onTableAction($event)"
+      >
+      </app-table-detail>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

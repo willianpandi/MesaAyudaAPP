@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, computed, inject } from '@angular/core';
 import { TableColumn } from '../../components/table/interfaces/table-colum.interface';
 
 import { DistritoService } from '../../services/districts.service';
@@ -10,6 +10,8 @@ import { Estableishment } from '../../interfaces/estableishments';
 import { Directive } from '../../interfaces/directives';
 import { Profile } from '../../interfaces/users';
 import { TicketService } from '../../services/tickets.service';
+import { Ticket } from '../../interfaces/tickets';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -21,15 +23,19 @@ export class HomePageComponent implements OnInit {
   establecimientosList: Array<Estableishment> = [];
   directivasList: Array<Directive> = [];
   usuariosList: Array<Profile> = [];
+  ticketsList: Array<Ticket> = [];
+
+  userCount!: number;
+  estableishmentCount!: number;
 
   tableColumnsDistritos: TableColumn[] = [];
   tableColumnsEstablecimientos: TableColumn[] = [];
   tableColumnsDirectivas: TableColumn[] = [];
   tableColumnsUsuarios: TableColumn[] = [];
-  totalCountUsers: number = 0;
-  totalCountTickets: number = 0;
-  totalCountEstableishment: number = 0;
-  totalCountDirectives: number = 0;
+  users: any;
+
+  private authService = inject( AuthService);
+  public user = computed(()=> this.authService.currentUser());
 
   constructor(
     private distritoService: DistritoService,
@@ -37,11 +43,15 @@ export class HomePageComponent implements OnInit {
     private directivaService: DirectivaService,
     private usuarioService: UsuarioService,
     private ticketService: TicketService
-  ) {}
+  ) {
+    this.users = this.authService.currentUser();
+  }
 
   ngOnInit(): void {
-    this.setTableColumns();
-    this.setData();
+      this.setTableColumns();
+      this.setData();
+      this.setDataCount();
+      console.log({usuario: this.user});
   }
 
   setTableColumns() {
@@ -63,101 +73,102 @@ export class HomePageComponent implements OnInit {
       { label: 'Provincia', def: 'provincia', dataKey: 'provincia' },
       { label: 'Cantón', def: 'canton', dataKey: 'canton' },
       { label: 'Parroquia', def: 'parroquia', dataKey: 'parroquia' },
-      {
-        label: 'Codigo Distrito',
-        def: 'districtcode',
-        dataKey: 'district.codigo',
-        dataType: 'object',
-      },
-      {
-        label: 'Distrito',
-        def: 'district',
-        dataKey: 'district.nombre',
-        dataType: 'object',
-      },
+      // {
+      //   label: 'Codigo Distrito',
+      //   def: 'district.codigo',
+      //   dataKey: 'district.codigo',
+      //   dataType: 'object',
+      // },
+      // {
+      //   label: 'Distrito',
+      //   def: 'district',
+      //   dataKey: 'district.nombre',
+      //   dataType: 'object',
+      // },
     ];
 
     this.tableColumnsDirectivas = [
       { label: 'Nombre de Problema', def: 'nombre', dataKey: 'nombre' },
-      {
-        label: 'Descripción del Problema',
-        def: 'descripcion',
-        dataKey: 'descripcion',
-      },
+      // {
+      //   label: 'Descripción del Problema',
+      //   def: 'descripcion',
+      //   dataKey: 'descripcion',
+      // },
       {
         label: 'Tiempo Estimado',
         def: 'rango_tiempo',
         dataKey: 'rango_tiempo',
       },
     ];
-    this.tableColumnsUsuarios = [
-      {
-        label: 'N° Cédula',
-        def: 'usuario',
-        dataKey: 'usuario',
-        isSticky: true,
-      },
-      {
-        label: 'Nombres Apellidos',
-        def: 'nombre',
-        dataKey: 'nombre',
-        isSticky: true,
-      },
-      { label: 'Sexo', def: 'sexo', dataKey: 'sexo' },
-      {
-        label: 'Nivel de Instrucción',
-        def: 'nivel_institucional',
-        dataKey: 'nivel_institucional',
-      },
-      { label: 'Itinerancia', def: 'itinerancia', dataKey: 'itinerancia' },
-      { label: 'Profesión', def: 'profesion', dataKey: 'profesion' },
-      { label: 'Étnia', def: 'etnia', dataKey: 'etnia' },
-      {
-        label: 'F. Nacimiento',
-        def: 'fecha_nacimiento',
-        dataKey: 'fecha_nacimiento',
-        dataType: 'date',
-        formatt: 'dd/MM/yyyy',
-      },
-      { label: 'N° Teléfono', def: 'telefono', dataKey: 'telefono' },
-      { label: 'Dirección', def: 'direccion', dataKey: 'direccion' },
-      {
-        label: 'Correo Institucional',
-        def: 'correo_institucional',
-        dataKey: 'correo_institucional',
-      },
-      {
-        label: 'Correo Personal',
-        def: 'correo_personal',
-        dataKey: 'correo_personal',
-      },
-      {
-        label: 'Regimen Laboral',
-        def: 'regimen_laboral',
-        dataKey: 'regimen_laboral',
-      },
-      {
-        label: 'Modalidad Laboral',
-        def: 'modalidad_laboral',
-        dataKey: 'modalidad_laboral',
-      },
-      { label: 'Area Laboral', def: 'area_laboral', dataKey: 'area_laboral' },
-      { label: 'Nombramiento', def: 'nombramiento', dataKey: 'nombramiento' },
-      {
-        label: 'F. Ingreso',
-        def: 'fecha_ingreso',
-        dataKey: 'fecha_ingreso',
-        dataType: 'date',
-        formatt: 'dd/MM/yyyy',
-      },
-      {
-        label: 'Establecimiento',
-        def: 'estableishment',
-        dataKey: 'estableishment.nombre',
-        dataType: 'object',
-      },
-    ];
+    // this.tableColumnsUsuarios = [
+    //   {
+    //     label: 'N° Cédula',
+    //     def: 'usuario',
+    //     dataKey: 'usuario',
+    //     isSticky: true,
+    //   },
+    //   {
+    //     label: 'Nombres Apellidos',
+    //     def: 'nombre',
+    //     dataKey: 'nombre',
+    //     isSticky: true,
+    //   },
+      // { label: 'Sexo', def: 'sexo', dataKey: 'sexo' },
+      // {
+      //   label: 'Nivel de Instrucción',
+      //   def: 'nivel_institucional',
+      //   dataKey: 'nivel_institucional',
+      // },
+      // { label: 'Itinerancia', def: 'itinerancia', dataKey: 'itinerancia' },
+      // { label: 'Profesión', def: 'profesion', dataKey: 'profesion' },
+      // { label: 'Étnia', def: 'etnia', dataKey: 'etnia' },
+      // {
+      //   label: 'F. Nacimiento',
+      //   def: 'fecha_nacimiento',
+      //   dataKey: 'fecha_nacimiento',
+      //   dataType: 'date',
+      //   formatt: 'dd/MM/yyyy',
+      // },
+      // { label: 'N° Teléfono', def: 'telefono', dataKey: 'telefono' },
+      // { label: 'Dirección', def: 'direccion', dataKey: 'direccion' },
+      // {
+      //   label: 'Correo Institucional',
+      //   def: 'correo_institucional',
+      //   dataKey: 'correo_institucional',
+      // },
+      // {
+      //   label: 'Correo Personal',
+      //   def: 'correo_personal',
+      //   dataKey: 'correo_personal',
+      // },
+      // {
+      //   label: 'Regimen Laboral',
+      //   def: 'regimen_laboral',
+      //   dataKey: 'regimen_laboral',
+      // },
+      // {
+      //   label: 'Modalidad Laboral',
+      //   def: 'modalidad_laboral',
+      //   dataKey: 'modalidad_laboral',
+      // },
+      // { label: 'Area Laboral', def: 'area_laboral', dataKey: 'area_laboral' },
+      // { label: 'Nombramiento', def: 'nombramiento', dataKey: 'nombramiento' },
+      // {
+      //   label: 'F. Ingreso',
+      //   def: 'fecha_ingreso',
+      //   dataKey: 'fecha_ingreso',
+      //   dataType: 'date',
+      //   formatt: 'dd/MM/yyyy',
+      // },
+    //   {
+    //     label: 'Establecimiento',
+    //     def: 'estableishment',
+    //     dataKey: 'estableishment.nombre',
+    //     dataType: 'object',
+    //   },
+    // ];
   }
+
 
   setData(): void {
     this.distritoService.lista().subscribe(
@@ -168,9 +179,12 @@ export class HomePageComponent implements OnInit {
         console.log(err);
       }
     );
-    this.establecimientoService.lista().subscribe(
+
+    this.distritoService.detailes(this.users.estableishment.district.id).subscribe(
       (data) => {
         this.establecimientosList = data;
+        console.log({EStablecimientos: this.establecimientosList});
+
       },
       (err) => {
         console.log(err);
@@ -184,47 +198,35 @@ export class HomePageComponent implements OnInit {
         console.log(err);
       }
     );
-    this.usuarioService.lista().subscribe(
-      (data) => {
-        this.usuariosList = data;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    // this.usuarioService.lista().subscribe(
+    //   (data) => {
+    //     this.usuariosList = data;
+    //   },
+    //   (err) => {
+    //     console.log(err);
+    //   }
+    // );
 
-    // CONTADORES
-    this.ticketService.count().subscribe(
+    this.ticketService.lista().subscribe(
       (data) => {
-        this.totalCountTickets = data.totalCountTickets;
+        this.ticketsList = data;
       },
       (err) => {
         console.log(err);
       }
     );
-    this.establecimientoService.count().subscribe(
-      (data) => {
-        this.totalCountEstableishment = data.totalCountEstableishments;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-    this.directivaService.count().subscribe(
-      (data) => {
-        this.totalCountDirectives = data.totalCountDirectives;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+  }
+
+  setDataCount(): void {
     this.usuarioService.count().subscribe(
       (data) => {
-        this.totalCountUsers = data.totalCountUsers;
-      },
-      (err) => {
-        console.log(err);
+        this.userCount = data.totalCountUsers;
       }
-    );
+    )
+    this.establecimientoService.count().subscribe(
+      (data) => {
+        this.estableishmentCount = data.totalCountEstableishments;
+      }
+    )
   }
 }

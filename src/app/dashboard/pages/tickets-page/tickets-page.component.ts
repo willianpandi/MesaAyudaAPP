@@ -4,9 +4,10 @@ import { TicketService } from '../../services/tickets.service';
 import { Ticket } from '../../interfaces/tickets';
 import { TableConfig } from '../../components/table/interfaces/table-config.interface';
 import { Table, TableAction } from '../../components/table/interfaces/table-action.interface';
-import { TicketDialogComponent } from '../../components/dialogs/ticket-dialog/ticket-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-tickets',
@@ -20,9 +21,11 @@ export class TicketsPageComponent implements OnInit {
     showActions: true,
   };
 
+
   constructor(
     private ticketsService: TicketService,
     public dialog: MatDialog,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -37,21 +40,12 @@ export class TicketsPageComponent implements OnInit {
 
   setTableColumns() {
     this.tableColumnsTickets = [
-      // { label: 'N° Ticket', def: 'id', dataKey: 'id' },
-      { label: 'Fecha de Inicio', def: 'createdAt', dataKey: 'createdAt', dataType: 'date', formatt: 'HH:mm - dd/MM/yyyy' },
-      { label: 'Fecha de Finalización', def: 'apdateAt', dataKey: 'apdateAt', dataType: 'date', formatt: 'HH:mm - dd/MM/yyyy' },
-      { label: 'N° Cédula', def: 'user.usuario', dataKey: 'user.usuario', dataType: 'object'},
-      { label: 'Nombre', def: 'user.nombre', dataKey: 'user.nombre', dataType: 'object'},
-      { label: 'Establecimiento', def: 'user.estableishment.nombre', dataKey: 'user.estableishment.nombre', dataType: 'object'},
-      { label: 'Problema', def: 'directive', dataKey: 'directive.nombre', dataType: 'object' },
-      { label: 'Descripción', def: 'descripcion', dataKey: 'descripcion' },
-      { label: 'Archivos', def: 'archivo', dataKey: 'archivo', dataType:'object' },
-      { label: 'Área', def: 'area', dataKey: 'area' },
-      { label: 'Piso', def: 'piso', dataKey: 'piso' },
-      { label: 'N° Sala', def: 'n_sala', dataKey: 'n_sala' },
-      { label: 'N° Consultorio', def: 'n_consultorio', dataKey: 'n_consultorio' },
-      { label: 'Satisfaccion', def: 'sarvey', dataKey: 'sarvey' },
+      { label: 'N° Ticket', def: 'codigo', dataKey: 'codigo' },
       { label: 'Estado', def: 'estado', dataKey: 'estado' },
+      { label: 'Fecha de Creación', def: 'createdAt', dataKey: 'createdAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm' },
+      { label: 'Fecha de Actualización', def: 'apdateAt', dataKey: 'apdateAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm' },
+      { label: 'Categoría', def: 'directive.nombre', dataKey: 'directive.nombre', dataType: 'object' },
+      { label: 'Problema', def: 'titulo', dataKey: 'titulo' },
     ];
   }
 
@@ -81,29 +75,17 @@ export class TicketsPageComponent implements OnInit {
     }
   }
 
-  ticketDialog(){
-    this.dialog.open(TicketDialogComponent, {
-      disableClose: true,
-      width:"800px"
-    }).afterClosed().subscribe(resultado => {
-      if (resultado === "creado") {
-        this.setData();
-      }
-    })
+
+
+  onEdit({ id }: Ticket) {
+    console.log('Edit', id);
+    this.router.navigateByUrl(`dashboard/ticket/${id}`)
   }
 
-  onEdit(dataTickets: Ticket) {
-    console.log('Edit', dataTickets);
-    this.dialog.open(TicketDialogComponent, {
-      disableClose: true,
-      width:"800px",
-      data: dataTickets
-    }).afterClosed().subscribe(resultado => {
-      if (resultado === "editado") {
-        this.setData();
-      }
-    })
+  newTicket(){
+    this.router.navigateByUrl('dashboard/ticket/nuevo')
   }
+
   onDelete(ticket: Ticket) {
     console.log('Delete', ticket);
     Swal.fire({
@@ -120,22 +102,30 @@ export class TicketsPageComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.ticketsService.delete(ticket.id).subscribe({
-          next: (affectedRows: { affected: number }) => {
-            if (affectedRows.affected === 1) {
+          next: ( resp ) => {
               Swal.fire(
                 'Eliminado!',
                 'Su ticket ha sido eliminado correctamente.',
                 'success'
               );
               this.setData();
-            } else {
-              Swal.fire(
-                'Advertencia',
-                'No se ha eliminado el ticket, por que mantiene una relacion con otro dato',
-                'warning'
-              );
-            }
           },
+          // next: (affectedRows: { affected: number }) => {
+          //   if (affectedRows.affected === 1) {
+          //     Swal.fire(
+          //       'Eliminado!',
+          //       'Su ticket ha sido eliminado correctamente.',
+          //       'success'
+          //     );
+          //     this.setData();
+          //   } else {
+          //     Swal.fire(
+          //       'Advertencia',
+          //       'No se ha eliminado el ticket, por que mantiene una relacion con otro dato',
+          //       'warning'
+          //     );
+          //   }
+          // },
           error: (message) => {
             Swal.fire('Error', message, 'error');
           },
@@ -143,7 +133,9 @@ export class TicketsPageComponent implements OnInit {
       }
     });
   }
+
+  onView({ id }: Ticket) {
+    console.log('View', id);
+    this.router.navigateByUrl(`dashboard/ticketd/${id}`)
+  }
 }
-
-
-
