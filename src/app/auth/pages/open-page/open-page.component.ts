@@ -122,6 +122,12 @@ export class OpenPageComponent implements OnInit{
     const { district, ...otherDate} = dataTicket;
     console.log(otherDate);
 
+    const cedula = dataTicket.cedula;
+    const nombre = dataTicket.nombre;
+    const correo_electronico = dataTicket.correo_electronico;
+    const telefono = dataTicket.telefono;
+    const districts = dataTicket.district;
+    const estableishment = dataTicket.estableishment;
     this.ticketsService.save(otherDate, this.archivo).subscribe({
       next: (data) => {
         Swal.fire({
@@ -129,7 +135,16 @@ export class OpenPageComponent implements OnInit{
           icon: 'success',
           html: `<strong>Solicitud de Ticket de Ayuda</strong> creado correctamente, <strong>`+ data.soporteAsignado +`</strong> se contactará con usted en breve si es necesario.`,
         });
-        this.formTicket.reset();
+
+        this.formTicket.reset({
+          cedula: cedula,
+          nombre: nombre,
+          correo_electronico: correo_electronico,
+          telefono: telefono,
+          district: districts,
+          estableishment:estableishment,
+          estado: 'ABIERTO',
+        });
       },
       error: (e) => {
         Swal.fire({
@@ -142,7 +157,9 @@ export class OpenPageComponent implements OnInit{
   }
 
   resetTicket(){
-    this.formTicket.reset();
+    this.formTicket.reset({
+      estado: 'ABIERTO',
+    });
   }
 
   viewTicket(cedula: string){
@@ -168,7 +185,7 @@ export class OpenPageComponent implements OnInit{
           Swal.fire({
             title: 'Encuesta de Satisfacción NO Realizada!',
             icon: 'warning',
-            html: `Por favor, realice la/las encuesta de satisfacción de sus últimos ticket CERRADOS. Revise el seguimiento de sus Tickets.`,
+            html: `Por favor, realice la/las encuesta de satisfacción de sus últimos ticket CERRADOS. Revise su Historial de Tickets.`,
           });
           this.ticketSatisfaccion = false;
         } else {

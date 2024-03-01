@@ -22,9 +22,15 @@ export class CategoriesPageComponent implements OnInit {
   tableColumnsSubCategory: TableColumn[] = [];
   tableConfig: TableConfig = {
     showActions: true,
+    showFilter: true,
+    showDowload: true,
+    isPaginable: true,
   };
   tableConfig2: TableConfig = {
     showActions: true,
+    showFilter: true,
+    showDowload: true,
+    isPaginable: true,
   };
 
   constructor(

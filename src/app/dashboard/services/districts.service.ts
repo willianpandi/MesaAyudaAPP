@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { SmallEstableishment } from '../interfaces/districts';
 import { environment } from '../../../environments/environments';
 import { Estableishment } from '../interfaces/estableishments';
+import { EstableishmentsReports } from '../interfaces/reports';
 
 
 @Injectable({
@@ -51,6 +52,23 @@ export class DistrictService {
         catchError((err) => throwError(() => err.error.message)),
       );
     }
+
+    public reportsEstaByDistrict(id: string, mes?:any, anio?:any): Observable<EstableishmentsReports[]> {
+      const headers = this.getHeaders();
+      let params = new HttpParams();
+      if (mes !== undefined) {
+        params = params.set('mes', mes);
+      }
+      if (anio !== undefined) {
+        params = params.set('anio', anio);
+      }
+
+      return this.httpClient.get<EstableishmentsReports[]>(`${this.districtsURL}reports/${id}`, {headers, params})
+      .pipe(
+        catchError((err) => throwError(() => err.error.message))
+      );
+    }
+
 
     public save(body: any): Observable<any> {
           const headers = this.getHeaders();

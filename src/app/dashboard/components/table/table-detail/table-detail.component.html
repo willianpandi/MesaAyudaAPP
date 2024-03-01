@@ -1,5 +1,5 @@
 <!-- BUSCADOR -->
-<mat-form-field appearance="outline" class="col-12">
+<mat-form-field appearance="outline" class="col-12" *ngIf="tableConfig?.showFilter">
   <mat-label> <h5>Buscar o filtrar</h5></mat-label>
   <div class="label-input100">
     <input matInput (keyup)="applyFilter($event)" #input />
@@ -42,15 +42,18 @@
   <!-- Cuando no encuentre ningun dato relacionado a la busqueda. -->
   <tr class="mat-row" *matNoDataRow>
     <td class="mat-cell" [colSpan]="tableDisplayColumns.length">
-      No hay datos que coincidan con la palabra: "{{ input.value }}"
+      No hay datos que coincidan con la palabra: "{{ currentFilterValue }}"
     </td>
   </tr>
 </table>
 
+<mat-divider></mat-divider>
 <!-- PAGINADOR -->
-<mat-paginator
-  [pageSizeOptions]="[5, 10, 20]"
-  showFirstLastButtons
-  aria-label="Select page"
->
-</mat-paginator>
+<ng-container *ngIf="tableConfig?.isPaginable">
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</ng-container>

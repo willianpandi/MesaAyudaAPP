@@ -20,6 +20,8 @@ export class TicketsPageComponent implements OnInit {
   tableColumnsTicketsClose: TableColumn[] = [];
   tableConfig: TableConfig = {
     showActions: true,
+    showFilter: true,
+    isPaginable: true,
   };
 
   newTicketsList: Ticket[] = [];

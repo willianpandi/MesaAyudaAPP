@@ -6,6 +6,7 @@ import { TableConfig } from '../interfaces/table-config.interface';
 import { Table, TableAction } from '../interfaces/table-action.interface';
 import { MatSort } from '@angular/material/sort';
 import { ColumValuePipe } from '../pipes/colum-values.pipe';
+import * as Papa from 'papaparse';
 
 @Component({
   selector: 'app-table',
@@ -80,6 +81,40 @@ export class TableComponent implements AfterViewInit{
 
   onDelete(row: any) {
     this.action.emit({ action: Table.ELIMINAR, row });
+  }
+
+  exportToCsv(data: any[], filename: string) {
+
+    const csvData = data.map(item => {
+      const establecimientoIDs = item.estableishments ? item.estableishments.map((est: { nombre: string }) => est.nombre) : [];
+      const categoriaIDs = item.categories ? item.categories.map((cat: { nombre: string }) => cat.nombre) : [];
+      const subcategoriaIDs = item.subcategories ? item.subcategories.map((scat: { nombre: string }) => scat.nombre) : [];
+
+      const rowData = {
+        ...item,
+        ...(item.category && { category: item.category.nombre }),
+        ...(item.subcategory && { subcategory: item.subcategory.nombre }),
+        ...(item.estableishment && { estableishment: item.estableishment.nombre }),
+        ...(item.district && { district: item.district.nombre }),
+        ...(establecimientoIDs.length > 0 && { estableishments: establecimientoIDs }),
+        ...(categoriaIDs.length > 0 && { categories: categoriaIDs }),
+        ...(subcategoriaIDs.length > 0 && { subcategories: subcategoriaIDs }),
+      };
+      return rowData;
+    });
+
+    const csv = '\uFEFF' + Papa.unparse(csvData, {
+      delimiter: ";",
+    });
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
 }

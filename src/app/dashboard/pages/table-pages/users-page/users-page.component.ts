@@ -22,6 +22,9 @@ export class UsersPageComponent implements OnInit{
   tableColumnsUsers: TableColumn[] = [];
   tableConfig: TableConfig = {
     showActions: true,
+    showFilter: true,
+    showDowload: true,
+    isPaginable: true,
   };
 
   constructor(

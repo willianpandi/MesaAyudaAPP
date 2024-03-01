@@ -65,6 +65,7 @@
         class="menu-button"
         *ngFor="let item of sidebarItemsSoporte"
         [routerLink]="item.url"
+        routerLinkActive="menu-button-active"
       >
         <mat-icon>{{ item.icon }}</mat-icon>
         <span>{{ item.label }}</span>
@@ -83,6 +84,7 @@
         class="menu-button"
         *ngFor="let item of sidebarItemsAdmin"
         [routerLink]="item.url"
+        routerLinkActive="menu-button-active"
       >
         <mat-icon>{{ item.icon }}</mat-icon>
         <span>{{ item.label }}</span>
@@ -103,8 +105,8 @@
       <mat-divider></mat-divider>
 
       <div class="footer">
-        <p>Desarrollado por: Willian Pandi</p>
         <p>Derechos de autor &copy; {{anioActual}} Mesa de Ayuda - MSP - CZ3 - GZTICs. Todos los derechos reservados.</p>
+        <p>Desarrollado por: Willian Pandi</p>
         <img [src]="imageUrl" alt="mesa_ayuda" style="max-height: 30px" />
       </div>
 

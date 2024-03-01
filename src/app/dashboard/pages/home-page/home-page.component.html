@@ -71,6 +71,7 @@
               *ngIf="categoriesList.length > 0"
               [data]="categoriesList"
               [columns]="tableColumnsCategorias"
+              [config]="tableConfig2"
             ></app-table>
           </mat-card-content>
         </mat-card>
@@ -88,6 +89,7 @@
               *ngIf="estabelishementsList.length > 0"
               [data]="estabelishementsList"
               [columns]="tableColumnsEstablecimientos"
+              [config]="tableConfig2"
             ></app-table>
           </mat-card-content>
         </mat-card>

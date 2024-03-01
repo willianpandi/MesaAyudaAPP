@@ -18,6 +18,14 @@ export class TableDetailComponent implements AfterViewInit{
   tableDisplayColumns: string[] = [];
   tableColumns: TableColumn[] = [];
   tableConfig: TableConfig | undefined;
+  currentFilterValue: string = '';
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.currentFilterValue = filterValue;
+  }
+
 
   @Input() set data(data: any) {
     this.dataSource.data = data;
@@ -59,11 +67,6 @@ export class TableDetailComponent implements AfterViewInit{
 
   @Output() action: EventEmitter<TableAction> = new EventEmitter();
 
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
 
   // configuraciones de la tabla
   setConfig( config: TableConfig) {

@@ -26,9 +26,15 @@ export class DistrictsPageComponent implements OnInit {
   tableColumnsEstableishments: TableColumn[] = [];
   tableConfig: TableConfig = {
     showActions: true,
+    showFilter: true,
+    showDowload: true,
+    isPaginable: true,
   };
   tableConfig2: TableConfig = {
     showActions: true,
+    showFilter: true,
+    showDowload: true,
+    isPaginable: true,
   };
 
   constructor(

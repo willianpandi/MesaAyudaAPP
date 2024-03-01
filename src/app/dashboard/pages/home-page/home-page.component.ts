@@ -45,6 +45,14 @@ export class HomePageComponent implements OnInit {
   ticketsList: Ticket[]  = [];
   tableConfig: TableConfig = {
     showActions: true,
+    showFilter: true,
+    showDowload: true,
+    isPaginable: true,
+  };
+
+  tableConfig2: TableConfig = {
+    showFilter: true,
+    isPaginable: true,
   };
 
   usersCount!: number;

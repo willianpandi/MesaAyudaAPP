@@ -79,5 +79,9 @@ span {
   border-radius: 15px;
   background-color: #dcdfe1;
   /* height:fit-content; */
+}
 
+.menu-button-active {
+  background-color: #dcdfe1;
+  border-radius: 20px;
 }

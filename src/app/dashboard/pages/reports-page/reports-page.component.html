@@ -4,7 +4,7 @@
     <mat-card>
       <mat-card-header>
         <mat-toolbar>
-          <span>Tickets por EOD</span>
+          <span>EOD por Departamento</span>
         </mat-toolbar>
       </mat-card-header>
       <mat-card-content>
@@ -81,6 +81,7 @@
           *ngIf="subCategoryByEod.length > 0"
           [data]="subCategoryByEod"
           [columns]="tableColumnsReportsSubCategory"
+          [config]="tableConfig"
         ></app-table>
 
       </mat-card-content>
@@ -91,7 +92,93 @@
     <mat-card>
       <mat-card-header>
         <mat-toolbar>
-          <span>Tickets por Unidad/Gestión</span>
+          <span>EOD por Unidad/Gestión</span>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <br>
+        <div class="grid">
+          <div class="col-12 md:col-9 lg:col-9">
+            <mat-form-field appearance="outline">
+              <mat-label>Eods</mat-label>
+              <mat-select [formControl]="eods2">
+                <mat-option *ngFor="let item of listEods | order: 'nombre'"[value]="item.id">
+                  {{ item.nombre }}
+                  <hr />
+                </mat-option>
+              </mat-select>
+              <mat-icon matSuffix>map</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="col-12 md:col-3 lg:col-3">
+            <button
+              class="boton"
+              mat-fab
+              extended
+              color="primary"
+              [disabled]="eods2.value === null"
+              (click)="searchByEod()"
+            >
+              <mat-icon>search</mat-icon>
+              <strong>Buscar</strong>
+            </button>
+
+          </div>
+        </div>
+        <br>
+        <div class="grid">
+          <div class="col-12 md:col-5 lg:col-4">
+              <mat-form-field appearance="outline">
+              <mat-label>Mes y Año</mat-label>
+              <input matInput [matDatepicker]="dp6" [formControl]="dateEod2">
+              <mat-hint>MM/AAAA</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="dp6"></mat-datepicker-toggle>
+              <mat-datepicker #dp6
+                              startView="multi-year"
+                              (monthSelected)="setMonthAndYearEod2($event, dp6)"
+                              panelClass="example-month-picker">
+              </mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-7 md:col-4 lg:col-3">
+            <button
+              class="boton"
+              mat-fab
+              extended
+              color="accent"
+              (click)="filterDateEod2()"
+            >
+              <mat-icon>filter_list</mat-icon>
+              <strong>Filtrar</strong>
+            </button>
+          </div>
+          <div class="col-1">
+            <button class="example-button-container"
+              mat-mini-fab
+              color="warn"
+              (click)="removefilterDate6()"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <app-table
+          *ngIf="estableishmentsByEod.length > 0"
+          [data]="estableishmentsByEod"
+          [columns]="tableColumnsTicketsEstableishments"
+          [config]="tableConfig"
+        ></app-table>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Unidad/Gestión por Departamento</span>
         </mat-toolbar>
       </mat-card-header>
       <mat-card-content>
@@ -132,6 +219,7 @@
 
           <div class="col-12 md:col-3 lg:col-3">
             <button
+              class="boton"
               mat-fab
               extended
               color="primary"
@@ -186,6 +274,7 @@
           *ngIf="subCategoryByEstableishment.length > 0"
           [data]="subCategoryByEstableishment"
           [columns]="tableColumnsReportsSubCategory"
+          [config]="tableConfig"
         ></app-table>
 
       </mat-card-content>
@@ -197,7 +286,7 @@
     <mat-card>
       <mat-card-header>
         <mat-toolbar>
-          <span>Tickets por Departamento</span>
+          <span>Por Departamento</span>
         </mat-toolbar>
       </mat-card-header>
       <mat-card-content>
@@ -244,6 +333,7 @@
           *ngIf="subCategoryReportsList.length > 0"
           [data]="subCategoryReportsList"
           [columns]="tableColumnsReportsSubCategory"
+          [config]="tableConfig"
         ></app-table>
 
       </mat-card-content>
@@ -254,7 +344,7 @@
     <mat-card>
       <mat-card-header>
         <mat-toolbar>
-          <span>Tickets por Soporte</span>
+          <span>Por Soporte</span>
         </mat-toolbar>
       </mat-card-header>
       <mat-card-content>
@@ -301,6 +391,7 @@
           *ngIf="usersTicketsReports.length > 0"
           [data]="usersTicketsReports"
           [columns]="tableColumnsTickets"
+          [config]="tableConfig"
         ></app-table>
 
       </mat-card-content>
@@ -357,6 +448,7 @@
           *ngIf="reasigTicketsReports.length > 0"
           [data]="reasigTicketsReports"
           [columns]="tableColumnsTicketsReasig"
+          [config]="tableConfig"
         ></app-table>
 
       </mat-card-content>

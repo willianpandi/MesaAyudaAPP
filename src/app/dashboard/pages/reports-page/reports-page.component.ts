@@ -11,8 +11,8 @@ import { SubCategoryService } from '../../services/subcategories.service';
 import { UserService } from '../../services/users.service';
 import { TicketService } from '../../services/tickets.service';
 import {MatDatepicker} from '@angular/material/datepicker';
-import { SubCategoryReports, TicketsReports, UsersReports } from '../../interfaces/reports';
-
+import { EstableishmentsReports, SubCategoryReports, TicketsReports, UsersReports } from '../../interfaces/reports';
+import { TableConfig } from '../../components/table/interfaces/table-config.interface';
 
 import * as moment from 'moment';
 import {Moment} from 'moment';
@@ -40,8 +40,16 @@ export class ReportsPageComponent implements OnInit {
   tableColumnsReportsSubCategory: TableColumn[] = [];
   tableColumnsTickets: TableColumn[] = [];
   tableColumnsTicketsReasig: TableColumn[] = [];
+  tableColumnsTicketsEstableishments: TableColumn[] = [];
+  tableConfig: TableConfig = {
+    showActions: true,
+    showFilter: true,
+    showDowload: true,
+    isPaginable: true,
+  };
 
   subCategoryByEod: SubCategoryReports[] = [];
+  estableishmentsByEod: EstableishmentsReports[] = [];
   subCategoryByEstableishment: SubCategoryReports[] = [];
   estableishmetsByDistrict: SmallEstableishment[] = [];
   subCategoryReportsList: SubCategoryReports[] = [];
@@ -50,8 +58,10 @@ export class ReportsPageComponent implements OnInit {
 
   listEods: District[] = [];
   eods = new FormControl();
+  eods2= new FormControl();
   formReport!: FormGroup;
   dateEod = new FormControl(moment());
+  dateEod2 = new FormControl(moment());
   dateEsta = new FormControl(moment());
   dateCategory = new FormControl(moment());
   dateSupport = new FormControl(moment());
@@ -74,6 +84,14 @@ export class ReportsPageComponent implements OnInit {
     ctrlValue.month(normalizedMonthAndYear.month());
     ctrlValue.year(normalizedMonthAndYear.year());
     this.dateEod.setValue(ctrlValue);
+    datepicker.close();
+  }
+
+  setMonthAndYearEod2(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.dateEod2.value!;
+    ctrlValue.month(normalizedMonthAndYear.month());
+    ctrlValue.year(normalizedMonthAndYear.year());
+    this.dateEod2.setValue(ctrlValue);
     datepicker.close();
   }
 
@@ -143,6 +161,24 @@ export class ReportsPageComponent implements OnInit {
       { label: 'Solucionado', def: 'ticketsSolucionado', dataKey: 'ticketsSolucionado' },
       { label: 'No Solucionado', def: 'ticketsNoSolucionado', dataKey: 'ticketsNoSolucionado' },
     ];
+    this.tableColumnsTicketsEstableishments = [
+      { label: 'Unidad/Gestión', def: 'nombre', dataKey: 'nombre', isSticky: true, },
+      { label: 'Abiertos', def: 'ticketsAbiertos', dataKey: 'ticketsAbiertos' },
+      { label: 'En Proceso', def: 'ticketsEnProceso', dataKey: 'ticketsEnProceso' },
+      { label: 'Cerrados', def: 'ticketsCerrados', dataKey: 'ticketsCerrados' },
+      { label: 'A Tiempo', def: 'ticketsATiempo', dataKey: 'ticketsATiempo' },
+      { label: 'Atrasados', def: 'ticketsAtrasados', dataKey: 'ticketsAtrasados' },
+      { label: 'Total', def: 'TotalTickets', dataKey: 'totalTickets' },
+      { label: 'Nada Satisfactorio', def: 'ticketsNS', dataKey: 'ticketsNS' },
+      { label: 'Poco Satisfactorio', def: 'ticketsAS', dataKey: 'ticketsAS' },
+      { label: 'Satisfactorio', def: 'ticketsS', dataKey: 'ticketsS' },
+      { label: 'Muy Satisfactorio', def: 'ticketsMS', dataKey: 'ticketsMS' },
+      { label: 'Oportuno', def: 'ticketsOportuno', dataKey: 'ticketsOportuno' },
+      { label: 'No Oportuno', def: 'ticketsNoOportuno', dataKey: 'ticketsNoOportuno' },
+      { label: 'Solucionado', def: 'ticketsSolucionado', dataKey: 'ticketsSolucionado' },
+      { label: 'No Solucionado', def: 'ticketsNoSolucionado', dataKey: 'ticketsNoSolucionado' },
+    ];
+
     this.tableColumnsTickets = [
       { label: 'Nombre', def: 'nombre', dataKey: 'nombre', isSticky: true, },
       { label: 'Abiertos', def: 'ticketsAbiertos', dataKey: 'ticketsAbiertos' },
@@ -217,6 +253,27 @@ export class ReportsPageComponent implements OnInit {
     this.estableishmentService.reportsEod(this.eods.value, mes, anio).subscribe(
       (data) => {
         this.subCategoryByEod = data;
+      },
+      (err) => {}
+    )
+  }
+
+  filterDateEod2(){
+    const fechaSeleccionada = this.dateEod2.value;
+    const mes = fechaSeleccionada ? fechaSeleccionada.format('MM') : null;
+    const anio = fechaSeleccionada ? fechaSeleccionada.format('YYYY') : null;
+    this.districtService.reportsEstaByDistrict(this.eods2.value, mes, anio).subscribe(
+      (data) => {
+        this.estableishmentsByEod = data;
+      },
+      (err) => {}
+    )
+  }
+
+  searchByEod(){
+    this.districtService.reportsEstaByDistrict(this.eods2.value).subscribe(
+      (data) => {
+        this.estableishmentsByEod = data
       },
       (err) => {}
     )
@@ -334,6 +391,16 @@ export class ReportsPageComponent implements OnInit {
       },
       (err) => {}
     )
+  }
+
+
+  removefilterDate6(){
+    this.districtService.reportsEstaByDistrict(this.eods2.value).subscribe(
+      (data) => {
+        this.estableishmentsByEod = data;
+      },
+      (err) => {}
+    );
   }
 
 }
