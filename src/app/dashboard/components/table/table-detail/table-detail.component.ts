@@ -65,9 +65,7 @@ export class TableDetailComponent implements AfterViewInit{
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-
   // configuraciones de la tabla
-
   setConfig( config: TableConfig) {
     this.tableConfig = config;
     if (this.tableConfig.showActions ) {

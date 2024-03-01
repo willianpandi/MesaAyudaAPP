@@ -1,12 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { District } from 'src/app/dashboard/interfaces/districts';
-
-import { Estableishment } from 'src/app/dashboard/interfaces/estableishments';
-import { DistritoService } from 'src/app/dashboard/services/districts.service';
-import { EstablecimientoService } from 'src/app/dashboard/services/estableishments.service';
+import { District } from '../../../../dashboard/interfaces/districts';
+import { Estableishment } from '../../../../dashboard/interfaces/estableishments';
+import { DistrictService } from '../../../../dashboard/services/districts.service';
+import { EstableishmentService } from '../../../../dashboard/services/estableishments.service';
+import { ValidatorsService } from '../../../../shared/service/validators.service';
 
 import Swal from 'sweetalert2';
 
@@ -17,7 +16,7 @@ import Swal from 'sweetalert2';
 })
 export class EstableishmentDialogComponent implements OnInit {
   formEstableishment: FormGroup;
-  tituloAccion: string = 'Nuevo';
+  tituloAccion: string = 'Nueva';
   botonAccion: string = 'Guardar';
   iconAccion: string = 'add_circle';
   listaDistrict: District[] = [];
@@ -25,21 +24,15 @@ export class EstableishmentDialogComponent implements OnInit {
   constructor(
     private dialogReferencia: MatDialogRef<EstableishmentDialogComponent>,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar,
-    private estableishmentService: EstablecimientoService,
-    private districtService: DistritoService,
+    private validatorsService: ValidatorsService,
+    private estableishmentService: EstableishmentService,
+    private districtService: DistrictService,
     @Inject(MAT_DIALOG_DATA) public dataEstablecimiento: Estableishment
   ) {
     this.formEstableishment = this.fb.group({
+      district: ['', Validators.required],
       codigo: ['', Validators.required],
       nombre: ['', Validators.required],
-      institucion: ['', Validators.required],
-      nivel_atencion: ['', Validators.required],
-      tipologia: ['', Validators.required],
-      provincia: ['', Validators.required],
-      canton: ['', Validators.required],
-      parroquia: ['', Validators.required],
-      district: ['', Validators.required],
     });
     this.districtService.lista().subscribe(
       (data) => {
@@ -49,19 +42,20 @@ export class EstableishmentDialogComponent implements OnInit {
     );
   }
 
-  addEstableishment() {
-    console.log(this.formEstableishment.value);
 
+  isValidField( field: string ): boolean | null{
+    return this.validatorsService.isValidField(this.formEstableishment, field)
+  }
+
+  getFieldError( field: string ) {
+    return this.validatorsService.getFieldError(this.formEstableishment, field)
+  }
+
+  addEstableishment() {
     const modelo = {
+      district: this.formEstableishment.value.district,
       codigo: this.formEstableishment.value.codigo,
       nombre: this.formEstableishment.value.nombre,
-      institucion: this.formEstableishment.value.institucion,
-      nivel_atencion: this.formEstableishment.value.nivel_atencion,
-      tipologia: this.formEstableishment.value.tipologia,
-      provincia: this.formEstableishment.value.provincia,
-      canton: this.formEstableishment.value.canton,
-      parroquia: this.formEstableishment.value.parroquia,
-      district: this.formEstableishment.value.district,
     };
 
     if (this.dataEstablecimiento == null) {
@@ -70,7 +64,8 @@ export class EstableishmentDialogComponent implements OnInit {
           Swal.fire({
             position: 'bottom-end',
             icon: 'success',
-            text: 'Establecimiento ' + modelo.nombre + ' creado correctamente',
+            title: 'Unidad/Gestión Creado',
+            html: `Unidad/Gestión <strong>`+modelo.nombre+`</strong> creado correctamente.`,
             showConfirmButton: false,
             timer: 2500,
           });
@@ -80,7 +75,8 @@ export class EstableishmentDialogComponent implements OnInit {
           Swal.fire({
             position: 'bottom-end',
             icon: 'error',
-            text: 'No se pudo crear la directiva. ' + e,
+            title: 'Unidad/Gestión NO Creado',
+            html: `No se pudo crear la Unidad/Gestión <strong>`+modelo.nombre+`</strong>. ` + e,
             showConfirmButton: false,
             timer: 2500,
           });
@@ -94,8 +90,9 @@ export class EstableishmentDialogComponent implements OnInit {
             Swal.fire({
               position: 'bottom-end',
               icon: 'success',
-              text:
-                'Establecimiento ' + modelo.nombre + ' editado correctamente',
+            title: 'Unidad/Gestión Editado',
+              html:
+                `Unidad/Gestión <strong>`+modelo.nombre+`</strong>, editado correctamente.`,
               showConfirmButton: false,
               timer: 2500,
             });
@@ -105,11 +102,9 @@ export class EstableishmentDialogComponent implements OnInit {
             Swal.fire({
               position: 'bottom-end',
               icon: 'error',
-              text:
-                'No se pudo editar el establecimiento ' +
-                modelo.nombre +
-                '. ' +
-                e,
+            title: 'Unidad/Gestión NO Editado',
+              html:
+                `No se pudo editar el Unidad/Gestión <strong>`+modelo.nombre+`</strong>. ` + e,
               showConfirmButton: false,
               timer: 2500,
             });
@@ -120,15 +115,9 @@ export class EstableishmentDialogComponent implements OnInit {
   ngOnInit(): void {
     if (this.dataEstablecimiento) {
       this.formEstableishment.patchValue({
+        district: this.dataEstablecimiento.district.id,
         codigo: this.dataEstablecimiento.codigo,
         nombre: this.dataEstablecimiento.nombre,
-        institucion: this.dataEstablecimiento.institucion,
-        nivel_atencion: this.dataEstablecimiento.nivel_atencion,
-        tipologia: this.dataEstablecimiento.tipologia,
-        provincia: this.dataEstablecimiento.provincia,
-        canton: this.dataEstablecimiento.canton,
-        parroquia: this.dataEstablecimiento.parroquia,
-        district: this.dataEstablecimiento.district.id,
       });
       this.tituloAccion = 'Editar';
       this.botonAccion = 'Actualizar';

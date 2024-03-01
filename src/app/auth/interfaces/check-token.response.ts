@@ -1,4 +1,4 @@
-import { User } from "./user.interface";
+import { User } from "../../dashboard/interfaces/users";
 
 export interface CheckTokenResponse {
   user:  User;

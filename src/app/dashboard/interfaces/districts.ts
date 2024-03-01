@@ -15,7 +15,7 @@ export enum Provincia {
   TUNGURAHUA = "TUNGURAHUA",
 }
 
-export interface SmallDistrict {
+export interface SmallEstableishment {
   id: string;
   nombre: string;
 }

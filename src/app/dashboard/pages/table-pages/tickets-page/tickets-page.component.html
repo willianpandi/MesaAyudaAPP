@@ -1,0 +1,42 @@
+<div class="grid">
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Tickets Asignados</span>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <app-table-detail
+          *ngIf="newTicketsList.length > 0"
+          [data]="newTicketsList"
+          [columns]="tableColumnsTickets"
+          [config]="tableConfig"
+          (action)="onTableAction($event)"
+        >
+        </app-table-detail>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Tickets Reasignados</span>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <app-table-detail
+          *ngIf="reasigTicketsList.length > 0"
+          [data]="reasigTicketsList"
+          [columns]="tableColumnsTicketsReasig"
+          [config]="tableConfig"
+          (action)="onTableAction($event)"
+        >
+        </app-table-detail>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

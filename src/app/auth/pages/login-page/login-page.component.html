@@ -1,6 +1,6 @@
 <div class="wrap-login100">
   <img
-    [src]="'assets/images/mesa_ayuda.jpg'"
+    [src]="'assets/images/mesa_ayuda.avif'"
     alt="mesa_ayuda"
     style="object-fit: cover; width: 100%; height: 100%"
   />
@@ -30,7 +30,7 @@
           <mat-hint class="hint" align="end"
             >{{ input.value.length }}/10</mat-hint
           >
-          <mat-icon matSuffix>account_circle</mat-icon>
+          <mat-icon matSuffix>person</mat-icon>
         </mat-form-field>
       </div>
       <div class="col-12">
@@ -67,14 +67,13 @@
         (click)="login()"
       >
         <mat-icon>input</mat-icon>
-        <strong>INGRESAR</strong>
+        <strong>Ingresar</strong>
       </button>
 
       <div class="flex-col-c col-12 p-t-30">
-        <span class="txt1 p-b-10">¿No tienes una cuenta?</span>
-        <button mat-fab extended color="accent" (click)="register()">
-          <mat-icon>assignment</mat-icon>
-          <strong>CREAR UNA CUENTA</strong>
+        <button mat-fab extended color="accent" routerLink="/auth/panel">
+          <mat-icon>assignment_turned_in</mat-icon>
+          <strong>Crear Tickets</strong>
         </button>
       </div>
     </div>

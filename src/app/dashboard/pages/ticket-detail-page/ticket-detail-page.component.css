@@ -27,10 +27,6 @@ mat-card{
   box-shadow: black;
 }
 
-.file-item {
-  margin-right: 10px; /* Espacio entre las columnas */
-  margin-bottom: 10px; /* Espacio entre los elementos */
-}
 
 mat-panel-description{
   color: black;
@@ -47,6 +43,10 @@ mat-panel-description{
 
 .ql-editor{
   height: 350px;
+}
+
+button{
+  width: 100%;
 }
 
 

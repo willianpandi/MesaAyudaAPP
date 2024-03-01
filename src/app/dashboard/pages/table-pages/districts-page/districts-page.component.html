@@ -2,21 +2,52 @@
 <div class="grid">
   <div class="col-12">
     <mat-card>
-
-      <mat-card-content>
-        <mat-card-actions align="end">
+      <mat-card-header>
+        <mat-toolbar>
+          <span>EODs</span>
+          <span class="spacer"></span>
           <button mat-fab extended color="primary" (click)="districtDialog()">
             <mat-icon>add_circle</mat-icon>
-            Nueva Directris
+            Nuevo EOD
           </button>
-        </mat-card-actions>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
 
-        <app-table [data]="distritosList"
-                    [columns]="tableColumnsDistritos"
-                    [config]="tableConfig"
-                    (action)="onTableAction($event)"
+        <app-table
+          *ngIf="districtsList.length > 0"
+          [data]="districtsList"
+          [columns]="tableColumnsDistricts"
+          [config]="tableConfig"
+          (action)="onTableAction($event)"
         >
         </app-table>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="col-12 ">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Unidades/Gestiones</span>
+          <span class="spacer"></span>
+          <button mat-fab extended color="primary" (click)="estableishmentDialog()">
+            <mat-icon>add_circle</mat-icon> Nueva Unidad/Gestión
+          </button>
+        </mat-toolbar>
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <app-table
+          *ngIf="estableishmentsList.length > 0"
+          [data]="estableishmentsList"
+          [columns]="tableColumnsEstableishments"
+          [config]="tableConfig2"
+          (action)="onTableAction2($event)"
+        ></app-table>
 
       </mat-card-content>
     </mat-card>

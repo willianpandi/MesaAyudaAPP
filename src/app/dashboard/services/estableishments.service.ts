@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environments';
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { environment } from '../../../environments/environments';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { Observable, catchError, throwError } from 'rxjs';
 import { Estableishment } from '../interfaces/estableishments';
+import { SubCategoryReports } from '../interfaces/reports';
 
-// import Swal from 'sweetalert2';
 
 @Injectable({
     providedIn: 'root'
 })
-export class EstablecimientoService {
+export class EstableishmentService {
 
   url = environment.baseURL;
   estableishmentURL = this.url+"/estableishments/";
@@ -23,8 +23,9 @@ export class EstablecimientoService {
     }
 
     public lista(): Observable<Estableishment[]> {
+      const headers = this.getHeaders();
 
-        return this.httpClient.get<Estableishment[]>(`${this.estableishmentURL}all`)
+        return this.httpClient.get<Estableishment[]>(`${this.estableishmentURL}all`, {headers})
         .pipe(
           catchError((err) => throwError(() => err.error.message))
         );
@@ -45,10 +46,42 @@ export class EstablecimientoService {
         );
     }
 
-    public save(establecimiento: any): Observable<Estableishment> {
+    public reportsEod(id: string, mes?:any, anio?:any): Observable<SubCategoryReports[]> {
+      const headers = this.getHeaders();
+      let params = new HttpParams();
+      if (mes !== undefined) {
+        params = params.set('mes', mes);
+      }
+      if (anio !== undefined) {
+        params = params.set('anio', anio);
+      }
+
+      return this.httpClient.get<SubCategoryReports[]>(`${this.estableishmentURL}reports-eod/${id}`, {headers, params})
+      .pipe(
+        catchError((err) => throwError(() => err.error.message))
+      );
+    }
+
+    public reports(id: string, mes?:any, anio?:any): Observable<SubCategoryReports[]> {
+      const headers = this.getHeaders();
+      let params = new HttpParams();
+      if (mes !== undefined) {
+        params = params.set('mes', mes);
+      }
+      if (anio !== undefined) {
+        params = params.set('anio', anio);
+      }
+
+      return this.httpClient.get<SubCategoryReports[]>(`${this.estableishmentURL}reports/${id}`, {headers, params})
+      .pipe(
+        catchError((err) => throwError(() => err.error.message))
+      );
+    }
+
+    public save(body: any): Observable<Estableishment> {
           const headers = this.getHeaders();
 
-        return this.httpClient.post<Estableishment>(`${this.estableishmentURL}create`, establecimiento, {headers})
+        return this.httpClient.post<Estableishment>(`${this.estableishmentURL}create`, body, {headers})
         .pipe(
           catchError((err) => throwError(() => err.error.message))
         );

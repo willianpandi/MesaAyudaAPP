@@ -7,14 +7,12 @@
   </button>
 
   <div style="display: flex; align-items: center" *ngIf="imagen">
-    <img [src]="imageUrl" alt="mesa_ayuda" style="object-fit: contain; width: 10%; height: 10%"/>
+    <img [src]="imageUrl" alt="mesa_ayuda" style="max-height: 50px"/>
   </div>
 
-  <!-- <span class="nombre">{{ user()?.rol }}</span> -->
   <span class="spacer"></span>
 
   <!-- ICONO Y NOMBRE DE USUARIO  -->
-
   <span class="nombre">{{ user()?.nombre }}</span>
 
   &nbsp;
@@ -52,27 +50,8 @@
     </div> -->
 
     <mat-divider></mat-divider>
-    <span>Coordinación Zonal 3 Salud</span>
-
+    <span class="mesa">MESA DE AYUDA</span>
     <mat-divider></mat-divider>
-
-    <div *ngIf="user()?.rol === 'USUARIO'">
-      <button mat-button disabled="">
-        <span>{{user()?.rol}}</span>
-      </button>
-      <mat-divider></mat-divider>
-      <button
-        mat-button
-        class="menu-button"
-        *ngFor="let item of sidebarItemsUser"
-        [routerLink]="item.url"
-      >
-        <mat-icon>{{ item.icon }}</mat-icon>
-        <span>{{ item.label }}</span>
-      </button>
-    </div>
-
-
 
     <div *ngIf="user()?.rol === 'SOPORTE'">
       <button mat-button disabled="">
@@ -121,10 +100,14 @@
       </mat-toolbar>
       <mat-divider></mat-divider>
       <router-outlet></router-outlet>
+      <mat-divider></mat-divider>
 
       <div class="footer">
-        <img [src]="imageUrl" alt="mesa_ayuda" style="max-height: 70px" />
+        <p>Desarrollado por: Willian Pandi</p>
+        <p>Derechos de autor &copy; {{anioActual}} Mesa de Ayuda - MSP - CZ3 - GZTICs. Todos los derechos reservados.</p>
+        <img [src]="imageUrl" alt="mesa_ayuda" style="max-height: 30px" />
       </div>
+
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

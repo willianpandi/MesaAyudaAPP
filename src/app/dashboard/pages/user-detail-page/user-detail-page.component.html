@@ -1,0 +1,442 @@
+<div class="grid">
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <mat-card-title> <span>Editar / Actualizar Usuario</span> </mat-card-title>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-divider></mat-divider>
+        <form class="grid" [formGroup]="formUserDetail" autocomplete="off">
+          <div class="col-12 md:col-4 lg:col-2">
+            <mat-form-field appearance="outline">
+              <mat-label>N° de Cédula</mat-label>
+              <input
+                matInput
+                formControlName="usuario"
+                type="text"
+                #input
+                maxlength="10"
+              />
+              <mat-hint *ngIf="isValidField('usuario')">{{
+                getFieldError("usuario")
+              }}</mat-hint>
+              <mat-hint class="hint" align="end"
+                >{{ input.value.length }}/10</mat-hint
+              >
+              <mat-icon matSuffix>credit_card</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-8 lg:col-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre Completo</mat-label>
+              <input matInput formControlName="nombre" />
+              <mat-hint *ngIf="isValidField('nombre')">{{
+                getFieldError("nombre")
+              }}</mat-hint>
+              <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-6 lg:col-3">
+            <mat-form-field appearance="outline">
+              <mat-label>N° de Celular</mat-label>
+              <input matInput formControlName="celular" type="text" #input
+              maxlength="10" />
+              <mat-hint *ngIf="isValidField('celular')">{{
+                getFieldError("celular")
+              }}</mat-hint>
+              <mat-hint class="hint" align="end"
+              >{{ input.value.length }}/10</mat-hint
+            >
+              <mat-icon matSuffix>smartphone</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-6 lg:col-3">
+            <mat-form-field appearance="outline">
+              <mat-label>N° de Teléfono</mat-label>
+              <input matInput formControlName="telefono" placeholder="Ex. 9999999-999"/>
+              <mat-icon matSuffix>phone</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-6 lg:col-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Correo institucional</mat-label>
+              <input
+                matInput
+                formControlName="correo_institucional"
+                placeholder="Ex. cz3s@ejemplo.com"
+              />
+              <mat-hint *ngIf="isValidField('correo_institucional')">{{
+                getFieldError("correo_institucional")
+              }}</mat-hint>
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-6 lg:col-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Correo Personal</mat-label>
+              <input matInput formControlName="correo_personal" />
+              <mat-hint *ngIf="isValidField('correo_personal')">{{
+                getFieldError("correo_personal")
+              }}</mat-hint>
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-6 lg:col-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Grupo Ocupacional</mat-label>
+              <input matInput formControlName="g_Ocupacional" placeholder="Ex. SP1"/>
+              <mat-hint *ngIf="isValidField('g_Ocupacional')">{{
+                getFieldError("g_Ocupacional")
+              }}</mat-hint>
+              <mat-icon matSuffix>people_alt</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-6 lg:col-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Tipo Contrato</mat-label>
+              <input matInput formControlName="m_contrato" placeholder="Ex. Contrato Provicional"/>
+              <mat-hint *ngIf="isValidField('m_contrato')">{{
+                getFieldError("m_contrato")
+              }}</mat-hint>
+              <mat-icon matSuffix>airline_seat_recline_normal</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-4 lg:col-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha de Ingreso</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="f_ingreso"
+                [max]="maxDate"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-hint *ngIf="isValidField('f_ingreso')">{{
+                getFieldError("f_ingreso")
+              }}</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-8 lg:col-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Puesto</mat-label>
+              <input matInput formControlName="puesto" />
+              <mat-hint *ngIf="isValidField('puesto')">{{
+                getFieldError("puesto")
+              }}</mat-hint>
+              <mat-icon matSuffix>work</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-12 lg:col-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Cambio Administrativo</mat-label>
+              <input matInput formControlName="c_Administrativo" />
+              <mat-icon matSuffix>assignment_turned_in</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-8 lg:col-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Funciones Adicionales</mat-label>
+              <textarea matInput formControlName="funciones_A"></textarea>
+              <mat-icon matSuffix>event_seat</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-12 lg:col-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Observaciones</mat-label>
+              <textarea matInput formControlName="observaciones"></textarea>
+              <mat-icon matSuffix>comment</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-4 lg:col-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Estado de Usuario</mat-label>
+              <mat-select formControlName="estado">
+                <mat-option *ngFor="let opcion of opcionesEstado | order: 'etiqueta'" [value]="opcion.valor">
+                  {{ opcion.etiqueta }}
+                </mat-option>
+              </mat-select>
+              <mat-hint *ngIf="isValidField('estado')">{{ getFieldError("estado") }}</mat-hint>
+              <mat-icon matSuffix>highlight_off</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <!-- <div class="col-12 md:col-6 lg:col-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Rol de Usuario</mat-label>
+              <mat-select formControlName="rol">
+                <mat-option value="SOPORTE">SOPORTE</mat-option>
+                <mat-option value="ADMINISTRADOR">ADMINISTRADOR</mat-option>
+              </mat-select>
+              <mat-hint *ngIf="isValidField('rol')">{{
+                getFieldError("rol")
+              }}</mat-hint>
+              <mat-icon matSuffix>supervisor_account</mat-icon>
+            </mat-form-field>
+          </div> -->
+
+          <div class="col-12">
+            <mat-divider></mat-divider>
+          </div>
+
+          <div class="col-12 md:col-3 lg:col-2">
+            <button mat-fab extended color="warn" routerLink="/dashboard/users">
+              <mat-icon>arrow_back</mat-icon> <strong>Atrás</strong>
+            </button>
+          </div>
+          <div class="md:col-3 lg:col-4"></div>
+          <div class="col-12 md:col-4 lg:col-3">
+            <button
+              mat-fab
+              extended
+              color="accent"
+              (click)="resetPass()"
+            >
+              <mat-icon>vpn_key</mat-icon>
+              <strong>Resetear Contraseña</strong>
+            </button>
+          </div>
+          <div class="col-12 md:col-4 lg:col-3">
+            <button
+              mat-fab
+              extended
+              color="primary"
+              [disabled]="formUserDetail.invalid"
+              (click)="updateUser()"
+            >
+              <mat-icon>refresh</mat-icon>
+              <strong>Actualizar</strong>
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="col-12 lg:col-6">
+    <mat-card>
+          <mat-card-header>
+            <mat-toolbar>
+              <mat-card-title> <span>Asignar Unidades/Gestiones</span> </mat-card-title>
+            </mat-toolbar>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-divider></mat-divider>
+            <h5>Seleccione EOD y Unidad/Gestión respectivo para asignarlo al usuario.</h5>
+            <mat-divider></mat-divider>
+            <form class="grid" [formGroup]="formDistrictEstableishments">
+              <div class="col-12">
+                <mat-form-field appearance="outline">
+                  <mat-label><strong>EOD</strong></mat-label>
+                  <mat-select
+                    formControlName="district"
+                    placeholder="Elija un EOD"
+                  >
+                    <mat-option *ngFor="let item of listaDistrict | order: 'nombre'"
+                    [value]="item.id">
+                      {{ item.nombre }}
+                      <hr>
+                    </mat-option>
+                  </mat-select>
+                  <mat-hint *ngIf="isValidFieldAdd('district')">{{
+                    getFieldErrorAdd("district")
+                  }}</mat-hint>
+                  <mat-icon matSuffix>map</mat-icon>
+                </mat-form-field>
+              </div>
+
+              <div class="col-12" *ngIf="estableishmetsByDistrict.length > 0">
+                <mat-form-field appearance="outline">
+                  <mat-label><strong>Unidades/Gestiones</strong> </mat-label>
+                  <mat-select
+                    formControlName="estableishment"
+                    placeholder="Elija una Unidad/Gestión"
+                  >
+                    <mat-option
+                      *ngFor="let item of estableishmetsByDistrict | order: 'nombre'"
+                      [value]="item.id"
+                    >
+                    {{ item.nombre }}
+                    <hr>
+                    </mat-option>
+                  </mat-select>
+                  <mat-hint *ngIf="isValidFieldAdd('estableishment')">{{
+                    getFieldErrorAdd("estableishment")
+                  }}</mat-hint>
+                  <mat-icon matSuffix>business</mat-icon>
+                </mat-form-field>
+              </div>
+
+              <div class="col-12"><mat-divider></mat-divider></div>
+              <div class="col-6 md:col-8 lg:col-8"></div>
+
+              <div class="col-6 md:col-4 lg:col-4">
+                <button
+                  mat-fab
+                  extended
+                  color="primary"
+                  [disabled]="formDistrictEstableishments.invalid"
+                  (click)="relationEstableishment()"
+                  >
+                  <mat-icon>add_circle</mat-icon>
+                  <strong>Asignar</strong>
+                </button>
+              </div>
+            </form>
+          </mat-card-content>
+    </mat-card>
+
+    <mat-divider></mat-divider>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <mat-card-title> <span>Unidades/Gestiones Asignadas</span> </mat-card-title>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-divider></mat-divider>
+        <h5>Seleccione la Unidades/Gestiones que desea quitar.</h5>
+        <mat-divider></mat-divider>
+        <form [formGroup]="formEstableishmentsUser" class="grid">
+          <div class="col-12">
+            <mat-selection-list formControlName="estableishment" [multiple]="false">
+              <mat-list-option *ngFor="let item of listEstablesihments | order: 'nombre'" [value]="item.id">
+                {{item.codigo}} - {{item.nombre}}
+              </mat-list-option>
+            </mat-selection-list>
+          </div>
+
+          <div class="col-12"><mat-divider></mat-divider></div>
+          <div class="col-6 md:col-8 lg:col-8"></div>
+
+          <div class="col-6 md:col-4 lg:col-4">
+            <button
+              mat-fab
+              extended
+              color="primary"
+              [disabled]="formEstableishmentsUser.invalid"
+              (click)="deleteRealationEstableishment()"
+              >
+              <mat-icon>delete</mat-icon>
+              <strong>Quitar</strong>
+            </button>
+          </div>
+        </form>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="col-12 lg:col-6">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <mat-card-title> <span>Asignar Categorías</span> </mat-card-title>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-divider></mat-divider>
+        <h5>Seleccione el Tema de Ayuda respectivo para asignarlo al usuario.</h5>
+        <mat-divider></mat-divider>
+        <form class="grid" [formGroup]="formCategories">
+          <div class="col-12">
+            <mat-form-field appearance="outline">
+              <mat-label><strong>Temas de Ayuda</strong></mat-label>
+              <mat-select
+                formControlName="category"
+                placeholder="Elija un Tema de Ayuda"
+              >
+                <mat-option *ngFor="let item of listaCategory | order: 'nombre'"
+                [value]="item.id">
+                  {{ item.nombre }}
+                  <hr>
+                </mat-option>
+              </mat-select>
+              <mat-hint *ngIf="isValidFieldAddC('category')">{{
+                getFieldErrorAddC("category")
+              }}</mat-hint>
+              <mat-icon matSuffix>list_alt</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12"><mat-divider></mat-divider></div>
+          <div class="col-6 md:col-8 lg:col-8"></div>
+
+          <div class="col-6 md:col-4 lg:col-4">
+            <button
+              mat-fab
+              extended
+              color="primary"
+              [disabled]="formCategories.invalid"
+              (click)="relationCategory()"
+              >
+              <mat-icon>add_circle</mat-icon>
+              <strong>Asignar</strong>
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-divider></mat-divider>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <mat-card-title> <span>Categorías Asignadas</span> </mat-card-title>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-divider></mat-divider>
+        <h5>Seleccione el Tema de Ayuda que desea quitar.</h5>
+        <mat-divider></mat-divider>
+        <form [formGroup]="formCategoriesUser" class="grid">
+          <div class="col-12">
+            <mat-selection-list formControlName="category" [multiple]="false">
+              <mat-list-option *ngFor="let item of listCategories | order: 'nombre'" [value]="item.id">
+                {{item.nombre}}
+              </mat-list-option>
+            </mat-selection-list>
+          </div>
+
+          <div class="col-12"><mat-divider></mat-divider></div>
+          <div class="col-6 md:col-8 lg:col-8"></div>
+
+          <div class="col-6 md:col-4 lg:col-4">
+            <button
+              mat-fab
+              extended
+              color="primary"
+              [disabled]="formCategoriesUser.invalid"
+              (click)="deleteRealationCategory()"
+              >
+              <mat-icon>delete</mat-icon>
+              <strong>Quitar</strong>
+            </button>
+          </div>
+        </form>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

@@ -1,5 +1,5 @@
 <div mat-dialog-content>
-  <div class="login100-form-title p-t-10">{{ tituloAccion }} Distrito</div>
+  <div class="login100-form-title p-t-10">{{ tituloAccion }} EOD</div>
   <mat-divider></mat-divider>
   <form [formGroup]="formDistrict">
     <div class="grid">
@@ -7,6 +7,9 @@
         <mat-form-field appearance="outline">
           <mat-label>Código</mat-label>
           <input matInput formControlName="codigo" autocomplete="off" />
+          <mat-hint *ngIf="isValidField('codigo')">{{
+            getFieldError("codigo")
+          }}</mat-hint>
           <mat-icon matSuffix>bookmark</mat-icon>
         </mat-form-field>
       </div>
@@ -20,18 +23,23 @@
             <mat-option value="PASTAZA">PASTAZA</mat-option>
             <mat-option value="TUNGURAHUA">TUNGURAHUA</mat-option>
           </mat-select>
+          <mat-hint *ngIf="isValidField('provincia')">{{
+            getFieldError("provincia")
+          }}</mat-hint>
           <mat-icon matSuffix>place</mat-icon>
         </mat-form-field>
       </div>
 
       <div class="col-12">
         <mat-form-field appearance="outline">
-          <mat-label>Nombre de distrito</mat-label>
+          <mat-label>Nombre de EOD</mat-label>
           <textarea matInput formControlName="nombre" autocomplete="off" ></textarea>
+          <mat-hint *ngIf="isValidField('nombre')">{{
+            getFieldError("nombre")
+          }}</mat-hint>
           <mat-icon matSuffix>map</mat-icon>
         </mat-form-field>
       </div>
-
 
     </div>
   </form>

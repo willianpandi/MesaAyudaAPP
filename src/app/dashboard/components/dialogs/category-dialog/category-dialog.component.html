@@ -1,0 +1,42 @@
+<div mat-dialog-content>
+  <div class="login100-form-title p-t-10">{{ tituloAccion }} Categoría</div>
+  <mat-divider></mat-divider>
+  <form [formGroup]="formCategory">
+    <div class="grid">
+      <div class="col-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre de Categoría</mat-label>
+          <input matInput formControlName="nombre" autocomplete="off" />
+          <mat-hint *ngIf="isValidField('nombre')">{{
+            getFieldError("nombre")
+          }}</mat-hint>
+          <mat-icon matSuffix>event_note</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Descripcion del Problema</mat-label>
+          <textarea matInput formControlName="descripcion" autocomplete="off" ></textarea>
+          <mat-hint *ngIf="isValidField('descripcion')">{{
+            getFieldError("descripcion")
+          }}</mat-hint>
+          <mat-icon matSuffix>subject</mat-icon>
+        </mat-form-field>
+      </div>
+
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-fab extended mat-dialog-close color="warn"><mat-icon>cancel</mat-icon> <strong>Cancelar</strong></button>
+  <button
+    mat-fab extended
+    color="primary"
+    [disabled]="formCategory.invalid"
+    (click)="addCategory()"
+  >
+  <mat-icon>{{ iconAccion }}</mat-icon>
+  <strong>{{ botonAccion }}</strong>
+  </button>
+</div>

@@ -1,170 +1,225 @@
 <div class="grid">
   <div class="col-12">
-    <div *ngIf="user()?.rol === 'USUARIO'" class="grid">
-      <div class="col-12 md:col-6 lg:col-4">
-        <mat-card>
-          <mat-card-content>
-            <mat-card-title-group>
-              <mat-card-title
-                ><h2>{{ ticketsList.length }}</h2></mat-card-title
-              >
-              <mat-card-subtitle><h4>Tickets</h4></mat-card-subtitle>
-            </mat-card-title-group>
-            <mat-icon>view_list</mat-icon>
-          </mat-card-content>
-        </mat-card>
-      </div>
-
-      <div class="col-12 md:col-6 lg:col-4 ">
-        <mat-card>
-          <mat-card-content>
-            <mat-card-title-group>
-              <mat-card-title><h2>{{ establecimientosList.length }}</h2></mat-card-title>
-              <mat-card-subtitle><h4>Establecimientos</h4></mat-card-subtitle>
-            </mat-card-title-group>
-            <mat-icon>business</mat-icon>
-          </mat-card-content>
-        </mat-card>
-      </div>
-
-      <div class="col-12 md:col-6 lg:col-4">
-        <mat-card>
-          <mat-card-content>
-            <mat-card-title-group>
-              <mat-card-title
-                ><h2>{{ directivasList.length }}</h2></mat-card-title
-              >
-              <mat-card-subtitle><h4>Directivas</h4></mat-card-subtitle>
-            </mat-card-title-group>
-            <mat-icon>list_alt</mat-icon>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
-
     <div
-      *ngIf="user()?.rol === 'SOPORTE' || user()?.rol === 'ADMINISTRADOR'"
+      *ngIf="user()?.rol === 'SOPORTE'"
       class="grid"
     >
       <div class="col-12 md:col-6 lg:col-3">
         <mat-card>
-          <mat-card-content>
+          <mat-card-content class="contenedor">
             <mat-card-title-group>
               <mat-card-title
-                ><h2>{{ ticketsList.length }}</h2></mat-card-title
+              ><h2>{{ newTicketsList.length }}</h2></mat-card-title
               >
-              <mat-card-subtitle><h4>Tickets</h4></mat-card-subtitle>
+              <mat-card-subtitle><h4>Tickets Asignados: Abiertos/En Proceso</h4></mat-card-subtitle>
             </mat-card-title-group>
-            <mat-icon>view_list</mat-icon>
+            <mat-icon class="icono">assignment</mat-icon>
           </mat-card-content>
         </mat-card>
       </div>
 
       <div class="col-12 md:col-6 lg:col-3">
         <mat-card>
-          <mat-card-content>
+          <mat-card-content class="contenedor">
             <mat-card-title-group>
               <mat-card-title
-                ><h2>{{ userCount }}</h2></mat-card-title
+                ><h2>{{ reasigTicketsList.length }}</h2></mat-card-title
               >
-              <mat-card-subtitle><h4>Usuarios</h4></mat-card-subtitle>
+              <mat-card-subtitle><h4>Tickets Reasignados: Abiertos/En Proceso</h4></mat-card-subtitle>
             </mat-card-title-group>
-            <mat-icon>supervisor_account</mat-icon>
+            <mat-icon class="icono">assignment</mat-icon>
           </mat-card-content>
         </mat-card>
       </div>
 
       <div class="col-12 md:col-6 lg:col-3">
         <mat-card>
-          <mat-card-content>
+          <mat-card-content class="contenedor">
             <mat-card-title-group>
               <mat-card-title
-                ><h2>{{ estableishmentCount }}</h2></mat-card-title
+                ><h2>{{ categoriesList.length }}</h2></mat-card-title
               >
-              <mat-card-subtitle><h4>Establecimientos</h4></mat-card-subtitle>
+              <mat-card-subtitle><h4>Temas de Ayuda Asignados</h4></mat-card-subtitle>
             </mat-card-title-group>
-            <mat-icon>business</mat-icon>
+            <mat-icon class="icono">list_alt</mat-icon>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-12 md:col-6 lg:col-3">
+        <mat-card>
+          <mat-card-content class="contenedor">
+            <mat-card-title-group>
+              <mat-card-title
+                ><h2>{{ estabelishementsList.length }}</h2></mat-card-title
+              >
+              <mat-card-subtitle><h4>Unidades / Gestiones Asignados</h4></mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-icon class="icono">business</mat-icon>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="col-12 lg:col-6">
+        <mat-card>
+          <mat-card-header>
+            <mat-toolbar>
+              <span>Temas de Ayuda Asignados</span>
+            </mat-toolbar>
+          </mat-card-header>
+          <mat-card-content>
+            <app-table
+              *ngIf="categoriesList.length > 0"
+              [data]="categoriesList"
+              [columns]="tableColumnsCategorias"
+            ></app-table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="col-12 lg:col-6">
+        <mat-card>
+          <mat-card-header>
+            <mat-toolbar>
+              <span>Unidades/Gestiones Asignados</span>
+            </mat-toolbar>
+          </mat-card-header>
+          <mat-card-content>
+            <app-table
+              *ngIf="estabelishementsList.length > 0"
+              [data]="estabelishementsList"
+              [columns]="tableColumnsEstablecimientos"
+            ></app-table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+
+    </div>
+
+    <div
+      *ngIf="user()?.rol === 'ADMINISTRADOR'"
+      class="grid"
+    >
+      <div class="col-12 md:col-6 lg:col-3">
+        <mat-card>
+          <mat-card-content class="contenedor">
+            <mat-card-title-group>
+              <mat-card-title
+                ><h2>{{ ticketsCount }}</h2></mat-card-title
+              >
+              <mat-card-subtitle><h4>Tickets Totales</h4></mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-icon class="icono">assignment</mat-icon>
           </mat-card-content>
         </mat-card>
       </div>
 
       <div class="col-12 md:col-6 lg:col-3">
         <mat-card>
-          <mat-card-content>
+          <mat-card-content class="contenedor">
             <mat-card-title-group>
               <mat-card-title
-                ><h2>{{ directivasList.length }}</h2></mat-card-title
+                ><h2>{{ usersCount }}</h2></mat-card-title
               >
-              <mat-card-subtitle><h4>Directivas</h4></mat-card-subtitle>
+              <mat-card-subtitle><h4>Usuarios Totales</h4></mat-card-subtitle>
             </mat-card-title-group>
-            <mat-icon>list_alt</mat-icon>
+            <mat-icon class="icono">supervisor_account</mat-icon>
           </mat-card-content>
         </mat-card>
       </div>
+
+      <div class="col-12 md:col-6 lg:col-3">
+        <mat-card>
+          <mat-card-content class="contenedor">
+            <mat-card-title-group>
+              <mat-card-title
+                ><h2>{{ estableishmentsCount }}</h2></mat-card-title
+              >
+              <mat-card-subtitle><h4>Unidades / Gestiones</h4></mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-icon class="icono">business</mat-icon>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="col-12 md:col-6 lg:col-3">
+        <mat-card>
+          <mat-card-content class="contenedor">
+            <mat-card-title-group>
+              <mat-card-title
+                ><h2>{{ categoriesCount }}</h2></mat-card-title
+              >
+              <mat-card-subtitle><h4>Temas de Ayuda</h4></mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-icon class="icono">list_alt</mat-icon>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="col-12">
+        <mat-card>
+          <mat-card-header>
+            <mat-toolbar>
+              <span>Todos los Tickets</span>
+            </mat-toolbar>
+          </mat-card-header>
+          <mat-card-content>
+            <br>
+            <div class="grid">
+              <div class="col-12 md:col-5 lg:col-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>Rango de Fechas</mat-label>
+                  <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                    <input matStartDate formControlName="inicio" placeholder="Fecha Inicio">
+                    <input matEndDate formControlName="fin" placeholder="Fecha Fin">
+                  </mat-date-range-input>
+                  <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+                  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-date-range-picker #picker></mat-date-range-picker>
+
+                  <mat-error *ngIf="range.controls.inicio.hasError('matStartDateInvalid')">Fecha de Inicio Invalido</mat-error>
+                  <mat-error *ngIf="range.controls.fin.hasError('matEndDateInvalid')">Fecha de Fin Invalido</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-7 md:col-4 lg:col-3">
+                <button
+                  class="boton"
+                  mat-fab
+                  extended
+                  color="accent"
+                  [disabled]="range.get('inicio')?.value === null"
+                  (click)="filterDate()"
+                >
+                  <mat-icon>filter_list</mat-icon>
+                  <strong>Filtrar</strong>
+                </button>
+
+              </div>
+              <div class="col-1">
+                <button class="example-button-container"
+                  mat-mini-fab
+                  color="warn"
+                  [disabled]="range.get('inicio')?.value === null"
+                  (click)="removefilterDate()"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+
+              </div>
+            </div>
+
+            <app-table
+              *ngIf="ticketsList.length > 0"
+              [data]="ticketsList"
+              [columns]="tableColumnsTickets"
+              [config]="tableConfig"
+              (action)="onTableAction($event)"
+            ></app-table>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
     </div>
   </div>
 
-  <!-- TABLAS  -->
-
-  <div class="col-12 md:col-12 lg:col-6">
-    <mat-card>
-      <mat-card-header>
-        <mat-toolbar>
-          <span>Lista de Distritos</span>
-        </mat-toolbar>
-      </mat-card-header>
-      <mat-card-content>
-        <app-table
-          [data]="distritosList"
-          [columns]="tableColumnsDistritos"
-        ></app-table>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <div class="col-12 md:col-12 lg:col-6">
-    <mat-card>
-      <mat-card-header>
-        <mat-toolbar>
-          <span>Lista de Directivas</span>
-        </mat-toolbar>
-      </mat-card-header>
-      <mat-card-content>
-        <app-table
-          [data]="directivasList"
-          [columns]="tableColumnsDirectivas"
-        ></app-table>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <div class="col-12">
-    <mat-card>
-      <mat-card-header>
-        <mat-toolbar>
-          <span>Lista de Establecimientos</span>
-        </mat-toolbar>
-      </mat-card-header>
-      <mat-card-content>
-        <app-table
-          [data]="establecimientosList"
-          [columns]="tableColumnsEstablecimientos"
-        ></app-table>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <!-- <div class="col-12  ">
-      <mat-card>
-        <mat-card-header>
-          <mat-toolbar >
-            <span>Lista de Usuarios</span>
-          </mat-toolbar>
-        </mat-card-header>
-        <mat-card-content>
-            <app-table [data]="usuariosList" [columns]="tableColumnsUsuarios"></app-table>
-
-        </mat-card-content>
-      </mat-card>
-    </div> -->
 </div>

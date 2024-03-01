@@ -1,154 +1,256 @@
 <div class="grid">
   <div class="col-12">
-    <mat-card>
+    <mat-card class="grid">
       <mat-card-header>
         <mat-toolbar>
           <mat-card-title
-            ><span> Ticket {{ ticketSelect.codigo }}</span></mat-card-title
+            ><span>Ticket</span></mat-card-title
           >
+          <span class="spacer"></span>
+          <div *ngIf="user()!.rol === 'ADMINISTRADOR'">
+            <button mat-fab extended color="primary" (click)="reasignarTicket(ticketSelect.id)" *ngIf="ticketSelect.estado !== 'CERRADO'">
+              <mat-icon>assignment_ind</mat-icon> <strong>Reasignar</strong>
+            </button>
+          </div>
         </mat-toolbar>
       </mat-card-header>
 
-      <mat-card-content>
+      <mat-card-content class="col-12">
         <mat-divider></mat-divider>
-        <mat-chip-listbox>
-          <mat-chip-option color="primary" selected>
-            <span>{{ ticketSelect.estado }}</span></mat-chip-option
-          >
-          <mat-chip-option color="accent" selected>
-            <span>{{ ticketSelect.user.nombre }}</span></mat-chip-option
-          >
-          <mat-chip-option color="warn" selected
-            ><span>{{ ticketSelect.createdAt | date }}</span></mat-chip-option
-          >
-        </mat-chip-listbox>
-        <mat-divider></mat-divider>
+          <mat-accordion class="grid">
 
-        <mat-accordion class="grid">
-          <mat-expansion-panel hideToggle class="col-12">
-            <mat-expansion-panel-header>
-              <mat-panel-title
-                ><span>Categoria de problema</span></mat-panel-title
-              >
-              <mat-panel-description>{{
-                ticketSelect.directive.nombre
-              }}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-          <mat-expansion-panel hideToggle class="col-12">
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>Titulo de Problema</span></mat-panel-title>
-              <mat-panel-description>{{
-                ticketSelect.titulo
-              }}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-          <mat-expansion-panel hideToggle class="col-3">
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>Area</span></mat-panel-title>
-              <mat-panel-description>{{
-                ticketSelect.area
-              }}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-          <mat-expansion-panel hideToggle class="col-3">
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>N° de Piso</span></mat-panel-title>
-              <mat-panel-description>{{
-                ticketSelect.piso
-              }}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-          <mat-expansion-panel hideToggle class="col-3">
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>N° de Sala</span></mat-panel-title>
-              <mat-panel-description>{{
-                ticketSelect.n_sala
-              }}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-          <mat-expansion-panel hideToggle class="col-3">
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>N° de Consultorio</span></mat-panel-title>
-              <mat-panel-description>{{
-                ticketSelect.n_consultorio
-              }}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-        </mat-accordion>
+            <mat-expansion-panel hideToggle class="col-12 md:col-8 lg:col-5">
 
-        <mat-divider></mat-divider>
-        <div class="col-12">
-          <quill-editor [readOnly]="quillEditorReadOnly"></quill-editor>
-        </div>
-        <div class="col-12">
-          <span style="padding-left: 20px">Archivo Adjunto:</span>
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>N° Cédula</span></mat-panel-title>
+                <mat-panel-description>{{ticketSelect.cedula}}</mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>Nombre</span></mat-panel-title>
+                <mat-panel-description>{{ticketSelect.nombre}}</mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>Corréo</span></mat-panel-title>
+                <mat-panel-description>{{ticketSelect.correo_electronico}}</mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>N° Celular</span></mat-panel-title>
+                <mat-panel-description>{{ticketSelect.telefono}}</mat-panel-description>
+              </mat-expansion-panel-header>
+
+            </mat-expansion-panel>
+
+
+            <mat-expansion-panel hideToggle class="col-12 md:col-4 lg:col-3">
+
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>Área operativa</span></mat-panel-title>
+                <mat-panel-description>{{ticketSelect.area}}</mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-expansion-panel-header >
+                <mat-panel-title><span>Piso</span></mat-panel-title>
+                <mat-panel-description *ngIf="ticketSelect.piso">{{ticketSelect.piso}}</mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-expansion-panel-header >
+                <mat-panel-title><span>Sala</span></mat-panel-title>
+                <mat-panel-description *ngIf="ticketSelect.n_sala">{{ticketSelect.n_sala}}</mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-expansion-panel-header >
+                <mat-panel-title><span>Consultorio</span></mat-panel-title>
+                <mat-panel-description *ngIf="ticketSelect.n_consultorio">{{ticketSelect.n_consultorio}}</mat-panel-description>
+              </mat-expansion-panel-header>
+
+            </mat-expansion-panel>
+
+            <mat-expansion-panel hideToggle class="col-12 md:col-12 lg:col-4">
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>N° Ticket</span></mat-panel-title>
+                <mat-panel-description>{{ticketSelect.codigo}}</mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>Estado</span></mat-panel-title>
+                <mat-panel-description>{{ticketSelect.estado}}</mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>F. Creación</span></mat-panel-title>
+                <mat-panel-description>{{ticketSelect.createdAt | dateFormat}}</mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-expansion-panel-header >
+                <mat-panel-title><span>F. Cierre</span></mat-panel-title>
+                <mat-panel-description *ngIf="ticketSelect.estado === 'CERRADO'">{{ticketSelect.cierreAt | dateFormat}}</mat-panel-description>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+
+          </mat-accordion>
           <mat-divider></mat-divider>
-          <div class="file-container">
-            <ng-container *ngFor="let file of archivos">
-              <div class="file-item">
-                <ng-container *ngIf="isImage(file.archivo)">
-                  <img
-                    [src]="file.archivo"
-                    alt="Imagen"
-                    width="200"
-                    (click)="openImageDialog(file.archivo)"
-                  />
-                </ng-container>
-                <ng-container *ngIf="!isImage(file.archivo)">
-                  <a [href]="file.archivo" target="_blank">{{
-                    file.archivo
-                  }}</a>
-                </ng-container>
-              </div>
-            </ng-container>
+          <mat-accordion class="grid">
+            <mat-expansion-panel hideToggle class="col-12 md:col-12 lg:col-6">
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>Tema de Ayuda</span></mat-panel-title>
+                <mat-panel-description>{{ticketSelect.category.nombre}}</mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-expansion-panel-header *ngIf="ticketSelect.subcategory">
+                <mat-panel-title><span>Departamento</span></mat-panel-title>
+                <mat-panel-description>{{ticketSelect.subcategory.nombre}}</mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>Soporte Asignado</span></mat-panel-title>
+                <mat-panel-description>{{ticketSelect.soporteAsignado}}</mat-panel-description>
+              </mat-expansion-panel-header>
+
+            </mat-expansion-panel>
+            <mat-expansion-panel hideToggle class="col-12 md:col-12 lg:col-6">
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>Requerimiento</span></mat-panel-title>
+                <mat-panel-description>{{ticketSelect.requerimiento}}</mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-expansion-panel-header>
+                <mat-panel-title><span>Unidad/Gestión</span></mat-panel-title>
+                <mat-panel-description>{{ticketSelect.estableishment.nombre}}</mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-expansion-panel-header *ngIf="ticketSelect.soporteReasignado">
+                <mat-panel-title><span>Soporte Reasignado</span></mat-panel-title>
+                <mat-panel-description>{{ticketSelect.soporteReasignado}}</mat-panel-description>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+
+
+
+
+          </mat-accordion>
+
+      </mat-card-content>
+
+      <div class="col-12">
+        <quill-editor #quillEditor1 [readOnly]="quillEditorReadOnly"></quill-editor>
+      </div>
+
+      <div class="col-12" *ngIf="archivos.length > 0">
+        <mat-divider></mat-divider>
+        <span style="padding-left: 20px">Archivo Adjunto:</span>
+        <mat-divider></mat-divider>
+        <div class="file-container">
+          <ng-container *ngFor="let file of archivos">
+            <div class="file-item">
+              <ng-container *ngIf="isImage(file.archivo)">
+                <img
+                  [src]="file.archivo"
+                  alt="Imagen"
+                  width="200"
+                  (click)="openImageDialog(file.archivo)"
+                />
+              </ng-container>
+              <ng-container *ngIf="!isImage(file.archivo)">
+                <a [href]="file.archivo" target="_blank">{{
+                  file.archivo
+                }}</a>
+              </ng-container>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="col-12"><mat-divider></mat-divider></div>
+        <span style="padding-left: 20px;">* Detalle de la Solución Aplicada</span>
+        <div class="col-12"><mat-divider></mat-divider></div>
+      <div class="col-12">
+        <quill-editor #quillEditor2  [readOnly]="quillEditorReadOnly2" [formControl]="commentSupport"></quill-editor>
+      </div>
+
+      <div class="col-12 md:col-4 lg:col-4" *ngIf="ticketSelect.estado !== 'CERRADO'">
+        <button mat-fab extended color="primary" [disabled]="commentSupport.value === null" (click)="guardarComentario(ticketSelect.id)">
+          <mat-icon>add_circle</mat-icon> <strong>Guardar Comentario</strong>
+        </button>
+      </div>
+
+
+      <div class="col-12" *ngIf="ticketSelect.estado === 'CERRADO'">
+        <mat-divider></mat-divider>
+        <span style="padding-left: 20px">Satisfacción del Usuario</span>
+        <mat-divider></mat-divider>
+        <mat-accordion class="grid">
+
+          <mat-expansion-panel hideToggle class="col-12 md:col-5 lg:col-5">
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Nivel de Satisfacción</span></mat-panel-title>
+              <mat-panel-description>{{ticketSelect.satisfaccion}}</mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Acompañamiento</span></mat-panel-title>
+              <mat-panel-description>{{ticketSelect.soportePresente}}</mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Ayuda Oportuna</span></mat-panel-title>
+              <mat-panel-description>{{ticketSelect.a_oportuna}}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel hideToggle class="col-12 md:col-7 lg:col-7">
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Problema Solucionado</span></mat-panel-title>
+              <mat-panel-description>{{ticketSelect.s_problema}}</mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Sugerencia / Comentario</span></mat-panel-title>
+              <mat-panel-description>{{ticketSelect.sugerencias}}</mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+
+        </mat-accordion>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="col-12">
+        <div class="grid">
+          <div class="col-12 md:col-3 lg:col-2" *ngIf="user()!.rol === 'ADMINISTRADOR'">
+            <button mat-fab extended color="accent" routerLink="/dashboard/tickets">
+              <mat-icon>arrow_back</mat-icon> <strong>Tickets</strong>
+            </button>
+          </div>
+          <div class="col-12 md:col-3 lg:col-2"  *ngIf="user()!.rol === 'SOPORTE'">
+            <button mat-fab extended color="accent" routerLink="/dashboard/assigned-ticket">
+              <mat-icon>arrow_back</mat-icon> <strong>Tickets</strong>
+            </button>
+          </div>
+
+          <div class="md:col-1 lg:col-4" *ngIf="ticketSelect.estado ==='EN PROCESO'"></div>
+          <div class="md:col-1 lg:col-1" *ngIf="ticketSelect.estado !=='EN PROCESO'"></div>
+          <div class="col-12 md:col-4 lg:col-3" *ngIf="ticketSelect.estado !=='EN PROCESO'">
+            <button mat-fab extended color="primary" (click)="crearTicket(ticketSelect.id)" *ngIf="ticketSelect.estado !== 'CERRADO'">
+              <mat-icon>assignment_turned_in</mat-icon> <strong>Crear Tickets</strong>
+            </button>
+          </div>
+          <div class="col-12 md:col-4 lg:col-3" *ngIf="ticketSelect.estado ==='EN PROCESO'">
+            <button mat-fab extended color="primary" (click)="crearTicket(ticketSelect.id)" >
+              <mat-icon>assignment_turned_in</mat-icon> <strong>Crear Tickets</strong>
+            </button>
+          </div>
+          <div class="col-12 md:col-4 lg:col-3" *ngIf="ticketSelect.estado !=='CERRADO' && ticketSelect.estado !=='EN PROCESO' && ticketSelect.estado !=='ABIERTO'">
+            <button mat-fab extended color="primary" (click)="crearTicket(ticketSelect.id)">
+              <mat-icon>assignment_turned_in</mat-icon> <strong>Crear Tickets</strong>
+            </button>
+          </div>
+          <div class="col-12 md:col-4 lg:col-3" *ngIf="ticketSelect.estado !=='EN PROCESO'">
+            <button mat-fab extended color="primary" (click)="enProcesoTicket()" *ngIf="ticketSelect.estado !== 'CERRADO'">
+              <mat-icon>schedule</mat-icon> <strong>En Proceso</strong>
+            </button>
+          </div>
+          <div class="col-12 md:col-4 lg:col-3" *ngIf="ticketSelect.estado ==='ABIERTO' || 'EN PROCESO'">
+            <button mat-fab extended color="warn" (click)="cerrarTicket()" *ngIf="ticketSelect.estado !== 'CERRADO'">
+              <mat-icon>done_outline</mat-icon> <strong>Cerrar Ticket</strong>
+            </button>
+          </div>
+          <div class="col-12 md:col-4 lg:col-3" *ngIf="ticketSelect.estado ==='ABIERTO' || 'EN PROCESO'">
+            <button mat-fab extended color="primary" (click)="cambiarDepartamento(ticketSelect.id)" *ngIf="ticketSelect.estado !== 'CERRADO'">
+              <mat-icon>autorenew</mat-icon> <strong>Cambiar Departamento</strong>
+            </button>
           </div>
         </div>
-      </mat-card-content>
+      </div>
+
+
     </mat-card>
   </div>
 </div>
 
-    <mat-card>
-      <mat-card-header>
-        <mat-toolbar>
-          <mat-card-title><span> Seguimiento del Ticket</span></mat-card-title>
-        </mat-toolbar>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="grid" *ngFor="let item of ticketDetalle">
-          <div class="col-2">
-            <span>{{ item.createdAt | date }}</span>
-          </div>
-          <div class="col-10">
-            <span>{{ item.detalle }}</span>
-          </div>
-        </div>
-        <mat-divider></mat-divider>
-        <form class="grid" [formGroup]="formTicketDetalle">
-          <div class="col-12">
-            <quill-editor formControlName="detalle"></quill-editor>
-          </div>
-          <div class="col-12 md:col-3 lg:col-3">
-            <button mat-fab extended color="accent" routerLink="/dashboard/reports">
-              <mat-icon>arrow_back</mat-icon> <strong>Volver</strong>
-            </button>
-          </div>
-          <div class="col-12 md:col-3 lg:col-3">
-            <button mat-fab extended color="primary" [disabled]="formTicketDetalle.invalid" (click)="responderTicket()">
-              <mat-icon>reply</mat-icon> <strong>Responder</strong>
-            </button>
-          </div>
-          <div class="col-12 md:col-3 lg:col-3">
-            <button mat-fab extended color="warn" (click)="cerrarTicket()">
-              <mat-icon>launch</mat-icon> <strong>Reabrir Ticket</strong>
-            </button>
-          </div>
-          <div class="col-12 md:col-3 lg:col-3">
-            <button mat-fab extended color="warn" (click)="cerrarTicket()">
-              <mat-icon>close</mat-icon> <strong>Cerrar Ticket</strong>
-            </button>
-          </div>
-        </form>
-      </mat-card-content>
-    </mat-card>

@@ -2,9 +2,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit, ViewChild, computed, inject } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivationEnd, Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/services/auth.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ImageService } from 'src/app/service/ImageService.service';
+import { AuthService } from '../../../auth/services/auth.service';
+import { ImageService } from '../../../service/ImageService.service';
 import { Subscription, filter, map } from 'rxjs';
 
 @Component({
@@ -23,46 +22,27 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
 
   public rolAdmin: boolean = true;
 
+  anioActual: number = new Date().getFullYear();
+
   //header
   public headerItems = [
-    // { label: 'Nuevo Ticket', icon: 'add_box', url: './ticket/nuevo'},
     { label: 'Mi Perfil', icon: 'account_circle', url: './profile'},
     { label: 'Ajustes', icon: 'settings', url: './settings'},
   ];
 
   //Lista de Opciones
 
-  public sidebarItemsUser = [
-    { label: 'Inicio', icon: 'home', url: './home'},
-    { label: 'Nuevo Ticket', icon: 'add_box', url: './ticket/nuevo'},
-    { label: 'Mis Tickets', icon: 'view_list', url: './tickets'},
-    { label: 'Tickets', icon: ' insert_chart', url: './reports'},
-    { label: 'Mi Perfil', icon: 'account_circle', url: './profile'},
-    { label: 'Ajustes', icon: 'settings', url: './settings'},
-  ];
-
   public sidebarItemsSoporte = [
     { label: 'Inicio', icon: 'home', url: './home'},
-    // { label: 'Reportes', icon: ' insert_chart', url: './reports'},
-    { label: 'Tickets', icon: ' view_list', url: './reports'},
-    { label: 'Mi Perfil', icon: 'account_circle', url: './profile'},
-    { label: 'Ajustes', icon: 'settings', url: './settings'},
-    { label: 'Usuarios', icon: 'table_chart', url: './users'},
-    { label: 'Establecimientos', icon: 'table_chart', url: './establishments'},
-    { label: 'Distritos', icon: 'table_chart', url: './districts'},
-    { label: 'Directivas', icon: 'table_chart', url: './directives'},
+    { label: 'Mis Tickets', icon: ' assignment', url: './assigned-tickets'},
+
   ];
   public sidebarItemsAdmin = [
     { label: 'Inicio', icon: 'home', url: './home'},
-    // { label: 'Nuevo Ticket', icon: 'add_box', url: './ticket/nuevo'},
-    // { label: 'Reportes', icon: ' insert_chart', url: './reports'},
-    { label: 'Mi Perfil', icon: 'account_circle', url: './profile'},
-    { label: 'Ajustes', icon: 'settings', url: './settings'},
-    { label: 'Tickets', icon: 'table_chart', url: './tickets'},
-    { label: 'Usuarios', icon: 'table_chart', url: './users'},
-    { label: 'Establecimientos', icon: 'table_chart', url: './establishments'},
-    { label: 'Distritos', icon: 'table_chart', url: './districts'},
-    { label: 'Directivas', icon: 'table_chart', url: './directives'},
+    { label: 'Reportes', icon: 'description', url: './reports'},
+    { label: 'Usuarios', icon: 'supervisor_account', url: './users'},
+    { label: 'Temas Ayuda', icon: 'list_alt', url: './categories'},
+    { label: 'EODs', icon: 'business', url: './eods'},
   ];
 
 
@@ -75,16 +55,16 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
     @Inject(BreakpointObserver) private observer: BreakpointObserver,
     private cd:ChangeDetectorRef,
     private router: Router,
-    private dialog: MatDialog,
 
-     ){
+  ){
 
-      this.tituloSubs = this.getArgumentosRuta()
-                        .subscribe( ({titulo}) => {
-                          this.titulo = titulo;
-                          document.title = `Mesa de Ayuda - ${titulo}`;
-                      })
-     }
+  this.tituloSubs = this.getArgumentosRuta().subscribe(
+    ({titulo}) => {
+      this.titulo = titulo;
+      document.title = `Mesa de Ayuda - ${titulo}`;
+    }
+  )
+}
 
 
 
@@ -94,18 +74,12 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
   }
 
   verificarRol(){
-    // console.log( this.user!.rol );
-
-      this.rolAdmin = true;
-
-    // if (this.user && this.user.value && this.user.value.rol === 'ADMIN') {
-    //   this.rolAdmin = true;
-    // }
+    this.rolAdmin = true;
   }
 
 
   ngAfterViewInit() {
-    this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+    this.observer.observe(['(max-width: 992px)']).subscribe((res) => {
       if ( res.matches ){
         this.sidenav.mode = 'over';
         this.sidenav.close();
@@ -127,8 +101,8 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
       filter( (event): event is ActivationEnd => event instanceof ActivationEnd && event.snapshot.firstChild === null),
       map( (event: ActivationEnd) => event.snapshot.data ),
     )
-
   }
+
   onLogout(): void{
     this.authService.logout();
   }

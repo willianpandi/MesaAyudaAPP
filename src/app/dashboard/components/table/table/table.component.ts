@@ -7,7 +7,6 @@ import { Table, TableAction } from '../interfaces/table-action.interface';
 import { MatSort } from '@angular/material/sort';
 import { ColumValuePipe } from '../pipes/colum-values.pipe';
 
-
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -20,7 +19,14 @@ export class TableComponent implements AfterViewInit{
   tableDisplayColumns: string[] = [];
   tableColumns: TableColumn[] = [];
   tableConfig: TableConfig | undefined;
+  currentFilterValue: string = '';
 
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.currentFilterValue = filterValue;
+  }
 
   @Input() set data(data: any) {
     this.dataSource.data = data;
@@ -60,20 +66,11 @@ export class TableComponent implements AfterViewInit{
 
   @Output() action: EventEmitter<TableAction> = new EventEmitter();
 
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-
   // configuraciones de la tabla
-
   setConfig( config: TableConfig) {
     this.tableConfig = config;
     if (this.tableConfig.showActions ) {
       this.tableDisplayColumns.push('actions')
-      // this.tableDisplayColumns.push('actions1')
     }
   }
 

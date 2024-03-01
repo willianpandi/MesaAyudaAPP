@@ -2,17 +2,365 @@
 <div class="grid">
   <div class="col-12">
     <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Tickets por EOD</span>
+        </mat-toolbar>
+      </mat-card-header>
       <mat-card-content>
 
-        <app-table-detail
-        [data]="ticketList"
-        [columns]="tableColumnsTickets"
-        [config]="tableConfig"
-        (action)="onTableAction($event)"
-      >
-      </app-table-detail>
+        <br>
+        <div class="grid">
+          <div class="col-12 md:col-9 lg:col-9">
+            <mat-form-field appearance="outline">
+              <mat-label>Eods</mat-label>
+              <mat-select [formControl]="eods">
+                <mat-option *ngFor="let item of listEods | order: 'nombre'"[value]="item.id">
+                  {{ item.nombre }}
+                  <hr />
+                </mat-option>
+              </mat-select>
+              <mat-icon matSuffix>map</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="col-12 md:col-3 lg:col-3">
+            <button
+              class="boton"
+              mat-fab
+              extended
+              color="primary"
+              [disabled]="eods.value === null"
+              (click)="searchByEods()"
+            >
+              <mat-icon>search</mat-icon>
+              <strong>Buscar</strong>
+            </button>
+
+          </div>
+        </div>
+        <br>
+        <div class="grid">
+          <div class="col-12 md:col-5 lg:col-4">
+              <mat-form-field appearance="outline">
+              <mat-label>Mes y Año</mat-label>
+              <input matInput [matDatepicker]="dp" [formControl]="dateEod">
+              <mat-hint>MM/AAAA</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+              <mat-datepicker #dp
+                              startView="multi-year"
+                              (monthSelected)="setMonthAndYearEod($event, dp)"
+                              panelClass="example-month-picker">
+              </mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-7 md:col-4 lg:col-3">
+            <button
+              class="boton"
+              mat-fab
+              extended
+              color="accent"
+              (click)="filterDateEod()"
+            >
+              <mat-icon>filter_list</mat-icon>
+              <strong>Filtrar</strong>
+            </button>
+          </div>
+          <div class="col-1">
+            <button class="example-button-container"
+              mat-mini-fab
+              color="warn"
+              (click)="removefilterDate1()"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+
+        <app-table
+          *ngIf="subCategoryByEod.length > 0"
+          [data]="subCategoryByEod"
+          [columns]="tableColumnsReportsSubCategory"
+        ></app-table>
 
       </mat-card-content>
     </mat-card>
   </div>
+
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Tickets por Unidad/Gestión</span>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+
+        <br>
+        <form class="grid" [formGroup]="formReport">
+          <div class="col-12">
+            <mat-form-field appearance="outline">
+              <mat-label>Eods</mat-label>
+              <mat-select
+                formControlName="district"
+                placeholder="Elija un EOD"
+              >
+                <mat-option *ngFor="let item of listEods | order: 'nombre'"[value]="item.id">
+                  {{ item.nombre }}
+                  <hr />
+                </mat-option>
+              </mat-select>
+              <mat-icon matSuffix>map</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-9 lg:col-9">
+            <mat-form-field appearance="outline">
+              <mat-label>Unidades/Gestiones</mat-label>
+                <mat-select formControlName="estableishment" placeholder="Elija la Unidad/Gestión">
+                <mat-option
+                  *ngFor="let item of estableishmetsByDistrict | order: 'nombre'"
+                  [value]="item.id"
+                >
+                  <hr />
+                  {{ item.nombre }}
+                </mat-option>
+              </mat-select>
+              <mat-icon matSuffix>business</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-3 lg:col-3">
+            <button
+              mat-fab
+              extended
+              color="primary"
+              [disabled]="formReport.invalid"
+              (click)="searchByEstableishment()"
+            >
+              <mat-icon>search</mat-icon>
+              <strong>Buscar</strong>
+            </button>
+
+          </div>
+        </form>
+        <br>
+        <div class="grid">
+          <div class="col-12 md:col-5 lg:col-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Mes y Año</mat-label>
+              <input matInput [matDatepicker]="dp2" [formControl]="dateEsta">
+              <mat-hint>MM/AAAA</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="dp2"></mat-datepicker-toggle>
+              <mat-datepicker #dp2
+                              startView="multi-year"
+                              (monthSelected)="setMonthAndYearEsta($event, dp2)"
+                              panelClass="example-month-picker">
+              </mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-7 md:col-4 lg:col-3">
+            <button
+              class="boton"
+              mat-fab
+              extended
+              color="accent"
+              (click)="filterDateEsta()"
+            >
+              <mat-icon>filter_list</mat-icon>
+              <strong>Filtrar</strong>
+            </button>
+          </div>
+          <div class="col-1">
+            <button class="example-button-container"
+              mat-mini-fab
+              color="warn"
+              (click)="removefilterDate2()"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <app-table
+          *ngIf="subCategoryByEstableishment.length > 0"
+          [data]="subCategoryByEstableishment"
+          [columns]="tableColumnsReportsSubCategory"
+        ></app-table>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Tickets por Departamento</span>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+
+        <br>
+        <div class="grid">
+          <div class="col-12 md:col-5 lg:col-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Mes y Año</mat-label>
+              <input matInput [matDatepicker]="dp3" [formControl]="dateCategory">
+              <mat-hint>MM/AAAA</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="dp3"></mat-datepicker-toggle>
+              <mat-datepicker #dp3
+                              startView="multi-year"
+                              (monthSelected)="setMonthAndYearCategory($event, dp3)"
+                              panelClass="example-month-picker">
+              </mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-7 md:col-4 lg:col-3">
+            <button
+              class="boton"
+              mat-fab
+              extended
+              color="accent"
+              (click)="searchCategory()"
+            >
+              <mat-icon>filter_list</mat-icon>
+              <strong>Filtrar</strong>
+            </button>
+          </div>
+          <div class="col-1">
+            <button class="example-button-container"
+              mat-mini-fab
+              color="warn"
+              (click)="removefilterDate3()"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <app-table
+          *ngIf="subCategoryReportsList.length > 0"
+          [data]="subCategoryReportsList"
+          [columns]="tableColumnsReportsSubCategory"
+        ></app-table>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Tickets por Soporte</span>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+
+        <br>
+        <div class="grid">
+          <div class="col-12 md:col-5 lg:col-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Mes y Año</mat-label>
+              <input matInput [matDatepicker]="dp4" [formControl]="dateSupport">
+              <mat-hint>MM/AAAA</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="dp4"></mat-datepicker-toggle>
+              <mat-datepicker #dp4
+                              startView="multi-year"
+                              (monthSelected)="setMonthAndYearSupport($event, dp4)"
+                              panelClass="example-month-picker">
+              </mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-7 md:col-4 lg:col-3">
+            <button
+              class="boton"
+              mat-fab
+              extended
+              color="accent"
+              (click)="searchUser()"
+            >
+              <mat-icon>filter_list</mat-icon>
+              <strong>Filtrar</strong>
+            </button>
+          </div>
+          <div class="col-1">
+            <button class="example-button-container"
+              mat-mini-fab
+              color="warn"
+              (click)="removefilterDate4()"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <app-table
+          *ngIf="usersTicketsReports.length > 0"
+          [data]="usersTicketsReports"
+          [columns]="tableColumnsTickets"
+        ></app-table>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Tickets Reasignados por Soporte</span>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <br>
+        <div class="grid">
+          <div class="col-12 md:col-5 lg:col-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Mes y Año</mat-label>
+              <input matInput [matDatepicker]="dp5" [formControl]="dateReasig">
+              <mat-hint>MM/AAAA</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="dp5"></mat-datepicker-toggle>
+              <mat-datepicker #dp5
+                              startView="multi-year"
+                              (monthSelected)="setMonthAndYearReasig($event, dp5)"
+                              panelClass="example-month-picker">
+              </mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-7 md:col-4 lg:col-3">
+            <button
+              class="boton"
+              mat-fab
+              extended
+              color="accent"
+              (click)="searchReasig()"
+            >
+              <mat-icon>filter_list</mat-icon>
+              <strong>Filtrar</strong>
+            </button>
+          </div>
+          <div class="col-1">
+            <button class="example-button-container"
+              mat-mini-fab
+              color="warn"
+              (click)="removefilterDate5()"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <app-table
+          *ngIf="reasigTicketsReports.length > 0"
+          [data]="reasigTicketsReports"
+          [columns]="tableColumnsTicketsReasig"
+        ></app-table>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
 </div>

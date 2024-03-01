@@ -1,15 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import { environment } from 'src/environments/environments';
-// import { Files } from '../dashboard/interfaces/tickets';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ImageService {
-  // private imageUrl: string = 'assets/images/logo.png'; // Aquí colocas la URL inicial de tu imagen
-  private imageUrl: string = 'assets/images/LOGO-MSP-1.png'; // Aquí colocas la URL inicial de tu imagen
+  private imageUrl: string = 'assets/images/LOGO-MSP-1.png';
 
   url = environment.baseURL;
   filesURL =  this.url+"/tickets/";
@@ -37,8 +35,6 @@ export class ImageService {
     if (file) {
       formData.append('file', file, file.name);
     }
-    console.log({fordata: formData});
-
     return this.httpClient.post<any>(`${this.filesURL}logo`, formData, {headers})
     .pipe(catchError((err) => throwError(() => err.error.message)));
   }

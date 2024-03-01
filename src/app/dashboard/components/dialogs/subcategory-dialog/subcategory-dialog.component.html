@@ -1,0 +1,57 @@
+<div mat-dialog-content>
+  <div class="login100-form-title p-t-10">{{ tituloAccion }} Departamento</div>
+  <mat-divider></mat-divider>
+  <form class="grid" [formGroup]="formSubCategory">
+
+      <div class="col-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Categoría Asignada</mat-label>
+          <mat-select formControlName="category">
+            <mat-option *ngFor="let item of listCategories | order: 'nombre'"[value]="item.id">
+              {{ item.nombre }}
+              <hr />
+            </mat-option>
+          </mat-select>
+          <mat-hint *ngIf="isValidField('category')">{{
+            getFieldError("category")
+          }}</mat-hint>
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 md:col-8 lg:col-8">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre de Sub-Categoría</mat-label>
+          <input matInput formControlName="nombre" autocomplete="off"/>
+          <mat-hint *ngIf="isValidField('nombre')">{{
+            getFieldError("nombre")
+          }}</mat-hint>
+          <mat-icon matSuffix>event_note</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 md:col-4 lg:col-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Tiempo (min)</mat-label>
+          <input matInput formControlName="tiempo" type="number" autocomplete="off" />
+          <mat-hint *ngIf="isValidField('tiempo')">{{
+            getFieldError("tiempo")
+          }}</mat-hint>
+          <mat-icon matSuffix>access_time</mat-icon>
+        </mat-form-field>
+      </div>
+
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-fab extended mat-dialog-close color="warn"><mat-icon>cancel</mat-icon> <strong>Cancelar</strong></button>
+  <button
+    mat-fab extended
+    color="primary"
+    [disabled]="formSubCategory.invalid"
+    (click)="addSubCategory()"
+  >
+  <mat-icon>{{ iconAccion }}</mat-icon>
+  <strong>{{ botonAccion }}</strong>
+  </button>
+</div>

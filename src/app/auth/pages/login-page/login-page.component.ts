@@ -2,10 +2,9 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import Swal from 'sweetalert2'
-import { ValidatorsService } from 'src/app/shared/service/validators.service';
+import { ValidatorsService } from '../../../shared/service/validators.service';
 import { MatDialog } from '@angular/material/dialog';
-import { RegisterPageComponent } from '../register-page/register-page.component';
+import Swal from 'sweetalert2'
 
 @Component({
   templateUrl: './login-page.component.html',
@@ -35,47 +34,21 @@ export class LoginPageComponent {
     return this.validatorsService.getFieldError(this.formLogin, field)
   }
 
-  // getFieldError( field: string ): string | null {
-  //   if ( !this.formLogin.controls[field] ) return null;
-
-  //   const errors = this.formLogin.controls[field].errors || {};
-
-  //   for (const key of Object.keys(errors)) {
-  //     switch( key ){
-  //       case 'required':
-  //         return 'Este campo es requerido';
-
-  //       case 'minlength':
-  //         return `Minimo ${ errors['minlength'].requiredLength} caracteres.`;
-  //     }
-
-  //   }
-  //   return null;
-  // }
-
-
   login(){
     const { username, password } = this.formLogin.value;
 
     this.authService.login(username, password)
       .subscribe(  {
-        next: () => this.router.navigateByUrl('/dashboard'),
+        next: () => {this.router.navigateByUrl('/dashboard'), this.formLogin.reset();},
+
         error: (message) => {
-          Swal.fire('Error', message, 'error')
+          Swal.fire({
+          title: 'Credenciales Invalidas',
+          icon: 'error',
+          html: `Por favor, ingrese correctamente sus credenciales. <strong>`+message+`</strong>`,
+        })
         }
       })
-
-    this.formLogin.reset();
-  }
-
-  register(){
-    this.dialog.open(RegisterPageComponent, {
-      disableClose: true,
-      width:"800px"
-    }).afterClosed().subscribe(resultado => {
-      if (resultado === "creado") {
-      }
-    })
   }
 }
 

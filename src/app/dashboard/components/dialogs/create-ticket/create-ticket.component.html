@@ -1,0 +1,53 @@
+<div mat-dialog-content>
+  <div class="login100-form-title p-t-10">Crear Ticket</div>
+  <mat-divider></mat-divider>
+  <form [formGroup]="formCreatTicket">
+    <div class="grid">
+      <div class="col-12 lg:col-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Número de Cédula</mat-label>
+          <input matInput
+            formControlName="cedula"
+            placeholder="Ex. 0123456789"
+            type="text"
+            #input
+            maxlength="10"
+          />
+          <mat-hint class="hint" align="end"
+            >{{ input.value.length }}/10</mat-hint
+          >
+          <mat-hint *ngIf="isValidField('cedula')">{{
+            getFieldError("cedula")
+          }}</mat-hint>
+          <mat-icon matSuffix>credit_card</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 lg:col-8">
+        <mat-form-field appearance="outline">
+          <mat-label>Correo Electrónico</mat-label>
+          <input matInput formControlName="correo_electronico" autocomplete="off"  placeholder="Ex. nombre@gmail.com" />
+          <mat-hint *ngIf="isValidField('correo_electronico')">{{
+            getFieldError("correo_electronico")
+          }}</mat-hint>
+          <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+      </div>
+
+    </div>
+  </form>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-fab extended mat-dialog-close color="warn"><mat-icon>cancel</mat-icon> <strong>Cancelar</strong></button>
+    <button
+      mat-fab extended
+      color="primary"
+      [disabled]="formCreatTicket.invalid"
+      (click)="crearTicket()"
+      type="submit"
+    >
+    <mat-icon>assignment_turned_in</mat-icon>
+    <strong>Crear Ticket</strong>
+    </button>
+  </div>

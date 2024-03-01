@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable, catchError, map, tap, throwError } from 'rxjs';
-import { District, SmallDistrict } from '../interfaces/districts';
-import { environment } from 'src/environments/environments';
+import { SmallEstableishment } from '../interfaces/districts';
+import { environment } from '../../../environments/environments';
 import { Estableishment } from '../interfaces/estableishments';
 
-// import Swal from 'sweetalert2';
 
 @Injectable({
     providedIn: 'root'
 })
-export class DistritoService {
+export class DistrictService {
 
     url = environment.baseURL;
     districtsURL = this.url+"/districts/";
@@ -24,8 +23,9 @@ export class DistritoService {
     }
 
     public lista(): Observable<any[]> {
+      const headers = this.getHeaders();
 
-        return this.httpClient.get<any[]>(`${this.districtsURL}all`,)
+        return this.httpClient.get<any[]>(`${this.districtsURL}all`, {headers})
         .pipe(
           catchError((err) => throwError(() => err.error.message))
         );
@@ -37,23 +37,25 @@ export class DistritoService {
       return this.httpClient.get<any>(`${this.districtsURL}count`, {headers});
     }
 
-    public detail(id: string): Observable<SmallDistrict[]> {
-      return this.httpClient.get<any>(`${this.districtsURL}${id}`)
+    public findEstableishments(id: string): Observable<SmallEstableishment[]> {
+      const headers = this.getHeaders();
+
+      return this.httpClient.get<SmallEstableishment[]>(`${this.districtsURL}estableishments/${id}`, {headers})
       .pipe(
         catchError((err) => throwError(() => err.error.message)),
       );
     }
     public detailes(id: string): Observable<Estableishment[]> {
-      return this.httpClient.get<any>(`${this.districtsURL}${id}`)
+      return this.httpClient.get<Estableishment[]>(`${this.districtsURL}${id}`)
       .pipe(
         catchError((err) => throwError(() => err.error.message)),
       );
     }
 
-    public save(distrito: any): Observable<any> {
+    public save(body: any): Observable<any> {
           const headers = this.getHeaders();
 
-        return this.httpClient.post<any>(`${this.districtsURL}create`, distrito, {headers})
+        return this.httpClient.post<any>(`${this.districtsURL}create`, body, {headers})
         .pipe(
           catchError((err) => throwError(() => err.error.message))
         );

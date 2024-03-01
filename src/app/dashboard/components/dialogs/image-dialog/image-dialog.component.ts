@@ -16,6 +16,6 @@ export class ImageDialogComponent {
   }
 
   closeDialog(): void {
-    this.dialogRef.close(); // Cierra el modal
+    this.dialogRef.close();
   }
 }

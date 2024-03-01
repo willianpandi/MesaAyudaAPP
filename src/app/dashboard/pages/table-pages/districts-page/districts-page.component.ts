@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { TableColumn } from '../../../components/table/interfaces/table-colum.interface';
 
-import { DistritoService } from '../../../services/districts.service';
-import { District } from 'src/app/dashboard/interfaces/districts';
-import { TableConfig } from 'src/app/dashboard/components/table/interfaces/table-config.interface';
-import { Table, TableAction } from 'src/app/dashboard/components/table/interfaces/table-action.interface';
+import { DistrictService } from '../../../services/districts.service';
+import { District } from '../../../../dashboard/interfaces/districts';
+import { TableConfig } from '../../../../dashboard/components/table/interfaces/table-config.interface';
+import { Table, TableAction } from '../../../../dashboard/components/table/interfaces/table-action.interface';
 import { MatDialog } from '@angular/material/dialog';
-import { DistrictDialogComponent } from 'src/app/dashboard/components/dialogs/district-dialog/district-dialog.component';
+import { DistrictDialogComponent } from '../../../../dashboard/components/dialogs/district-dialog/district-dialog.component';
+
+import { EstableishmentService } from '../../../services/estableishments.service';
+import { Estableishment } from '../../../../dashboard/interfaces/estableishments';
+import { EstableishmentDialogComponent } from '../../../../dashboard/components/dialogs/estableishment-dialog/estableishment-dialog.component';
 
 import Swal from 'sweetalert2';
 
@@ -16,14 +20,20 @@ import Swal from 'sweetalert2';
   styleUrls: ['./districts-page.component.css']
 })
 export class DistrictsPageComponent implements OnInit {
-  distritosList: District[]= [];
-  tableColumnsDistritos: TableColumn[] = [];
+  districtsList: District[]= [];
+  estableishmentsList: Estableishment[]= [];
+  tableColumnsDistricts: TableColumn[] = [];
+  tableColumnsEstableishments: TableColumn[] = [];
   tableConfig: TableConfig = {
+    showActions: true,
+  };
+  tableConfig2: TableConfig = {
     showActions: true,
   };
 
   constructor(
-    private distritoService: DistritoService,
+    private districtService: DistrictService,
+    private estableishmentService: EstableishmentService,
     public dialog: MatDialog
   ){}
 
@@ -32,23 +42,35 @@ export class DistrictsPageComponent implements OnInit {
     this.setData();
   }
   setTableColumns() {
-    this.tableColumnsDistritos = [
+    this.tableColumnsDistricts = [
       { label: 'Código', def: 'codigo', dataKey: 'codigo' },
-      { label: 'Nombre', def: 'nombre', dataKey: 'nombre' },
+      { label: 'Nombre EOD', def: 'nombre', dataKey: 'nombre' },
       { label: 'Provincia', def: 'provincia', dataKey: 'provincia' },
-      { label: 'Creado en', def: 'createdAt', dataKey: 'createdAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm' },
-      { label: 'Actualizado en', def: 'apdateAt', dataKey: 'apdateAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm' },
+      { label: 'Creado', def: 'createdAt', dataKey: 'createdAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm' },
+      { label: 'Actualizado', def: 'updateAt', dataKey: 'updateAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm' },
+    ];
+    this.tableColumnsEstableishments = [
+      { label: 'Código', def: 'codigo', dataKey: 'codigo' },
+      { label: 'Nombre Unidad/Gestión', def: 'nombre', dataKey: 'nombre' },
+      { label: 'Código EOD', def: 'district.codigo', dataKey: 'district.codigo', dataType: 'object' },
+      { label: 'Nombre EOD', def: 'district.nombre', dataKey: 'district.nombre', dataType: 'object' },
+      { label: 'Creado', def: 'createdAt', dataKey: 'createdAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm' },
+      { label: 'Actualizado', def: 'updateAt', dataKey: 'updateAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm' },
     ];
   }
 
   setData(): void {
-    this.distritoService.lista().subscribe(
+    this.districtService.lista().subscribe(
       (data)=> {
-        this.distritosList = data;
+        this.districtsList = data;
       },
-      (err) => {
-        console.log(err)
-      }
+      (err) => {}
+    );
+    this.estableishmentService.lista().subscribe(
+      (data) => {
+        this.estableishmentsList = data;
+      },
+      (err) => {}
     );
   }
 
@@ -81,7 +103,6 @@ export class DistrictsPageComponent implements OnInit {
   }
 
   onEdit(dataDistricts: District) {
-    console.log('Edit', dataDistricts);
     this.dialog.open(DistrictDialogComponent, {
       disableClose: true,
       width:"700px",
@@ -93,10 +114,9 @@ export class DistrictsPageComponent implements OnInit {
     })
   }
   onDelete(distrito: District) {
-    console.log('Delete', distrito);
     Swal.fire({
       title: 'ADVERTENCIA',
-      text: '¿Estás seguro de eliminar el distrito: ' + distrito.nombre + '?',
+      html: `¿Estás seguro de eliminar el EOD <strong>` + distrito.nombre +`</strong>?, recuerde que se eliminaran los datos de Unidades/Gestiones relacionados.`,
       icon: 'warning',
       showCancelButton: true,
       focusConfirm: false,
@@ -107,25 +127,86 @@ export class DistrictsPageComponent implements OnInit {
       cancelButtonColor: '#d33',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.distritoService.delete(distrito.id).subscribe({
-          next: (affectedRows: { affected: number }) => {
-            if (affectedRows.affected === 1) {
+        this.districtService.delete(distrito.id).subscribe({
+          next: () => {
+
               Swal.fire(
                 'Eliminado!',
-                'El distrito ha sido eliminado correctamente.',
+                `El EOD <strong>` + distrito.nombre +`</strong> ha sido eliminado correctamente.`,
                 'success'
               );
               this.setData();
-            } else {
-              Swal.fire(
-                'Advertencia',
-                'No se ha eliminado el distrito, por que mantiene una relacion con otro dato',
-                'warning'
-              );
-            }
           },
           error: (message) => {
-            Swal.fire('Error', 'No se ha eliminado el distrito, por que mantiene una relacion con otro dato', 'error');
+            Swal.fire('Error', `No se ha eliminado el EOD <strong>` + distrito.nombre + `</strong>.`, 'error');
+          },
+        });
+      }
+    });
+  }
+
+  onTableAction2(tableAction2: TableAction) {
+    switch (tableAction2.action) {
+      case Table.EDITAR:
+        this.onEditEst(tableAction2.row);
+        break;
+
+      case Table.ELIMINAR:
+        this.onDeleteEst(tableAction2.row);
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  estableishmentDialog(){
+    this.dialog.open(EstableishmentDialogComponent, {
+      disableClose: true,
+      width: "700px"
+    }).afterClosed().subscribe(resultado => {
+      if (resultado === "creado") {
+        this.setData();
+      }
+    })
+  }
+
+  onEditEst(dataEstablecimiento: Estableishment ) {
+    this.dialog.open(EstableishmentDialogComponent, {
+      disableClose: true,
+      width:"700px",
+      data: dataEstablecimiento
+    }).afterClosed().subscribe(resultado => {
+      if (resultado === "editado") {
+        this.setData();
+      }
+    })
+  }
+  onDeleteEst(establecimiento: Estableishment) {
+    Swal.fire({
+      title: 'ADVERTENCIA',
+      html: `¿Estás seguro de eliminar la Unidad/Gestión <strong>` + establecimiento.nombre + `</strong>?, recuerde que se eliminaran las relaciones con usuarios.`,
+      icon: 'warning',
+      showCancelButton: true,
+      focusConfirm: false,
+      reverseButtons: true,
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.estableishmentService.delete(establecimiento.id).subscribe({
+          next: () => {
+              Swal.fire(
+                'Eliminado!',
+                `La Unidad/Gestión <strong>` + establecimiento.nombre + `</strong> ha sido eliminado correctamente.`,
+                'success'
+              );
+              this.setData();
+          },
+          error: (message) => {
+            Swal.fire(`Error', 'No se ha eliminado la Unidad/Gestión <strong>` + establecimiento.nombre + `</strong> , por que mantiene una relacion usuarios.`, 'error');
           },
         });
       }

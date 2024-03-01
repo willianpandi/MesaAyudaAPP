@@ -20,8 +20,8 @@ mat-sidenav {
 }
 
 .footer {
-  display: flex;
-  justify-content: center;
+  padding: 5px;
+  text-align: center;
 }
 
 mat-sidenav-container {
@@ -61,7 +61,11 @@ span {
 
 .nombre{
   font-family: Poppins-SemiBold;
-  font-size: 16px;
+  font-size: 18px;
+}
+
+.mesa{
+  font-size: 22px;
 }
 
 .titulo{

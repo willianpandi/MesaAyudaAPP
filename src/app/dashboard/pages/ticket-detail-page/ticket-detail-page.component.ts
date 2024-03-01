@@ -1,14 +1,19 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ImageDialogComponent } from '../../components/dialogs/image-dialog/image-dialog.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TicketService } from '../../services/tickets.service';
-import { ImageService } from 'src/app/service/ImageService.service';
-import { Files, Ticket, TicketDetalle } from '../../interfaces/tickets';
-import { DirectivaService } from '../../services/directives.service';
-import { Directive } from '../../interfaces/directives';
+import { Component, OnInit, AfterViewInit, ViewChild, computed, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { QuillEditorComponent } from 'ngx-quill';
+
+import { ImageDialogComponent } from '../../components/dialogs/image-dialog/image-dialog.component';
+import { TicketService } from '../../services/tickets.service';
+import { ImageService } from '../../../service/ImageService.service';
+import { Files, Ticket } from '../../interfaces/tickets';
+import { AuthService } from '../../../auth/services/auth.service';
+import { ReassignedTicketsComponent } from '../../components/dialogs/reassigned-tickets/reassigned-tickets.component';
+import { FormControl } from '@angular/forms';
+import { ChangeTicketComponent } from '../../components/dialogs/change-ticket/change-ticket.component';
+import { CreateTicketComponent } from '../../components/dialogs/create-ticket/create-ticket.component';
+
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ticket-detail-page',
@@ -18,35 +23,39 @@ import { QuillEditorComponent } from 'ngx-quill';
 export class TicketDetailPageComponent implements OnInit, AfterViewInit {
   ticketSelect!: Ticket;
   archivos: Files[] = [];
-  ticketDetalle: TicketDetalle[] = [];
-  listaDirective: Directive[] = [];
-  quillEditorReadOnly = false;
-  formTicketDetalle!: FormGroup;
+  quillEditorReadOnly = true;
+  quillEditorReadOnly2 = false;
+
+  private authService = inject( AuthService);
+  public user = computed(()=> this.authService.currentUser());
+
+  commentSupport = new FormControl();
 
   constructor(
     private ticketsService: TicketService,
     private archivoService: ImageService,
-    private directiveService: DirectivaService,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private fb: FormBuilder,
-  ) {
-    this.directiveService.lista().subscribe(
-      (data) => {
-        this.listaDirective = data;
-      },
-      (err) => {}
-    );
-  }
+  ) {}
 
-  @ViewChild(QuillEditorComponent, { static: false })
-  quillEditor!: QuillEditorComponent;
+  @ViewChild('quillEditor1')
+  quillEditor1!: QuillEditorComponent;
+
+  @ViewChild('quillEditor2') quillEditor2!: QuillEditorComponent;
+
   ngAfterViewInit(): void {
     if (this.ticketSelect) {
       const descripcion = this.ticketSelect.descripcion;
+      const comentario = this.ticketSelect.soporteComentario;
       if (descripcion) {
-        this.quillEditor.content = descripcion;
+        this.quillEditor1.content = descripcion;
       }
+      if (comentario) {
+        this.quillEditor2.content = comentario;
+      }
+    }
+    if (this.ticketSelect.estado === 'CERRADO') {
+      this.quillEditorReadOnly2 = true;
     }
   }
 
@@ -54,9 +63,7 @@ export class TicketDetailPageComponent implements OnInit, AfterViewInit {
     this.activatedRoute.params.subscribe(({ id }) => {
       this.cargarTicket(id);
     });
-    this.formTicketDetalle = this.fb.group({
-      detalle: ['', Validators.required],
-    })
+
   }
 
   isImage(url: string): boolean {
@@ -75,21 +82,141 @@ export class TicketDetailPageComponent implements OnInit, AfterViewInit {
       this.archivoService.getImages(this.ticketSelect.id).subscribe((data) => {
         this.archivos = data;
       });
-      this.ticketsService.listaDetalle(this.ticketSelect.id).subscribe((data) => {
-      this.ticketDetalle = data;
-    })
     });
+
   }
 
-  responderTicket(){
-    this.ticketsService.saveDetalle(this.ticketSelect.id, this.formTicketDetalle.value)
-    .subscribe({
-      next: (data) =>{this.formTicketDetalle.reset()},
-      error: (e) => {},
+  reasignarTicket(id: string){
+    this.dialog.open(ReassignedTicketsComponent, {
+      disableClose: true,
+      width:"600px",
+      data: id
+    }).afterClosed().subscribe(resultado => {
+      if (resultado === "reasignado") {
+        this.cargarTicket(id);
+      }
     })
+  }
+
+  guardarComentario(id: string){
+    const modelo = {
+      soporteComentario: this.commentSupport.value
+    }
+    this.ticketsService.update(id, modelo).subscribe({
+      next: (data) => {
+        Swal.fire({
+          position: 'bottom-end',
+          icon: 'success',
+          title: 'Comentario Guardado',
+          html: `Comentario guardado correctamente.`,
+          showConfirmButton: false,
+          timer: 2500,
+        });
+        this.cargarTicket(this.ticketSelect.id)
+      },
+      error: (e) => {
+        Swal.fire({
+          position: 'bottom-end',
+          icon: 'error',
+          title: 'Comentario NO Guardado',
+          html: `No se pudo guardar el comentario correctamente. ` + e,
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      },
+    })
+  }
+
+  crearTicket(id: string){
+    this.dialog.open(CreateTicketComponent, {
+      disableClose: true,
+      width:"800px",
+      data: id,
+    }).afterClosed().subscribe(resultado => {
+      if (resultado === "crear") {
+        this.cargarTicket(id);
+      }
+    })
+  }
+
+  enProcesoTicket() {
+    const modelo = {
+      estado: 'EN PROCESO'
+    }
+    Swal.fire({
+      title: 'ADVERTENCIA',
+      html: `¿Estás seguro de cambiar el estado del <strong>Ticket ` + this.ticketSelect.codigo +`</strong> a <strong>EN PROCESO</strong>.`,
+      icon: 'warning',
+      showCancelButton: true,
+      focusConfirm: false,
+      reverseButtons: true,
+      confirmButtonText: 'Si !',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ticketsService.update(this.ticketSelect.id, modelo).subscribe({
+          next: (data) => {
+              Swal.fire(
+                'Ticket en Proceso!',
+                `El <strong>Ticket ` + this.ticketSelect.codigo +`</strong> ha sido cambiado a estado <strong>EN PROCESO</strong>.`,
+                'success'
+              );
+              this.cargarTicket(this.ticketSelect.id)
+          },
+          error: (message) => {
+            Swal.fire('Error', `No se ha podido cerrar el <strong>Ticket ` + this.ticketSelect.codigo +`</strong>.`, 'error');
+          },
+        });
+      }
+    });
+
   }
 
   cerrarTicket() {
-    this.quillEditorReadOnly = true
+    const modelo = {
+      estado: 'CERRADO'
+    }
+    Swal.fire({
+      title: 'ADVERTENCIA',
+      html: `¿Estás seguro de <strong>CERRAR</strong> el <strong>Ticket ` + this.ticketSelect.codigo +`</strong> recuerde que si lo cierra no se podra reabrir.`,
+      icon: 'warning',
+      showCancelButton: true,
+      focusConfirm: false,
+      reverseButtons: true,
+      confirmButtonText: 'Si, Cerrar!',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ticketsService.updateCloseTicket(this.ticketSelect.id, modelo).subscribe({
+          next: (data) => {
+              Swal.fire(
+                'Ticket Cerrado!',
+                `El <strong>Ticket ` + this.ticketSelect.codigo +`</strong> ha sido cerrado correctamente.`,
+                'success'
+              );
+              this.cargarTicket(this.ticketSelect.id)
+          },
+          error: (message) => {
+            Swal.fire('Error', `No se ha podido cerrar el <strong>Ticket ` + this.ticketSelect.codigo +`</strong>.`, 'error');
+          },
+        });
+      }
+    });
+  }
+
+  cambiarDepartamento(id: string){
+    this.dialog.open(ChangeTicketComponent, {
+      disableClose: true,
+      width:"800px",
+      data: id,
+    }).afterClosed().subscribe(resultado => {
+      if (resultado === "cambiar") {
+        this.cargarTicket(id);
+      }
+    })
   }
 }

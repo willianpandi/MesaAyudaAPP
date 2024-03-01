@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, catchError, map, of, retry, tap, throwError } from 'rxjs';
-import { environment } from 'src/environments/environments';
-import { User } from '../interfaces/user.interface';
+import { environment } from '../../../environments/environments';
+import { User } from "../../dashboard/interfaces/users";
 import { AuthStatus } from '../interfaces/auth-status.enum';
 import { LoginResponse } from '../interfaces/login-response.interface';
 import { CheckTokenResponse } from '../interfaces/check-token.response';
@@ -66,11 +66,5 @@ export class AuthService {
     localStorage.removeItem('token');
     this._currentUser.set(null);
     this._authStatus.set(AuthStatus.notAuthenticated);
-  }
-
-  register(body: any): Observable<User> {
-    return this.http
-      .post<User>(`${this.baseUrl}/auth/register`, body)
-      .pipe(catchError((err) => throwError(() => err.error.message)));
   }
 }

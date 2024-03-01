@@ -1,9 +1,16 @@
+mat-toolbar {
+  border-radius: 15px;
+  background-color: #dcdfe1;
+}
+span{
+  font-family: Poppins-Bold;
+}
+
+mat-divider{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 
 mat-card{
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
-
-::ng-deep .mat-select-panel {
-  max-height: 200px; /* Ajusta la altura máxima según sea necesario */
-  overflow-y: auto; /* Agrega la barra de desplazamiento vertical */
 }

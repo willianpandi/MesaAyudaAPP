@@ -1,0 +1,16 @@
+<div mat-dialog-content>
+  <div class="login100-form-title p-t-10">Seguimiento de Tickets</div>
+  <mat-divider></mat-divider>
+  <mat-card>
+    <mat-card-content>
+      <app-table
+        *ngIf="userTickets.length > 0"
+        [data]="userTickets"
+        [columns]="tableColumnTickets"
+      ></app-table>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-fab extended mat-dialog-close color="warn"><mat-icon>cancel</mat-icon> <strong>Cerrar</strong></button>
+</div>

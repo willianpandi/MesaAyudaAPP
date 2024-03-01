@@ -47,7 +47,7 @@
   <!-- Cuando no encuentre ningun dato relacionado a la busqueda. -->
   <tr class="mat-row" *matNoDataRow>
     <td class="mat-cell" [colSpan]="tableDisplayColumns.length">
-      No hay datos que coincidan con la palabra: "{{ input.value }}"
+      No hay datos que coincidan con la palabra: "{{ currentFilterValue }}"
     </td>
   </tr>
 </table>

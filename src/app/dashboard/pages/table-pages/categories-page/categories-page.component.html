@@ -1,0 +1,50 @@
+<div class="grid">
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Categorías</span>
+          <span class="spacer"></span>
+          <button mat-fab extended color="primary" (click)="categoryDialog()">
+            <mat-icon>add_circle</mat-icon>
+            Nueva Categoría
+          </button>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <app-table
+          *ngIf="categoryList.length > 0"
+          [data]="categoryList"
+          [columns]="tableColumnsCategory"
+          [config]="tableConfig"
+          (action)="onTableAction($event)"
+        >
+        </app-table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Departamentos</span>
+          <span class="spacer"></span>
+            <button  mat-fab extended color="primary" (click)="subCategoryDialog()">
+              <mat-icon>add_circle</mat-icon>
+              Nuevo Departamento
+            </button>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <app-table
+          *ngIf="subCategoryList.length > 0"
+          [data]="subCategoryList"
+          [columns]="tableColumnsSubCategory"
+          [config]="tableConfig2"
+          (action)="onTableAction2($event)"
+        >
+        </app-table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environments';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environments';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { Ticket, TicketDetalle } from '../interfaces/tickets';
-// import Swal from 'sweetalert2';
+import { Ticket } from '../interfaces/tickets';
+import { TicketsReports } from '../interfaces/reports';
 
 @Injectable({
   providedIn: 'root',
@@ -19,16 +19,49 @@ export class TicketService {
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
-  public lista(): Observable<Ticket[]> {
+  public lista(inicio?: Date, fin?: Date): Observable<Ticket[]> {
+    const headers = this.getHeaders();
+    let params = new HttpParams();
+    if (inicio !== undefined) {
+      params = params.set('inicio', inicio.toISOString());
+    }
+    if (fin !== undefined) {
+      params = params.set('fin', fin.toISOString());
+    }
+    return this.httpClient
+      .get<Ticket[]>(`${this.ticketURL}all`, { headers, params })
+      .pipe(catchError((err) => throwError(() => err.error.message)));
+  }
+
+  public listaTickets(cedula: string): Observable<any[]> {
+    return this.httpClient
+      .get<any[]>(`${this.ticketURL}tickets/${cedula}`)
+      .pipe(catchError((err) => throwError(() => err.error.message)));
+  }
+
+  public listTicketsReasig(): Observable<Ticket[]> {
     const headers = this.getHeaders();
     return this.httpClient
-      .get<Ticket[]>(`${this.ticketURL}all`, { headers })
+      .get<Ticket[]>(`${this.ticketURL}reasig-tickets`, { headers })
+      .pipe(catchError((err) => throwError(() => err.error.message)));
+  }
+
+  public reports(mes?: any, anio?: any): Observable<TicketsReports[]> {
+    const headers = this.getHeaders();
+    let params = new HttpParams();
+    if (mes !== undefined) {
+      params = params.set('mes', mes);
+    }
+    if (anio !== undefined) {
+      params = params.set('anio', anio);
+    }
+    return this.httpClient
+      .get<TicketsReports[]>(`${this.ticketURL}reports`, { headers, params })
       .pipe(catchError((err) => throwError(() => err.error.message)));
   }
 
   public count(): Observable<{ totalCountTickets: number }> {
     const headers = this.getHeaders();
-
     return this.httpClient.get<any>(`${this.ticketURL}count`, { headers });
   }
 
@@ -43,22 +76,16 @@ export class TicketService {
       );
   }
 
-  public listaDetalle(id: string): Observable<TicketDetalle[]> {
-    const headers = this.getHeaders();
-    return this.httpClient.get<TicketDetalle[]>(`${this.ticketURL}detalle/${id}`, {headers});
-  }
-
-  public saveDetalle(id: string, body: TicketDetalle): Observable<TicketDetalle> {
-    const headers = this.getHeaders();
-
+  public search(id: string): Observable<Ticket> {
     return this.httpClient
-      .post<any>(`${this.ticketURL}create/detalle/${id}`, body, { headers })
-      .pipe(catchError((err) => throwError(() => err.error.message)));
+      .get<Ticket>(`${this.ticketURL}search/${id}`)
+      .pipe(
+        map((resp) => resp),
+        catchError((err) => throwError(() => err.error.message))
+      );
   }
-
 
   public save(ticket: any, file?: File): Observable<any> {
-    const headers = this.getHeaders();
     const formData = new FormData();
     if (file) {
       formData.append('file', file, file.name);
@@ -70,7 +97,16 @@ export class TicketService {
 
 
     return this.httpClient
-      .post<any>(`${this.ticketURL}create`, formData, { headers })
+      .post<any>(`${this.ticketURL}create`, formData)
+      .pipe(catchError((err) => throwError(() => err.error.message)));
+  }
+
+  public createTicket(body: any): Observable<any> {
+    const headers = this.getHeaders();
+
+
+    return this.httpClient
+      .post<any>(`${this.ticketURL}create-ticket`, body , {headers})
       .pipe(catchError((err) => throwError(() => err.error.message)));
   }
 
@@ -79,6 +115,29 @@ export class TicketService {
 
     return this.httpClient
       .patch<Ticket>(`${this.ticketURL}edit/${id}`, ticket, { headers })
+      .pipe(catchError((err) => throwError(() => err.error.message)));
+  }
+
+  public updateCloseTicket(id: string, ticket: any): Observable<Ticket> {
+    const headers = this.getHeaders();
+
+    return this.httpClient
+      .patch<Ticket>(`${this.ticketURL}edit-close/${id}`, ticket, { headers })
+      .pipe(catchError((err) => throwError(() => err.error.message)));
+  }
+
+  public updateReasigTicket(id: string, ticket: any): Observable<Ticket> {
+    const headers = this.getHeaders();
+
+    return this.httpClient
+      .patch<Ticket>(`${this.ticketURL}edit-reasig/${id}`, ticket, { headers })
+      .pipe(catchError((err) => throwError(() => err.error.message)));
+  }
+
+  public updateDepartTicket(id: string, ticket: any): Observable<Ticket> {
+    const headers = this.getHeaders();
+    return this.httpClient
+      .patch<Ticket>(`${this.ticketURL}edit-departamento/${id}`, ticket, { headers })
       .pipe(catchError((err) => throwError(() => err.error.message)));
   }
 

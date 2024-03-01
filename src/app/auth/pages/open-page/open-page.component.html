@@ -1,0 +1,335 @@
+<mat-card class="example-card">
+      <mat-card>
+        <mat-card-header>
+          <div class="grid">
+            <div style="display: flex; justify-content: center; align-items: center" class="col-12 md:col-6 lg:col-6">
+              <img
+              [src]="'assets/images/Ministerio_de_Salud_Pública.png'"
+              alt="mesa_ayuda"
+              style="max-height: 70px"
+              />
+            </div>
+
+
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"  class="col-12 md:col-6 lg:col-6">
+              <h3>COORDINACIÓN ZONAL 3 - SALUD</h3>
+              <mat-divider></mat-divider>
+              <button mat-fab extended color="primary" routerLink="/auth/login">
+                <mat-icon>account_circle</mat-icon>
+                <strong>Iniciar Sesión</strong>
+              </button>
+            </div>
+          </div>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+
+        <mat-card-content>
+          <mat-toolbar>
+            <mat-card-title>
+              <span>Nuevo Ticket</span>
+            </mat-card-title>
+          </mat-toolbar>
+
+          <mat-divider></mat-divider>
+          <span style="padding-left: 20px">
+            * Información del contacto
+          </span>
+          <mat-divider></mat-divider>
+
+          <form class="grid  p-t-20" [formGroup]="formTicket">
+            <div class="col-12">
+              <div class="grid">
+                <div class="col-7 md:col-8 lg:col-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>Número de Cédula</mat-label>
+                  <input
+                    matInput
+                    formControlName="cedula"
+                    placeholder="Ex. 0123456789"
+                    type="text"
+                    #input
+                    maxlength="10"
+                  />
+                  <mat-hint class="hint" align="end"
+                    >{{ input.value.length }}/10</mat-hint
+                  >
+                  <mat-hint *ngIf="isValidFieldUser('cedula')">{{ getFieldErrorUser("cedula") }}</mat-hint>
+                  <mat-icon matSuffix>credit_card</mat-icon>
+                </mat-form-field>
+                </div>
+                <div style="display: flex; justify-content: center; " class="col-5 md:col-4 lg:col-2">
+                  <button
+                    mat-fab
+                    extended
+                    color="accent"
+                    [disabled]="formTicket.get('cedula')?.value === null || formTicket.get('cedula')?.value === ''"
+                    (click)="searchUser()"
+                  >
+                    <mat-icon>search</mat-icon>
+                    <strong>Buscar</strong>
+                  </button>
+                </div>
+                <div class="col-12 md:col-12 lg:col-6">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Nombre y Apellido</mat-label>
+                    <input matInput formControlName="nombre" autocomplete="off" placeholder="Ex. Jose Cabrera"/>
+                    <mat-hint *ngIf="isValidField('nombre')">{{getFieldError("nombre")}}</mat-hint>
+                    <mat-icon matSuffix>person</mat-icon>
+                  </mat-form-field>
+                </div>
+                <div class="col-12 md:col-6 lg:col-6">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Correo Electrónico</mat-label>
+                    <input matInput formControlName="correo_electronico" autocomplete="off" placeholder="Ex. nombre@gmail.com"/>
+                    <mat-hint *ngIf="isValidField('correo_electronico')">{{getFieldError("correo_electronico")}}</mat-hint>
+                    <mat-icon matSuffix>email</mat-icon>
+                  </mat-form-field>
+                </div>
+                <div class="col-12 md:col-6 lg:col-6">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Número Celular</mat-label>
+                    <input
+                    matInput
+                    formControlName="telefono"
+                    placeholder="Ex. 0987654321"
+                    type="text"
+                    #input2
+                    maxlength="10"
+                  />
+                  <mat-hint class="hint" align="end"
+                    >{{ input2.value.length }}/10</mat-hint
+                  >
+                  <mat-hint *ngIf="isValidFieldUser('telefono')">{{ getFieldErrorUser("telefono") }}</mat-hint>
+                    <mat-icon matSuffix>smartphone</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-12" *ngIf="ticketSatisfaccion">
+                  <mat-divider></mat-divider>
+                  <span style="padding-left: 20px;">* Detalle de la Unidad/Gestión</span>
+                  <mat-divider></mat-divider>
+                </div>
+
+                <div class="col-12" *ngIf="ticketSatisfaccion">
+                  <mat-form-field appearance="outline">
+                    <mat-label><strong>EOD</strong></mat-label>
+                    <mat-select
+                      formControlName="district"
+                      placeholder="Elija un EOD"
+                    >
+                      <mat-option *ngFor="let item of listDistrict | order: 'nombre'"
+                      [value]="item.id">
+                        {{ item.nombre }}
+                        <hr>
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="isValidField('district')">{{
+                      getFieldError("district")
+                    }}</mat-hint>
+                    <mat-icon matSuffix>map</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-12" *ngIf="estableishmetsByDistrict.length > 0">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Unidades/Gestiones</mat-label>
+                      <mat-select formControlName="estableishment" placeholder="Elija la Unidad/Gestión">
+                      <mat-option
+                        *ngFor="let item of estableishmetsByDistrict | order: 'nombre'"
+                        [value]="item.id"
+                      >
+                        <hr />
+                        {{ item.nombre }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="isValidField('estableishment')">{{getFieldError("estableishment")}}</mat-hint>
+                    <mat-icon matSuffix>business</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-12" *ngIf="formTicket.get('district')?.value ">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Área de la Unidad/Gestión</mat-label>
+                    <input matInput formControlName="area" placeholder="Ex. Emergencias" autocomplete="off" />
+                    <mat-hint *ngIf="isValidField('area')">{{
+                      getFieldError("area")
+                    }}</mat-hint>
+                    <mat-icon matSuffix>event_seat</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-12" *ngIf="ticketSatisfaccion">
+                  <mat-divider></mat-divider>
+                  <span style="padding-left: 20px;">* Detalle del Tema de Ayuda</span>
+                  <mat-divider></mat-divider>
+                </div>
+
+                <div class="col-12" *ngIf="ticketSatisfaccion">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Temas de Ayuda</mat-label>
+                    <mat-select formControlName="category" placeholder="Elija un Tema de Ayuda">
+                      <mat-option
+                        *ngFor="let item of listCategory | order: 'nombre'"
+                        [value]="item.id"
+                      >
+                        <hr />
+                        {{ item.nombre }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="isValidField('category')">{{getFieldError("category")}}</mat-hint>
+                    <mat-icon matSuffix>list_alt</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-12">
+                  <mat-form-field appearance="outline" *ngIf="listSubcategoryByCategory.length > 0">
+                    <mat-label>Departamentos de Ayuda</mat-label>
+                    <mat-select formControlName="subcategory" placeholder="Elija un Departamento de Ayuda">
+                      <mat-option
+                        *ngFor="let item of listSubcategoryByCategory | order: 'nombre'"
+                        [value]="item.id"
+                      >
+                        <hr />
+                        {{ item.nombre }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="isValidField('subcategory')">{{getFieldError("subcategory")}}</mat-hint>
+                    <mat-icon matSuffix>assignment</mat-icon>
+                  </mat-form-field>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-12" *ngIf="formTicket.controls['subcategory'].value">
+              <div class="grid">
+                <div class="col-12"><mat-divider></mat-divider></div>
+                <span style="padding-left: 20px;">* Detalles del Requerimiento</span>
+                <div class="col-12"><mat-divider></mat-divider></div>
+
+                <div class="col-12">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Pedido, Problema o Requerimiento</mat-label>
+                    <input
+                      matInput
+                      formControlName="requerimiento"
+                      autocomplete="off"
+                    />
+                    <mat-hint *ngIf="isValidField('requerimiento')">{{
+                      getFieldError("requerimiento")
+                    }}</mat-hint>
+                    <mat-icon matSuffix>assignment</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-12">
+                  <quill-editor formControlName="descripcion"></quill-editor>
+                </div>
+
+                <div style="display: flex; justify-content: center;"  class="col-12 md:col-4 lg:col-4">
+                  <input
+                    type="file"
+                    style="display: none"
+                    #fileInput
+                    (change)="handleFileInput($event)"
+                  />
+                  <button
+                    mat-fab
+                    extended
+                    color="accent"
+                    (click)="fileInput.click()"
+                  >
+                    <mat-icon>upload</mat-icon>
+                    <strong>Cargar Archivo</strong>
+                  </button>
+                </div>
+
+                <div class="col-12 md:col-8 lg:col-8">
+                  <span *ngIf="selectedFileName !== null">{{
+                    selectedFileName
+                  }}</span>
+                </div>
+
+                <div class="col-12">
+                  <mat-divider></mat-divider>
+                  <span style="padding-left: 20px;">* Detalle Opcionales de la Unidad/Gestión</span>
+                  <mat-divider></mat-divider>
+                </div>
+
+                <div class="col-12 md:col-4 lg:col-4">
+                  <mat-form-field appearance="outline">
+                    <mat-label>N° de Piso</mat-label>
+                    <input
+                      matInput
+                      formControlName="piso"
+                      autocomplete="off"
+                      type="number"
+                    />
+                    <mat-icon matSuffix>layers</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-12 md:col-4 lg:col-4">
+                  <mat-form-field appearance="outline">
+                    <mat-label>N° de Sala</mat-label>
+                    <input
+                      matInput
+                      formControlName="n_sala"
+                      autocomplete="off"
+                      type="number"
+                    />
+                    <mat-icon matSuffix>layers</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-12 md:col-4 lg:col-4">
+                  <mat-form-field appearance="outline">
+                    <mat-label>N° de Consultorio</mat-label>
+                    <input
+                      matInput
+                      formControlName="n_consultorio"
+                      autocomplete="off"
+                      type="number"
+                    />
+                    <mat-icon matSuffix>layers</mat-icon>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <mat-divider></mat-divider>
+            </div>
+
+            <div style="display: flex; justify-content: center;"  class="col-12 md:col-4 lg:col-4">
+              <button mat-fab extended color="warn" (click)="resetTicket()">
+                <mat-icon>refresh</mat-icon>
+                <strong>Cancelar Ticket</strong>
+              </button>
+            </div>
+
+            <div style="display: flex; justify-content: center;"  class="col-12 md:col-4 lg:col-4">
+              <button mat-fab extended color="accent"
+                [disabled]="formTicket.get('cedula')?.value === null || formTicket.get('cedula')?.value === ''"
+                (click)="viewTicket(formTicket.get('cedula')?.value)">
+                <mat-icon>visibility</mat-icon>
+                <strong>Historial de Tickets</strong>
+              </button>
+            </div>
+
+            <div style="display: flex; justify-content: center; " class="col-12 md:col-4 lg:col-4">
+              <button
+                mat-fab
+                extended
+                color="primary"
+                [disabled]="formTicket.invalid"
+                (click)="crearTicket()"
+              >
+                <mat-icon>assignment_turned_in</mat-icon>
+                <strong>Crear Ticket</strong>
+              </button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+</mat-card>

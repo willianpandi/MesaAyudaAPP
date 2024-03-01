@@ -14,7 +14,7 @@ export class ColumValuePipe implements PipeTransform {
     switch (column.dataType) {
       case 'date':
         if (column.formatt !== undefined) {
-          displayValue = new DatePipe('en').transform(
+          displayValue = new DatePipe('en-US').transform(
             displayValue,
             column.formatt
           );
@@ -33,9 +33,17 @@ export class ColumValuePipe implements PipeTransform {
         displayValue = currentValue;
         break;
 
-        case 'boolean':
-          const display = row[column.dataKey] ? 'ACTIVO' : 'INACTIVO';
-          displayValue = display;
+      case 'boolean':
+        const display = row[column.dataKey] ? 'ACTIVO' : 'INACTIVO';
+        displayValue = display;
+        break;
+
+      case 'minutes':
+        if (column.formatt !== undefined) {
+          const hours = Math.floor(displayValue / 60);
+          const remainingMinutes = displayValue % 60;
+          displayValue = `${hours}h : ${remainingMinutes}min`;
+        }
         break;
 
       default:

@@ -1,11 +1,10 @@
 <div mat-dialog-content>
   <div class="login100-form-title p-t-10">
-    {{ tituloAccion }} Usuario
+    Nuevo Usuario
   </div>
   <mat-divider></mat-divider>
-  <form [formGroup]="formUser" autocomplete="off">
-    <div class="grid">
-      <div class="col-12 md:col-12 lg:col-4">
+  <form class="grid" [formGroup]="formUser" autocomplete="off">
+      <div class="col-12 md:col-4 lg:col-4">
         <mat-form-field appearance="outline">
           <mat-label>N° de Cédula</mat-label>
           <input
@@ -25,7 +24,7 @@
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-12 lg:col-8">
+      <div class="col-12 md:col-8 lg:col-8">
         <mat-form-field appearance="outline">
           <mat-label>Nombre Completo</mat-label>
           <input matInput formControlName="nombre" />
@@ -36,109 +35,129 @@
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-12 lg:col-5">
+      <div class="col-12 md:col-6 lg:col-6">
         <mat-form-field appearance="outline">
-          <mat-label>Fecha de Nacimiento</mat-label>
+          <mat-label><strong>Contraseña</strong> </mat-label>
           <input
+            autocomplete="new-password"
             matInput
-            [matDatepicker]="pickerNacimiento"
-            formControlName="fecha_nacimiento"
-            [max]="maxDate"
+            [type]="hide ? 'password' : 'text'"
+            formControlName="contrasenia"
+            placeholder="Ingrese una contraseña"
           />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="pickerNacimiento"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #pickerNacimiento></mat-datepicker>
-          <mat-hint *ngIf="isValidField('fecha_nacimiento')">{{
-            getFieldError("fecha_nacimiento")
+          <mat-hint *ngIf="isValidField('contrasenia')">{{
+            getFieldError("contrasenia")
           }}</mat-hint>
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-8 lg:col-4">
+      <div class="col-12 md:col-6 lg:col-6">
         <mat-form-field appearance="outline">
-          <mat-label>Etnia</mat-label>
-          <mat-select formControlName="etnia">
-            <mat-option value="AFROECUATORIANO">AFROECUATORIANO</mat-option>
-            <mat-option value="BLANCO">BLANCO</mat-option>
-            <mat-option value="INDIGENA">INDIGENA</mat-option>
-            <mat-option value="MESTIZO">MESTIZO</mat-option>
-            <mat-option value="MONTUBIO">MONTUBIO</mat-option>
-            <mat-option value="OTROS">OTROS</mat-option>
-          </mat-select>
-          <mat-hint *ngIf="isValidField('etnia')">{{
-            getFieldError("etnia")
+          <mat-label><strong>Confirmar la Contraseña</strong> </mat-label>
+          <input
+            autocomplete="new-password"
+            matInput
+            [type]="hide2 ? 'password' : 'text'"
+            formControlName="contrasenia2"
+            placeholder="Vuelva a escribir su contraseña"
+          />
+          <mat-hint *ngIf="isValidField('contrasenia2')">{{
+            getFieldError("contrasenia2")
+          }}</mat-hint>
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide2 = !hide2"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide2"
+          >
+            <mat-icon>{{ hide2 ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 md:col-12 lg:col-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Puesto</mat-label>
+          <input matInput formControlName="puesto" />
+          <mat-hint *ngIf="isValidField('puesto')">{{
+            getFieldError("puesto")
+          }}</mat-hint>
+          <mat-icon matSuffix>work</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 md:col-6 lg:col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>N° de Celular</mat-label>
+          <input matInput formControlName="celular" type="text" #input2
+          maxlength="10" />
+          <mat-hint *ngIf="isValidField('celular')">{{
+            getFieldError("celular")
+          }}</mat-hint>
+          <mat-hint class="hint" align="end"
+          >{{ input2.value.length }}/10</mat-hint
+        >
+          <mat-icon matSuffix>smartphone</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 md:col-6 lg:col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>N° de Teléfono</mat-label>
+          <input matInput formControlName="telefono" placeholder="Ex. 9999999-999"/>
+          <mat-icon matSuffix>phone</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 md:col-6 lg:col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Grupo Ocupacional</mat-label>
+          <input matInput formControlName="g_Ocupacional" placeholder="Ex. SP1"/>
+          <mat-hint *ngIf="isValidField('g_Ocupacional')">{{
+            getFieldError("g_Ocupacional")
           }}</mat-hint>
           <mat-icon matSuffix>people_alt</mat-icon>
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-4 lg:col-3">
+      <div class="col-12 md:col-6 lg:col-6">
         <mat-form-field appearance="outline">
-          <mat-label>Sexo</mat-label>
-          <mat-select formControlName="sexo">
-            <mat-option value="MASCULINO">M</mat-option>
-            <mat-option value="FEMENINO">F</mat-option>
-          </mat-select>
-          <mat-hint *ngIf="isValidField('sexo')">{{
-            getFieldError("sexo")
+          <mat-label>Tipo Contrato</mat-label>
+          <input matInput formControlName="m_contrato" placeholder="Ex. Contrato Provicional"/>
+          <mat-hint *ngIf="isValidField('m_contrato')">{{
+            getFieldError("m_contrato")
           }}</mat-hint>
-          <mat-icon matSuffix>wc</mat-icon>
+          <mat-icon matSuffix>airline_seat_recline_normal</mat-icon>
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-12 lg:col-4">
+      <div class="col-12">
         <mat-form-field appearance="outline">
-          <mat-label>N° de Celular</mat-label>
-          <input matInput formControlName="telefono" type="text" #input
-          maxlength="10" />
-          <mat-hint *ngIf="isValidField('telefono')">{{
-            getFieldError("telefono")
+          <mat-label>Fecha de Ingreso al MSP</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="f_ingreso"
+            [max]="maxDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-hint *ngIf="isValidField('f_ingreso')">{{
+            getFieldError("f_ingreso")
           }}</mat-hint>
-          <mat-hint class="hint" align="end"
-          >{{ input.value.length }}/10</mat-hint
-        >
-          <mat-icon matSuffix>phone</mat-icon>
-        </mat-form-field>
-      </div>
-
-      <div class="col-12 md:col-12 lg:col-8">
-        <mat-form-field appearance="outline">
-          <mat-label>Direccion</mat-label>
-          <input matInput formControlName="direccion" />
-          <mat-hint *ngIf="isValidField('direccion')">{{
-            getFieldError("direccion")
-          }}</mat-hint>
-          <mat-icon matSuffix>location_on</mat-icon>
-        </mat-form-field>
-      </div>
-
-      <div class="col-12 md:col-12 lg:col-6">
-        <mat-form-field appearance="outline">
-          <mat-label>Nivel de Instrucción</mat-label>
-          <mat-select formControlName="nivel_institucional">
-            <mat-option value="SECUNDARIA">SECUNDARIA</mat-option>
-            <mat-option value="BACHILLERATO">BACHILLERATO</mat-option>
-            <mat-option value="TECNOLÓGICO">TECNOLÓGICO</mat-option>
-            <mat-option value="TERCER NIVEL">TERCER NIVEL</mat-option>
-            <mat-option value="CUARTO NIVEL">CUARTO NIVEL</mat-option>
-          </mat-select>
-          <mat-hint *ngIf="isValidField('nivel_institucional')">{{
-            getFieldError("nivel_institucional")
-          }}</mat-hint>
-          <mat-icon matSuffix>domain</mat-icon>
-        </mat-form-field>
-      </div>
-
-      <div class="col-12 md:col-12 lg:col-6">
-        <mat-form-field appearance="outline">
-          <mat-label>Profesion</mat-label>
-          <input matInput formControlName="profesion" />
-          <mat-hint *ngIf="isValidField('profesion')">{{
-            getFieldError("profesion")
-          }}</mat-hint>
-          <mat-icon matSuffix>work</mat-icon>
         </mat-form-field>
       </div>
 
@@ -168,134 +187,27 @@
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-12 lg:col-6">
+      <div class="col-12 md:col-12 lg:col-12">
         <mat-form-field appearance="outline">
-          <mat-label>Regimen Laboral</mat-label>
-          <mat-select formControlName="regimen_laboral">
-            <mat-option value="SERVICIO CIVIL PUBLICO (LOSEP)"
-              >SERVICIO CIVIL PUBLICO (LOSEP)</mat-option
-            >
-            <mat-option value="CÓDIGO DEL TRABAJO"
-              >CÓDIGO DEL TRABAJO</mat-option
-            >
-          </mat-select>
-          <mat-hint *ngIf="isValidField('regimen_laboral')">{{
-            getFieldError("regimen_laboral")
-          }}</mat-hint>
-          <mat-icon matSuffix>business_center</mat-icon>
-        </mat-form-field>
-      </div>
-
-      <div class="col-12 md:col-12 lg:col-6">
-        <mat-form-field appearance="outline">
-          <mat-label>Área Laboral</mat-label>
-          <input matInput formControlName="area_laboral" />
-          <mat-hint *ngIf="isValidField('area_laboral')">{{
-            getFieldError("area_laboral")
-          }}</mat-hint>
-          <mat-icon matSuffix>event_seat</mat-icon>
-        </mat-form-field>
-      </div>
-
-
-      <div class="col-12 md:col-12 lg:col-6">
-        <mat-form-field appearance="outline">
-          <mat-label>Modalidad Laboral</mat-label>
-          <mat-select formControlName="modalidad_laboral">
-            <mat-option value="CONTRATO INDEFINIDO"
-              >CONTRATO INDEFINIDO</mat-option
-            >
-            <mat-option value="CONTRATO COLECTIVO"
-              >CONTRATO COLECTIVO</mat-option
-            >
-            <mat-option value="CONTRATO OCACIONALES"
-              >CONTRATO OCACIONALES</mat-option
-            >
-            <mat-option value="CONTRATO SERVICIO SOCIAL SALUD"
-              >CONTRATO SERVICIO SOCIAL SALUD</mat-option
-            >
-            <mat-option value="DEVENGANTES DE BECAS LOSEP"
-              >DEVENGANTES DE BECAS LOSEP</mat-option
-            >
-            <mat-option value="NOMBRAMIENTO">NOMBRAMIENTO</mat-option>
-          </mat-select>
-          <mat-hint *ngIf="isValidField('modalidad_laboral')">{{
-            getFieldError("modalidad_laboral")
-          }}</mat-hint>
-          <mat-icon matSuffix>airline_seat_recline_normal</mat-icon>
-        </mat-form-field>
-      </div>
-
-      <div class="col-12 md:col-12 lg:col-6">
-        <mat-form-field appearance="outline" *ngIf="mostrarNombramiento">
-          <mat-label>Tipo de Nombramiento</mat-label>
-          <mat-select formControlName="nombramiento">
-            <mat-option value="DEFINITIVO">DEFINITIVO</mat-option>
-            <mat-option value="PROVICIONAL">PROVICIONAL</mat-option>
-          </mat-select>
-          <mat-hint *ngIf="isValidField('nombramiento')">{{
-            getFieldError("nombramiento")
-          }}</mat-hint>
+          <mat-label>Cambio Administrativo</mat-label>
+          <input matInput formControlName="c_Administrativo" />
           <mat-icon matSuffix>assignment_turned_in</mat-icon>
         </mat-form-field>
       </div>
 
-
-      <div class="col-12 md:col-12 lg:col-5">
+      <div class="col-12 md:col-12 lg:col-12">
         <mat-form-field appearance="outline">
-          <mat-label>Fecha de Ingreso</mat-label>
-          <input
-            matInput
-            [matDatepicker]="pickerIngreso"
-            formControlName="fecha_ingreso"
-            [max]="maxDate"
-          >
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="pickerIngreso"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #pickerIngreso></mat-datepicker>
-          <mat-hint *ngIf="isValidField('fecha_ingreso')">{{
-            getFieldError("fecha_ingreso")
-          }}</mat-hint>
+          <mat-label>Funciones Adicionales</mat-label>
+          <textarea matInput formControlName="funciones_A"></textarea>
+          <mat-icon matSuffix>event_seat</mat-icon>
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-12 lg:col-7">
-        <mat-form-field appearance="outline">
-          <mat-label>Itinerancia</mat-label>
-          <input matInput formControlName="itinerancia" />
-          <mat-hint *ngIf="isValidField('itinerancia')">{{
-            getFieldError("itinerancia")
-          }}</mat-hint>
-          <mat-icon matSuffix>data_usage</mat-icon>
-        </mat-form-field>
-      </div>
-
-      <div class="col-12">
-        <mat-form-field appearance="outline">
-          <mat-label>Establecimiento</mat-label>
-          <mat-select formControlName="estableishment">
-            <mat-option
-              *ngFor="let item of listaEstableishments | order: 'nombre'"
-              [value]="item.id"
-            >
-              <hr />
-              {{ item.nombre }}
-            </mat-option>
-          </mat-select>
-          <mat-hint *ngIf="isValidField('estableishment')">{{
-            getFieldError("estableishment")
-          }}</mat-hint>
-          <mat-icon matSuffix>business</mat-icon>
-        </mat-form-field>
-      </div>
-
-      <div class="col-12 md:col-4 lg:col-6">
+      <div class="col-12 md:col-6 lg:col-6">
         <mat-form-field appearance="outline">
           <mat-label>Estado de Usuario</mat-label>
           <mat-select formControlName="estado">
-            <mat-option *ngFor="let opcion of opcionesEstado" [value]="opcion.valor">
+            <mat-option *ngFor="let opcion of opcionesEstado | order: 'etiqueta'" [value]="opcion.valor">
               {{ opcion.etiqueta }}
             </mat-option>
           </mat-select>
@@ -304,11 +216,10 @@
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-4 lg:col-6">
+      <div class="col-12 md:col-6 lg:col-6">
         <mat-form-field appearance="outline">
           <mat-label>Rol de Usuario</mat-label>
           <mat-select formControlName="rol">
-            <mat-option value="USUARIO">USUARIO</mat-option>
             <mat-option value="SOPORTE">SOPORTE</mat-option>
             <mat-option value="ADMINISTRADOR">ADMINISTRADOR</mat-option>
           </mat-select>
@@ -318,7 +229,6 @@
           <mat-icon matSuffix>supervisor_account</mat-icon>
         </mat-form-field>
       </div>
-    </div>
   </form>
 </div>
 <div mat-dialog-actions align="end">
@@ -329,7 +239,7 @@
     [disabled]="formUser.invalid"
     (click)="addUser()"
   >
-  <mat-icon>{{ iconAccion }}</mat-icon>
-  <strong>{{ botonAccion }}</strong>
+  <mat-icon>add_circle</mat-icon>
+  <strong>Guardar</strong>
   </button>
 </div>

@@ -1,0 +1,37 @@
+<div mat-dialog-content>
+  <div class="login100-form-title p-t-10"> Reasignar Ticket</div>
+  <mat-divider></mat-divider>
+  <form [formGroup]="formReasigTicket">
+    <div class="grid">
+      <div class="col-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Usuario Soporte</mat-label>
+          <mat-select formControlName="soporteReasignado">
+            <mat-option *ngFor="let item of listUsersSoports | order: 'nombre'" [value]="item.nombre">
+              {{ item.nombre }}
+              <hr />
+            </mat-option>
+          </mat-select>
+          <mat-hint *ngIf="isValidField('soporteReasignado')">{{
+            getFieldError("soporteReasignado")
+          }}</mat-hint>
+          <mat-icon matSuffix>supervisor_account</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-fab extended mat-dialog-close color="warn"><mat-icon>cancel</mat-icon> <strong>Cancelar</strong></button>
+    <button
+      mat-fab extended
+      color="primary"
+      [disabled]="formReasigTicket.invalid"
+      (click)="reasigTicket()"
+      type="submit"
+    >
+    <mat-icon>assignment_ind</mat-icon>
+    <strong>Reasignar</strong>
+    </button>
+  </div>

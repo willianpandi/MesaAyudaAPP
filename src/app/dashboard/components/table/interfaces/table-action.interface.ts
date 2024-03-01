@@ -4,8 +4,6 @@ export enum Table {
   DETALLE,
 }
 
-
-
 export interface TableAction<T = any> {
   action: Table;
   row: T;
