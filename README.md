@@ -2,11 +2,29 @@
 
 Poyecto generado con Angular CLI version 16.2.2.
 
-## Compilacion de la app
+## Descripción
 
-Run `ng serve` for a dev server. En un navegador `http://localhost:4200/`.
+API para la aplicación de Mesa de Ayuda, realizada para la Coordinación Zonal 3 - Salud.
 
-#App Corriendo
+## Instalación
+
+```bash
+$ npm install
+```
+
+## Build para produccion
+
+```bash
+$ ng build
+```
+
+## Correr la APP 
+```bash
+$ ng serve
+```
+
+# App Corriendo
+En cualquier navegador `http://localhost:4200/`
 ## Inicio de Sesión
 ![image](https://github.com/willianpandi/MesaAyudaAPP/assets/70989156/6a3ed5fc-ca89-4146-950c-9a96d7f26132)
 
