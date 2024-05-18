@@ -19,10 +19,10 @@
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-8 lg:col-8">
+      <div class="col-12">
         <mat-form-field appearance="outline">
           <mat-label>Nombre de Sub-Categoría</mat-label>
-          <input matInput formControlName="nombre" autocomplete="off"/>
+          <textarea matInput formControlName="nombre" autocomplete="off"></textarea>
           <mat-hint *ngIf="isValidField('nombre')">{{
             getFieldError("nombre")
           }}</mat-hint>
@@ -30,14 +30,28 @@
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-4 lg:col-4">
+      <div class="col-12 md:col-6 lg:col-6">
         <mat-form-field appearance="outline">
-          <mat-label>Tiempo (min)</mat-label>
+          <mat-label>Tiempo Estimado (min)</mat-label>
           <input matInput formControlName="tiempo" type="number" autocomplete="off" />
           <mat-hint *ngIf="isValidField('tiempo')">{{
             getFieldError("tiempo")
           }}</mat-hint>
           <mat-icon matSuffix>access_time</mat-icon>
+        </mat-form-field>
+      </div>
+
+
+      <div class="col-12 md:col-6 lg:col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="estado">
+            <mat-option *ngFor="let opcion of opcionesEstado | order: 'etiqueta'" [value]="opcion.valor">
+              {{ opcion.etiqueta }}
+            </mat-option>
+          </mat-select>
+          <mat-hint *ngIf="isValidField('estado')">{{ getFieldError("estado") }}</mat-hint>
+          <mat-icon matSuffix>highlight_off</mat-icon>
         </mat-form-field>
       </div>
 

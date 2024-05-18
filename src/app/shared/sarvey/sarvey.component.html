@@ -1,221 +1,191 @@
 <div class="limiter">
-  <div class="container-login100" style="background-image: url('../../../../assets/images/bg-01.avif');" >
+  <div class="container-login100" style="background-image: url('../../../../assets/images/fondo.svg');" >
 
     <mat-card class="example-card">
-      <mat-card>
-        <mat-card-header>
-          <div class="grid">
-            <div style="display: flex; justify-content: center; align-items: center" class="col-12 md:col-6 lg:col-6">
-              <img
-              [src]="'assets/images/Ministerio_de_Salud_Pública.png'"
-              alt="mesa_ayuda"
-              style="max-height: 70px"
-              />
-            </div>
-
-
-            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"  class="col-12 md:col-6 lg:col-6">
-              <h3>COORDINACIÓN ZONAL 3 - SALUD</h3>
-            </div>
+      <mat-card-header>
+        <div class="grid">
+          <div style="display: flex; justify-content: center; align-items: center" class="col-12 md:col-6 lg:col-6">
+            <img
+            [src]="'assets/images/Ministerio_de_Salud_Pública.png'"
+            alt="mesa_ayuda"
+            style="max-height: 70px"
+            />
           </div>
 
-        </mat-card-header>
-        <mat-divider></mat-divider>
-        <mat-card-content *ngIf="ticketSelect">
-          <mat-toolbar  *ngIf="!ticketSelect.satisfaccion">
-            <mat-card-title>
-              <span>Encuesta de Satisfacción</span>
-            </mat-card-title>
-          </mat-toolbar>
-          <mat-toolbar  *ngIf="ticketSelect.satisfaccion">
-            <mat-card-title>
-              <span>Encuesta de Satisfacción Ralizada</span>
-            </mat-card-title>
-          </mat-toolbar>
-          <mat-divider></mat-divider>
 
-          <mat-accordion class="grid">
+          <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;"  class="col-12 md:col-6 lg:col-6">
+            <h3 style="text-align: center;">COORDINACIÓN ZONAL 3 - SALUD</h3>
+          </div>
+        </div>
 
-            <mat-expansion-panel hideToggle class="col-12 md:col-12 lg:col-5">
-
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>N° Ticket</span></mat-panel-title>
-                <mat-panel-description>{{ticketSelect.codigo}}</mat-panel-description>
-              </mat-expansion-panel-header>
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>N° Cédula</span></mat-panel-title>
-                <mat-panel-description>{{ticketSelect.cedula}}</mat-panel-description>
-              </mat-expansion-panel-header>
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Nombre</span></mat-panel-title>
-                <mat-panel-description>{{ticketSelect.nombre}}</mat-panel-description>
-              </mat-expansion-panel-header>
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Correo</span></mat-panel-title>
-                <mat-panel-description>{{ticketSelect.correo_electronico}}</mat-panel-description>
-              </mat-expansion-panel-header>
-
-            </mat-expansion-panel>
-            <mat-expansion-panel hideToggle class="col-12 md:col-12 lg:col-7">
-
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Tema de Ayuda</span></mat-panel-title>
-                <mat-panel-description>{{ticketSelect.category.nombre}}</mat-panel-description>
-              </mat-expansion-panel-header>
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Departamento de Ayuda</span></mat-panel-title>
-                <mat-panel-description>{{ticketSelect.subcategory.nombre}}</mat-panel-description>
-              </mat-expansion-panel-header>
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Soporte Asignado</span></mat-panel-title>
-                <mat-panel-description>{{ticketSelect.soporteAsignado}}</mat-panel-description>
-              </mat-expansion-panel-header>
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Requerimiento</span></mat-panel-title>
-                <mat-panel-description>{{ticketSelect.requerimiento}}</mat-panel-description>
-              </mat-expansion-panel-header>
-
-            </mat-expansion-panel>
-          </mat-accordion>
-          <mat-divider *ngIf="ticketSelect.satisfaccion"></mat-divider>
-          <mat-accordion class="grid">
-
-
-            <mat-expansion-panel hideToggle class="col-12" *ngIf="ticketSelect.satisfaccion">
-
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Satisfacción</span></mat-panel-title>
-                <mat-panel-description>{{ticketSelect.satisfaccion}}</mat-panel-description>
-              </mat-expansion-panel-header>
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Soporte Asistido</span></mat-panel-title>
-                <mat-panel-description>{{ticketSelect.soportePresente}}</mat-panel-description>
-              </mat-expansion-panel-header>
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Ayuda Oportuna</span></mat-panel-title>
-                <mat-panel-description>{{ticketSelect.a_oportuna}}</mat-panel-description>
-              </mat-expansion-panel-header>
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Problema Solucionado</span></mat-panel-title>
-                <mat-panel-description>{{ticketSelect.a_oportuna}}</mat-panel-description>
-              </mat-expansion-panel-header>
-              <mat-expansion-panel-header>
-                <mat-panel-title><span>Sugerencia / Comentario</span></mat-panel-title>
-                <mat-panel-description>{{ticketSelect.sugerencias}}</mat-panel-description>
-              </mat-expansion-panel-header>
-
-            </mat-expansion-panel>
-          </mat-accordion>
-
-          <div class="grid" *ngIf="ticketSelect.satisfaccion">
-            <div class="col-12">
-              <mat-divider></mat-divider>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content *ngIf="ticketSelect">
+        <mat-toolbar  *ngIf="!ticketSelect.satisfaccion">
+          <mat-card-title>
+            <span>Encuesta de Satisfacción</span>
+          </mat-card-title>
+        </mat-toolbar>
+        <mat-toolbar  *ngIf="ticketSelect.satisfaccion">
+          <mat-card-title>
+            <span>Encuesta de Satisfacción Ralizada</span>
+          </mat-card-title>
+        </mat-toolbar>
+        <br>
+        <div class="grid">
+          <div class="col-12 md:col-5 lg:col-5" style="border-left: 2px solid #DCDFE1; border-right: 1px solid #DCDFE1; border-top: 2px solid #DCDFE1; border-bottom: 1px solid #DCDFE1; border-radius: 20px 0 0 0;">
+            <div class="grid" style="padding: 5px 2px;">
+              <p class="col-5"><b>N° Ticket</b></p><p class="col-7">{{ ticketSelect.codigo }}</p>
+              <p class="col-5"><b>N° Cédula</b></p><p class="col-7">{{ ticketSelect.cedula }}</p>
             </div>
           </div>
+          <div class="col-12 md:col-7 lg:col-7" style="border-left: 1px solid #DCDFE1; border-right: 2px solid #DCDFE1; border-top: 2px solid #DCDFE1; border-bottom: 1px solid #DCDFE1; border-radius: 0 20px 0 0;">
+            <div class="grid" style="padding: 5px 2px;">
+              <p class="col-4"><b>Nombre</b></p><p class="col-8">{{ ticketSelect.nombre }}</p>
+              <p class="col-4"><b>Correo</b></p><p class="col-8">{{ ticketSelect.correo_electronico }}</p>
+            </div>
+          </div>
+          <div class="col-12 md:col-12 lg:col-12" style="border-left: 2px solid #DCDFE1; border-right: 2px solid #DCDFE1; border-top: 1px solid #DCDFE1; border-bottom: 2px solid #DCDFE1; border-radius: 0 0 20px 20px;">
+            <div class="grid" style="padding: 5px 2px;">
+              <p class="col-4"><b>Tema de Ayuda</b></p><p class="col-8">{{ ticketSelect.category.nombre }}</p>
+              <p class="col-4"><b>Departamento</b></p><p class="col-8">{{ ticketSelect.subcategory.nombre }}</p>
+              <p class="col-4"><b>Pedido</b></p><p class="col-8">{{ ticketSelect.requerimiento }}</p>
+              <p class="col-4"><b>Soporte</b></p>
+              <p class="col-8" *ngIf="!ticketSelect.soporteReasignado">{{ ticketSelect.soporteAsignado }}</p>
+              <p class="col-8" *ngIf="ticketSelect.soporteReasignado">{{ ticketSelect.soporteReasignado }}</p>
+            </div>
+          </div>
+        </div>
 
-          <form class="grid  p-t-20" [formGroup]="formTicketSarvey" *ngIf="!ticketSelect.satisfaccion">
-            <div class="col-12">
-              <div class="grid">
+        <mat-divider *ngIf="ticketSelect.satisfaccion"></mat-divider>
 
-                <div class="col-12"><mat-divider></mat-divider></div>
-                <span style="padding-left: 20px;">* Formulario de Satisfacción</span>
-                <div class="col-12"><mat-divider></mat-divider></div>
+        <div class="grid" *ngIf="ticketSelect.satisfaccion">
+          <div class="col-12" style="border-left: 2px solid #DCDFE1; border-right: 2px solid #DCDFE1; border-top: 2px solid #DCDFE1; border-bottom: 2px solid #DCDFE1">
+            <div class="grid">
+              <p class="col-4"><b>Nivel de Satisfacción</b></p><p class="col-8">{{ ticketSelect.satisfaccion }}</p>
+              <p class="col-4"><b>Acompañamiento</b></p><p class="col-8">{{ ticketSelect.soportePresente }}</p>
+              <p class="col-4"><b>Sugerencia / Comentario</b></p><p class="col-8">{{ ticketSelect.sugerencias }}</p>
+              <p class="col-4"><b>Ayuda Oportuna</b></p><p class="col-8">{{ ticketSelect.a_oportuna }}</p>
+              <p class="col-4"><b>Problema Solucionado</b></p><p class="col-8">{{ ticketSelect.s_problema }}</p>
+            </div>
+          </div>
+        </div>
 
-                <div class="col-12 lg:col-6">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Calidad de Atención</mat-label>
-                    <mat-select formControlName="satisfaccion">
-                      <mat-option value="NADA SATISFACTORIO">NADA SATISFACTORIO</mat-option>
-                      <mat-option value="POCO SATISFACTORIO">POCO SATISFACTORIO</mat-option>
-                      <mat-option value="SATISFACTORIO">SATISFACTORIO</mat-option>
-                      <mat-option value="MUY SATISFACTORIO">MUY SATISFACTORIO</mat-option>
-                    </mat-select>
-                    <mat-hint *ngIf="isValidField('satisfaccion')">{{getFieldError("satisfaccion")}}</mat-hint>
-                    <mat-icon matSuffix>star_rate</mat-icon>
-                  </mat-form-field>
-                </div>
+        <mat-accordion class="grid">
 
-                <div class="col-12 lg:col-6">
-                  <mat-form-field appearance="outline">
-                    <mat-label>¿Quien acudio?</mat-label>
-                    <mat-select formControlName="soportePresente">
-                      <mat-option
-                        *ngFor="let item of listUsersSoports "
-                        [value]="item.nombre"
-                      >
-                        <hr />
-                        {{ item.nombre }}
-                      </mat-option>
-                    </mat-select>
-                    <mat-hint *ngIf="isValidField('soportePresente')">{{getFieldError("soportePresente")}}</mat-hint>
-                    <mat-icon matSuffix>person</mat-icon>
-                  </mat-form-field>
-                </div>
+          <mat-expansion-panel hideToggle class="col-12" *ngIf="ticketSelect.satisfaccion">
 
-                <div class="col-12 lg:col-6">
-                  <mat-form-field appearance="outline">
-                    <mat-label>¿La ayuda fue oportuna?</mat-label>
-                    <mat-select formControlName="a_oportuna">
-                      <mat-option value="SI">SI</mat-option>
-                      <mat-option value="NO">NO</mat-option>
-                    </mat-select>
-                    <mat-hint *ngIf="isValidField('a_oportuna')">{{getFieldError("a_oportuna")}}</mat-hint>
-                    <mat-icon matSuffix>help</mat-icon>
-                  </mat-form-field>
-                </div>
-                <div class="col-12 lg:col-6">
-                  <mat-form-field appearance="outline">
-                    <mat-label>¿Se soluciono el problema?</mat-label>
-                    <mat-select formControlName="s_problema">
-                      <mat-option value="SI">SI</mat-option>
-                      <mat-option value="NO">NO</mat-option>
-                    </mat-select>
-                    <mat-hint *ngIf="isValidField('s_problema')">{{getFieldError("s_problema")}}</mat-hint>
-                    <mat-icon matSuffix>help</mat-icon>
-                  </mat-form-field>
-                </div>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Satisfacción</span></mat-panel-title>
+              <mat-panel-description>{{ticketSelect.satisfaccion}}</mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Soporte Asistido</span></mat-panel-title>
+              <mat-panel-description>{{ticketSelect.soportePresente}}</mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Ayuda Oportuna</span></mat-panel-title>
+              <mat-panel-description>{{ticketSelect.a_oportuna}}</mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Problema Solucionado</span></mat-panel-title>
+              <mat-panel-description>{{ticketSelect.a_oportuna}}</mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-expansion-panel-header>
+              <mat-panel-title><span>Sugerencia / Comentario</span></mat-panel-title>
+              <mat-panel-description>{{ticketSelect.sugerencias}}</mat-panel-description>
+            </mat-expansion-panel-header>
 
-                <div class="col-12 lg:col-12">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Sugerencia / Comentario</mat-label>
-                    <textarea matInput formControlName="sugerencias" autocomplete="off"></textarea>
-                    <mat-hint *ngIf="isValidField('sugerencias')">{{getFieldError("sugerencias")}}</mat-hint>
-                    <mat-icon matSuffix>comment</mat-icon>
-                  </mat-form-field>
-                </div>
+          </mat-expansion-panel>
+        </mat-accordion>
 
+        <div class="grid" *ngIf="ticketSelect.satisfaccion">
+          <div class="col-12">
+            <mat-divider></mat-divider>
+          </div>
+        </div>
 
+        <form class="grid  p-t-20" [formGroup]="formTicketSarvey" *ngIf="!ticketSelect.satisfaccion">
+          <div class="col-12">
+            <div class="grid">
+
+              <div class="col-12"><mat-divider></mat-divider></div>
+              <span class="col-12" style="padding-left: 20px;">* Formulario de Satisfacción</span>
+
+              <div class="col-12 lg:col-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Calidad de Atención</mat-label>
+                  <mat-select formControlName="satisfaccion">
+                    <mat-option value="NADA SATISFACTORIO">NADA SATISFACTORIO</mat-option>
+                    <mat-option value="POCO SATISFACTORIO">POCO SATISFACTORIO</mat-option>
+                    <mat-option value="SATISFACTORIO">SATISFACTORIO</mat-option>
+                    <mat-option value="MUY SATISFACTORIO">MUY SATISFACTORIO</mat-option>
+                  </mat-select>
+                  <mat-hint *ngIf="isValidField('satisfaccion')">{{getFieldError("satisfaccion")}}</mat-hint>
+                  <mat-icon matSuffix>star_rate</mat-icon>
+                </mat-form-field>
               </div>
-              <mat-divider></mat-divider>
+
+              <div class="col-12 lg:col-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>¿La ayuda fue oportuna?</mat-label>
+                  <mat-select formControlName="a_oportuna">
+                    <mat-option value="SI">SI</mat-option>
+                    <mat-option value="NO">NO</mat-option>
+                  </mat-select>
+                  <mat-hint *ngIf="isValidField('a_oportuna')">{{getFieldError("a_oportuna")}}</mat-hint>
+                  <mat-icon matSuffix>help</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="col-12 lg:col-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>¿Se soluciono el problema?</mat-label>
+                  <mat-select formControlName="s_problema">
+                    <mat-option value="SI">SI</mat-option>
+                    <mat-option value="NO">NO</mat-option>
+                  </mat-select>
+                  <mat-hint *ngIf="isValidField('s_problema')">{{getFieldError("s_problema")}}</mat-hint>
+                  <mat-icon matSuffix>help</mat-icon>
+                </mat-form-field>
+              </div>
+
+              <div class="col-12 lg:col-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Sugerencia / Comentario</mat-label>
+                  <textarea matInput formControlName="sugerencias" autocomplete="off"></textarea>
+                  <mat-hint *ngIf="isValidField('sugerencias')">{{getFieldError("sugerencias")}}</mat-hint>
+                  <mat-icon matSuffix>comment</mat-icon>
+                </mat-form-field>
+              </div>
+
+
             </div>
+            <mat-divider></mat-divider>
+          </div>
 
-            <div style="display: flex; justify-content: center;"  class="col-12 md:col-6 lg:col-6">
-              <button mat-fab extended color="warn" (click)="resetTicket()">
-                <mat-icon>refresh</mat-icon>
-                <strong>Cancelar Encuesta</strong>
-              </button>
-            </div>
+          <div style="display: flex; justify-content: center;"  class="col-12 md:col-6 lg:col-6">
+            <button mat-fab extended color="warn" (click)="resetTicket()">
+              <mat-icon>refresh</mat-icon>
+              <strong>Cancelar Encuesta</strong>
+            </button>
+          </div>
 
-            <div style="display: flex; justify-content: center; " class="col-12 md:col-6 lg:col-6">
-              <button
-                mat-fab
-                extended
-                color="primary"
-                [disabled]="formTicketSarvey.invalid"
-                (click)="ticketSarvey()"
-              >
-                <mat-icon>assignment_turned_in</mat-icon>
-                <strong>Guardar Encuesta</strong>
-              </button>
-            </div>
-            <div class="col-12"></div>
-          </form>
-
-
-        </mat-card-content>
-      </mat-card>
-</mat-card>
-
+          <div style="display: flex; justify-content: center; " class="col-12 md:col-6 lg:col-6">
+            <button
+              mat-fab
+              extended
+              color="primary"
+              [disabled]="formTicketSarvey.invalid"
+              (click)="ticketSarvey()"
+            >
+              <mat-icon>assignment_turned_in</mat-icon>
+              <strong>Guardar Encuesta</strong>
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
 
   </div>
+
 </div>

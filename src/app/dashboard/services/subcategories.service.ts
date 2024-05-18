@@ -21,7 +21,8 @@ export class SubCategoryService {
 
 
     public lista(): Observable<SubCategory[]> {
-        return this.httpClient.get<SubCategory[]>(`${this.subCategoryURL}all`)
+      const headers = this.getHeaders();
+        return this.httpClient.get<SubCategory[]>(`${this.subCategoryURL}all`, { headers })
         .pipe(
           catchError((err) => throwError(() => err.error.message))
         );
@@ -59,20 +60,12 @@ export class SubCategoryService {
     }
 
     public update(id: string, body: any): Observable<SubCategory> {
-          const headers = this.getHeaders();
+            const headers = this.getHeaders();
 
-        return this.httpClient.patch<SubCategory>(`${this.subCategoryURL}edit/${id}`, body, {headers})
-        .pipe(
-          catchError((err) => throwError(() => err.error.message))
-        );
-    }
-
-    public delete(id: string): Observable<any> {
-        const headers = this.getHeaders();
-        return this.httpClient.delete<any>(`${this.subCategoryURL}delete/${id}`, {headers})
-        .pipe(
-          catchError((err) => throwError(() => err.error.message))
-        );
+          return this.httpClient.patch<SubCategory>(`${this.subCategoryURL}edit/${id}`, body, {headers})
+          .pipe(
+            catchError((err) => throwError(() => err.error.message))
+          );
     }
 
 }

@@ -1,81 +1,81 @@
-<div class="wrap-login100">
-  <img
-    [src]="'assets/images/mesa_ayuda.avif'"
-    alt="mesa_ayuda"
-    style="object-fit: cover; width: 100%; height: 100%"
-  />
+<div class="example-card">
+  <mat-card>
+    <mat-card-header>
+      <img
+        [src]="'assets/images/mesa_ayuda.png'"
+        alt="mesa_ayuda"
+        style="object-fit: cover; width: 100%; height: 100%;"
+      />
+    </mat-card-header>
+    <mat-card-content>
+      <h2 style="text-align: center;">Inicio de Sesión</h2>
+      <form class="grid  p-t-20" [formGroup]="formLogin">
+          <div class="col-12">
+            <mat-form-field appearance="outline">
+              <mat-label>Usuario</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="username"
+                placeholder="0600000000/1800000000"
+                #input
+                maxlength="10"
+                autocomplete="username"
+              />
+              <mat-hint *ngIf="isValidField('username')">{{
+                getFieldError("username")
+              }}</mat-hint>
+              <mat-hint class="hint" align="end"
+                >{{ input.value.length }}/10</mat-hint
+              >
+              <mat-icon matSuffix>person</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <mat-form-field appearance="outline">
+              <mat-label>Contraseña</mat-label>
+              <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                formControlName="password"
+                placeholder="Ingrese su contraseña"
+                autocomplete="current-password"
+                (keyup.enter)="login()"
+              />
+              <mat-hint *ngIf="isValidField('password')">{{
+                getFieldError("password")
+              }}</mat-hint>
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <button
+              mat-fab
+              extended
+              color="primary"
+              [disabled]="formLogin.invalid"
+              (click)="login()"
+            >
+              <mat-icon>input</mat-icon>
+              <strong>Ingresar</strong>
+            </button>
+          </div>
 
-  <form
-    class="login100-form p-l-55 p-r-55 p-b-20"
-    [formGroup]="formLogin"
-  >
-    <span class="login100-form-title p-t-20 p-b-20"> Inicio de Sesión </span>
-
-    <div class="grid">
-      <div class="col-12">
-        <mat-form-field appearance="outline">
-          <mat-label><strong>Usuario</strong></mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="username"
-            placeholder="0600000000/1800000000"
-            #input
-            maxlength="10"
-            autocomplete="username"
-          />
-          <mat-hint *ngIf="isValidField('username')">{{
-            getFieldError("username")
-          }}</mat-hint>
-          <mat-hint class="hint" align="end"
-            >{{ input.value.length }}/10</mat-hint
-          >
-          <mat-icon matSuffix>person</mat-icon>
-        </mat-form-field>
-      </div>
-      <div class="col-12">
-        <mat-form-field appearance="outline">
-          <mat-label><strong>Contraseña</strong></mat-label>
-          <input
-            matInput
-            [type]="hide ? 'password' : 'text'"
-            formControlName="password"
-            placeholder="Ingrese su contraseña"
-            autocomplete="current-password"
-          />
-          <mat-hint *ngIf="isValidField('password')">{{
-            getFieldError("password")
-          }}</mat-hint>
-          <button
-            mat-icon-button
-            matSuffix
-            (click)="hide = !hide"
-            [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide"
-          >
-            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
-
-      <button
-        mat-fab
-        extended
-        color="primary"
-        class="col-12"
-        [disabled]="formLogin.invalid"
-        (click)="login()"
-      >
-        <mat-icon>input</mat-icon>
-        <strong>Ingresar</strong>
-      </button>
-
-      <div class="flex-col-c col-12 p-t-30">
-        <button mat-fab extended color="accent" routerLink="/auth/panel">
-          <mat-icon>assignment_turned_in</mat-icon>
-          <strong>Crear Tickets</strong>
-        </button>
-      </div>
-    </div>
-  </form>
+          <div class="col-12">
+            <button mat-fab extended color="accent" routerLink="/auth/panel">
+              <mat-icon>assignment_turned_in</mat-icon>
+              <strong>Crear Tickets</strong>
+            </button>
+          </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

@@ -40,10 +40,10 @@ export class EstableishmentService {
     public detail(id: string): Observable<Estableishment> {
       const headers = this.getHeaders();
 
-        return this.httpClient.get<Estableishment>(`${this.estableishmentURL}${id}`, {headers})
-        .pipe(
-          catchError((err) => throwError(() => err.error.message))
-        );
+      return this.httpClient.get<Estableishment>(`${this.estableishmentURL}${id}`, {headers})
+      .pipe(
+        catchError((err) => throwError(() => err.error.message))
+      );
     }
 
     public reportsEod(id: string, mes?:any, anio?:any): Observable<SubCategoryReports[]> {
@@ -79,30 +79,21 @@ export class EstableishmentService {
     }
 
     public save(body: any): Observable<Estableishment> {
-          const headers = this.getHeaders();
+      const headers = this.getHeaders();
 
-        return this.httpClient.post<Estableishment>(`${this.estableishmentURL}create`, body, {headers})
-        .pipe(
-          catchError((err) => throwError(() => err.error.message))
-        );
+      return this.httpClient.post<Estableishment>(`${this.estableishmentURL}create`, body, {headers})
+      .pipe(
+        catchError((err) => throwError(() => err.error.message))
+      );
     }
 
     public update(id: string, body: any): Observable<Estableishment> {
-          const headers = this.getHeaders();
+      const headers = this.getHeaders();
 
-        return this.httpClient.patch<Estableishment>(`${this.estableishmentURL}edit/${id}`, body, {headers})
-        .pipe(
-          catchError((err) => throwError(() => err.error.message))
-        );
-    }
-
-    public delete(id: string): Observable<any> {
-          const headers = this.getHeaders();
-
-        return this.httpClient.delete<any>(`${this.estableishmentURL}delete/${id}`, {headers})
-        .pipe(
-          catchError((err) => throwError(() => err.error.message))
-        );
+      return this.httpClient.patch<Estableishment>(`${this.estableishmentURL}edit/${id}`, body, {headers})
+      .pipe(
+        catchError((err) => throwError(() => err.error.message))
+      );
     }
 
     public getCount(): Observable<number> {

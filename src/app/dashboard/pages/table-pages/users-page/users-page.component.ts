@@ -71,11 +71,6 @@ export class UsersPageComponent implements OnInit{
       case Table.EDITAR:
         this.onEdit(tableAction.row);
         break;
-
-      case Table.ELIMINAR:
-        this.onDelete(tableAction.row);
-        break;
-
       default:
         break;
     }
@@ -95,37 +90,6 @@ export class UsersPageComponent implements OnInit{
 
   onEdit({ id }: User) {
     this.router.navigateByUrl(`dashboard/user-detail/${id}`)
-  }
-
-  onDelete(usuario: User) {
-    Swal.fire({
-      title: 'ADVERTENCIA',
-      html: `¿Estás seguro de eliminar al usuario <strong>` + usuario.nombre + `</strong>?, recuerde que se eliminará la/las relaciones que mantiene con las Unidades/Gestiones asignadas.`,
-      icon: 'warning',
-      showCancelButton: true,
-      focusConfirm: false,
-      reverseButtons: true,
-      confirmButtonText: 'Si, Eliminar!',
-      cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.userService.delete(usuario.id).subscribe({
-          next: () => {
-              Swal.fire(
-                'Eliminado!',
-                `El usuario <strong>`+ usuario.nombre +`</strong> ha sido eliminado correctamente.`,
-                'success'
-              );
-              this.setData();
-          },
-          error: (message) => {
-            Swal.fire('Error', `No se ha eliminado el usuario <strong>`+ usuario.nombre +`</strong>, por que mantiene una relacion con categorías de ayuda.`, 'error');
-          },
-        });
-      }
-    });
   }
 
 }

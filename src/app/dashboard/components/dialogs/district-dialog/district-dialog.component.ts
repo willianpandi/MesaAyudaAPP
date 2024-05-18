@@ -19,6 +19,11 @@ export class DistrictDialogComponent implements OnInit {
   iconAccion: string = 'add_circle';
   listaDistricts: District[] = [];
 
+  opcionesEstado = [
+    { valor: true, etiqueta: 'ACTIVO' },
+    { valor: false, etiqueta: 'INACTIVO' }
+  ];
+
   constructor(
     private dialogReferencia: MatDialogRef<DistrictDialogComponent>,
     private fb: FormBuilder,
@@ -30,6 +35,7 @@ export class DistrictDialogComponent implements OnInit {
       codigo: ['', Validators.required],
       nombre: ['', Validators.required],
       provincia: ['', Validators.required],
+      estado: ['', Validators.required],
     });
   }
 
@@ -47,6 +53,7 @@ export class DistrictDialogComponent implements OnInit {
       codigo: this.formDistrict.value.codigo,
       nombre: this.formDistrict.value.nombre,
       provincia: this.formDistrict.value.provincia,
+      estado: this.formDistrict.value.estado,
     };
 
     if (this.dataDistricts == null) {
@@ -106,6 +113,7 @@ export class DistrictDialogComponent implements OnInit {
         codigo: this.dataDistricts.codigo,
         nombre: this.dataDistricts.nombre,
         provincia: this.dataDistricts.provincia,
+        estado: this.dataDistricts.estado,
       });
       this.tituloAccion = 'Editar';
       this.botonAccion = 'Actualizar';

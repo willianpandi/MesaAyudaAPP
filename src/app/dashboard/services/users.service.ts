@@ -43,36 +43,36 @@ export class UserService {
 
   public listaEstableishments(id: string): Observable<Estableishment[]> {
     const headers = this.getHeaders();
-      return this.httpClient.get<Estableishment[]>(`${this.userUrl}estableishments/${id}`, {headers})
-      .pipe(
-        catchError((err) => throwError(() => err.error.message))
-      );
+    return this.httpClient.get<Estableishment[]>(`${this.userUrl}estableishments/${id}`, {headers})
+    .pipe(
+      catchError((err) => throwError(() => err.error.message))
+    );
   }
 
   public listaCategories(id: string): Observable<Category[]> {
     const headers = this.getHeaders();
-      return this.httpClient.get<Category[]>(`${this.userUrl}categories/${id}`, {headers})
-      .pipe(
-        catchError((err) => throwError(() => err.error.message))
-      );
+    return this.httpClient.get<Category[]>(`${this.userUrl}categories/${id}`, {headers})
+    .pipe(
+      catchError((err) => throwError(() => err.error.message))
+    );
   }
 
   public listCategoriesAsig(): Observable<Category[]> {
     const headers = this.getHeaders();
-      return this.httpClient.get<Category[]>(`${this.userUrl}categories`, {headers})
-      .pipe(
-        catchError((err) => throwError(() => err.error.message))
-      );
-  }
-
-  public listTickets(): Observable<Ticket[]> {
-    const headers = this.getHeaders();
-    return this.httpClient.get<Ticket[]>(`${this.userUrl}tickets`, {headers});
+    return this.httpClient.get<Category[]>(`${this.userUrl}categories`, {headers})
+    .pipe(
+      catchError((err) => throwError(() => err.error.message))
+    );
   }
 
   public listNewTickets(): Observable<Ticket[]> {
     const headers = this.getHeaders();
     return this.httpClient.get<Ticket[]>(`${this.userUrl}newtickets`, {headers});
+  }
+
+  public listCloseTickets(): Observable<Ticket[]> {
+    const headers = this.getHeaders();
+    return this.httpClient.get<Ticket[]>(`${this.userUrl}closetickets`, {headers});
   }
 
 
@@ -83,10 +83,10 @@ export class UserService {
 
   public detail(id: string): Observable<User> {
     const headers = this.getHeaders();
-      return this.httpClient.get<User>(`${this.userUrl}${id}`, {headers})
-      .pipe(
-        catchError((err) => throwError(() => err.error.message))
-      );
+    return this.httpClient.get<User>(`${this.userUrl}${id}`, {headers})
+    .pipe(
+      catchError((err) => throwError(() => err.error.message))
+    );
   }
 
   public reports(mes?:any, anio?:any): Observable<UsersReports[]> {
@@ -107,78 +107,66 @@ export class UserService {
 
   public save(body: any): Observable<User> {
     const headers = this.getHeaders();
-      return this.httpClient.post<User>(`${this.userUrl}create/`, body, {headers})
-      .pipe(
-        catchError((err) => throwError(() => err.error.message))
-      );
+    return this.httpClient.post<User>(`${this.userUrl}create/`, body, {headers})
+    .pipe(
+      catchError((err) => throwError(() => err.error.message))
+    );
   }
-
 
   public update(id: string, body: any): Observable<User> {
     const headers = this.getHeaders();
-      return this.httpClient.patch<User>(`${this.userUrl}edit/${id}`, body, {headers})
-      .pipe(
-        catchError((err) => throwError(() => err.error.message))
-      );
+    return this.httpClient.patch<User>(`${this.userUrl}edit/${id}`, body, {headers})
+    .pipe(
+      catchError((err) => throwError(() => err.error.message))
+    );
   }
 
   public addEstableishment(id: string, body: any): Observable<any> {
     const headers = this.getHeaders();
-      return this.httpClient.patch<any>(`${this.userUrl}add-estableishment/${id}`, body, {headers})
-      .pipe(
-        catchError((err) => throwError(() => err.error.message))
-      );
+    return this.httpClient.patch<any>(`${this.userUrl}add-estableishment/${id}`, body, {headers})
+    .pipe(
+      catchError((err) => throwError(() => err.error.message))
+    );
   }
 
   public removeEstableishment(id: string, body: any): Observable<any> {
     const headers = this.getHeaders();
-      return this.httpClient.patch<any>(`${this.userUrl}remove-estableishment/${id}`, body, {headers})
-      .pipe(
-        catchError((err) => throwError(() => err.error.message))
-      );
+    return this.httpClient.patch<any>(`${this.userUrl}remove-estableishment/${id}`, body, {headers})
+    .pipe(
+      catchError((err) => throwError(() => err.error.message))
+    );
   }
 
   public addCategory(id: string, body: any): Observable<any> {
     const headers = this.getHeaders();
-      return this.httpClient.patch<any>(`${this.userUrl}add-category/${id}`, body, {headers})
-      .pipe(
-        catchError((err) => throwError(() => err.error.message))
-      );
-  }
+    return this.httpClient.patch<any>(`${this.userUrl}add-category/${id}`, body, {headers})
+    .pipe(
+      catchError((err) => throwError(() => err.error.message))
+    );
+}
 
   public removeCategoryt(id: string, body: any): Observable<any> {
     const headers = this.getHeaders();
-      return this.httpClient.patch<any>(`${this.userUrl}remove-category/${id}`, body, {headers})
-      .pipe(
-        catchError((err) => throwError(() => err.error.message))
-      );
+    return this.httpClient.patch<any>(`${this.userUrl}remove-category/${id}`, body, {headers})
+    .pipe(
+      catchError((err) => throwError(() => err.error.message))
+    );
   }
 
   public resetPassword(id: string, newPass: string): Observable<any> {
     const headers = this.getHeaders();
-
-      return this.httpClient.put<any>(`${this.userUrl}reset-password/${id}/${newPass}`,null, {headers})
-      .pipe(
-        catchError((err) => throwError(() => err.error.message))
-      );
+    return this.httpClient.put<any>(`${this.userUrl}reset-password/${id}/${newPass}`,null, {headers})
+    .pipe(
+      catchError((err) => throwError(() => err.error.message))
+    );
   }
 
   public updatePassword(body: any): Observable<User> {
     const headers = this.getHeaders();
-      return this.httpClient.put<User>(`${this.userUrl}password`, body, {headers})
-      .pipe(
-        catchError((err) => throwError(() => err.error.message))
-      );
-  }
-
-
-  public delete(id: string): Observable<any> {
-    const headers = this.getHeaders();
-      return this.httpClient.delete<any>(`${this.userUrl}delete/${id}`,{headers})
-      .pipe(
-        catchError((err) => throwError(() => err.error.message))
-      );
-  }
-
+    return this.httpClient.put<User>(`${this.userUrl}password`, body, {headers})
+    .pipe(
+      catchError((err) => throwError(() => err.error.message))
+    );
+}
 
 }

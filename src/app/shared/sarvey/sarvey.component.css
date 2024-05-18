@@ -16,7 +16,8 @@ mat-divider{
 }
 
 mat-card{
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
 }
 
 mat-form-field{
@@ -27,12 +28,21 @@ mat-form-field{
   display: block;
   padding: 20px 40px 0;
 }
+
 .mat-mdc-card-content {
   display: block;
-  padding: 0 40px
+  padding: 0 20px 20px 20px
 }
 
+button{
+  width: 80%;
+}
 
-mat-panel-description{
-  color: black;
+mat-hint{
+  color: red;
+}
+
+p{
+  display: flex;
+  align-items: center;
 }

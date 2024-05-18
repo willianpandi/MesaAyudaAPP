@@ -26,6 +26,8 @@ export class TicketsPageComponent implements OnInit {
 
   newTicketsList: Ticket[] = [];
   reasigTicketsList: Ticket[] = [];
+  closeTicketsList: Ticket[] = [];
+  reasigCloseTicketsList: Ticket[] = [];
 
 
 
@@ -60,6 +62,15 @@ export class TicketsPageComponent implements OnInit {
       { label: 'Departamento', def: 'subcategory.nombre', dataKey: 'subcategory.nombre', dataType: 'object' },
       { label: 'Requerimiento', def: 'requerimiento', dataKey: 'requerimiento' },
     ];
+    this.tableColumnsTicketsClose = [
+      { label: 'N° Ticket', def: 'codigo', dataKey: 'codigo', isSticky: true, },
+      { label: 'Estado', def: 'estado', dataKey: 'estado' },
+      { label: 'Fecha Cierre', def: 'cierreAt', dataKey: 'cierreAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm' },
+      { label: 'Nombre', def: 'nombre', dataKey: 'nombre' },
+      { label: 'Unidad/Gestión', def: 'estableishment.nombre', dataKey: 'estableishment.nombre', dataType: 'object'},
+      { label: 'Departamento', def: 'subcategory.nombre', dataKey: 'subcategory.nombre', dataType: 'object' },
+      { label: 'Requerimiento', def: 'requerimiento', dataKey: 'requerimiento' },
+    ];
   }
 
   setData(): void {
@@ -74,6 +85,19 @@ export class TicketsPageComponent implements OnInit {
         const filtData: Ticket[] = data;
 
         this.reasigTicketsList = filtData;
+      },
+      (err) => {}
+    );
+    this.ticketService.listTicketsReasigClose().subscribe(
+      (data) => {
+        const filtData: Ticket[] = data;
+
+        this.reasigCloseTicketsList = filtData;
+      }
+    )
+    this.userService.listCloseTickets().subscribe(
+      (data) => {
+        this.closeTicketsList = data;
       },
       (err) => {}
     );

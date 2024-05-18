@@ -20,7 +20,7 @@
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-12 lg:col-4">
+      <div class="col-12 md:col-4 lg:col-4">
         <mat-form-field appearance="outline">
           <mat-label>Código</mat-label>
           <input matInput formControlName="codigo" />
@@ -31,7 +31,7 @@
         </mat-form-field>
       </div>
 
-      <div class="col-12 md:col-12 lg:col-8">
+      <div class="col-12 md:col-8 lg:col-8">
         <mat-form-field appearance="outline">
           <mat-label>Nombre de Unidad/Gestión</mat-label>
           <input matInput formControlName="nombre" />
@@ -41,6 +41,20 @@
           <mat-icon matSuffix>business</mat-icon>
         </mat-form-field>
       </div>
+
+      <div class="col-12 md:col-4 lg:col-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="estado">
+            <mat-option *ngFor="let opcion of opcionesEstado | order: 'etiqueta'" [value]="opcion.valor">
+              {{ opcion.etiqueta }}
+            </mat-option>
+          </mat-select>
+          <mat-hint *ngIf="isValidField('estado')">{{ getFieldError("estado") }}</mat-hint>
+          <mat-icon matSuffix>highlight_off</mat-icon>
+        </mat-form-field>
+      </div>
+
     </div>
   </form>
 </div>

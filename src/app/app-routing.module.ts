@@ -16,12 +16,18 @@ const routes: Routes = [
     canActivate: [ isAuthenticatedGuard ],
     loadChildren: () => import('./dashboard/dashboard.module').then( m => m.DashboardModule ),
   },
-  { path: 'encuesta/:id', component: SarveyComponent },
   {
-    path: '**',
+    path: 'encuesta/:id',
+    component: SarveyComponent, data: {titulo: 'ENCUESTA'}
+  },
+  {
+    path: '404',
     component: Error404PageComponent,
   },
-
+  {
+    path: '**',
+    redirectTo: '404',
+  },
 ];
 
 @NgModule({

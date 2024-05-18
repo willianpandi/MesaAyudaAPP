@@ -10,14 +10,9 @@
       <mat-card-content>
         <mat-divider></mat-divider>
 
-        <mat-accordion>
-          <mat-expansion-panel hideToggle *ngFor="let item of informacionBasica">
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>{{ item.label }}</span></mat-panel-title>
-              <mat-panel-description>{{ item.data }}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-        </mat-accordion>
+        <div class="grid" *ngFor="let item of informacionBasica" style="padding: 5px 10px;">
+          <p class="col-4"><b>{{ item.label }}</b></p><p class="col-8">{{ item.data }}</p>
+        </div>
 
       </mat-card-content>
     </mat-card>
@@ -32,15 +27,9 @@
       </mat-card-header>
       <mat-card-content>
         <mat-divider></mat-divider>
-
-        <mat-accordion>
-          <mat-expansion-panel hideToggle *ngFor="let item of informacionAdicional">
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>{{ item.label }}</span></mat-panel-title>
-              <mat-panel-description>{{ item.data }}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-        </mat-accordion>
+        <div class="grid" *ngFor="let item of informacionAdicional" style="padding: 5px 10px;">
+          <p class="col-4"><b>{{ item.label }}</b></p><p class="col-8">{{ item.data }}</p>
+        </div>
 
       </mat-card-content>
     </mat-card>
@@ -57,15 +46,10 @@
       </mat-card-header>
       <mat-card-content>
         <mat-divider></mat-divider>
+        <div class="grid" *ngFor="let item of informacionContacto" style="padding: 5px 10px;">
+          <p class="col-4"><b>{{ item.label }}</b></p><p class="col-8">{{ item.data }}</p>
+        </div>
 
-        <mat-accordion>
-          <mat-expansion-panel hideToggle *ngFor="let item of informacionContacto">
-            <mat-expansion-panel-header>
-              <mat-panel-title><span>{{ item.label}}</span></mat-panel-title>
-              <mat-panel-description>{{ item.data}}</mat-panel-description>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-        </mat-accordion>
       </mat-card-content>
     </mat-card>
 

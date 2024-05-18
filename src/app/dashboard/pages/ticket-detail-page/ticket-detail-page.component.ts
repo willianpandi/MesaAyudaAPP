@@ -5,8 +5,7 @@ import { QuillEditorComponent } from 'ngx-quill';
 
 import { ImageDialogComponent } from '../../components/dialogs/image-dialog/image-dialog.component';
 import { TicketService } from '../../services/tickets.service';
-import { ImageService } from '../../../service/ImageService.service';
-import { Files, Ticket } from '../../interfaces/tickets';
+import { Ticket } from '../../interfaces/tickets';
 import { AuthService } from '../../../auth/services/auth.service';
 import { ReassignedTicketsComponent } from '../../components/dialogs/reassigned-tickets/reassigned-tickets.component';
 import { FormControl } from '@angular/forms';
@@ -22,7 +21,6 @@ import Swal from 'sweetalert2';
 })
 export class TicketDetailPageComponent implements OnInit, AfterViewInit {
   ticketSelect!: Ticket;
-  archivos: Files[] = [];
   quillEditorReadOnly = true;
   quillEditorReadOnly2 = false;
 
@@ -33,7 +31,6 @@ export class TicketDetailPageComponent implements OnInit, AfterViewInit {
 
   constructor(
     private ticketsService: TicketService,
-    private archivoService: ImageService,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
   ) {}
@@ -79,9 +76,6 @@ export class TicketDetailPageComponent implements OnInit, AfterViewInit {
   cargarTicket(id: string) {
     this.ticketsService.detail(id).subscribe((ticket) => {
       this.ticketSelect = ticket;
-      this.archivoService.getImages(this.ticketSelect.id).subscribe((data) => {
-        this.archivos = data;
-      });
     });
 
   }
@@ -144,28 +138,39 @@ export class TicketDetailPageComponent implements OnInit, AfterViewInit {
       estado: 'EN PROCESO'
     }
     Swal.fire({
-      title: 'ADVERTENCIA',
+      title: '¿EN PROCESO?',
       html: `¿Estás seguro de cambiar el estado del <strong>Ticket ` + this.ticketSelect.codigo +`</strong> a <strong>EN PROCESO</strong>.`,
-      icon: 'warning',
+      icon: 'question',
       showCancelButton: true,
       focusConfirm: false,
       reverseButtons: true,
-      confirmButtonText: 'Si !',
+      confirmButtonText: 'Si, cambiar!',
       cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#3F51B5',
+      cancelButtonColor: '#FF5252',
     }).then((result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Cambiando . . . ',
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          willOpen: () => {
+            Swal.showLoading();
+          }
+        });
         this.ticketsService.update(this.ticketSelect.id, modelo).subscribe({
           next: (data) => {
-              Swal.fire(
-                'Ticket en Proceso!',
-                `El <strong>Ticket ` + this.ticketSelect.codigo +`</strong> ha sido cambiado a estado <strong>EN PROCESO</strong>.`,
-                'success'
-              );
-              this.cargarTicket(this.ticketSelect.id)
+            Swal.close();
+            Swal.fire(
+              `Ticket `+ this.ticketSelect.codigo +` en Proceso!`,
+              `El <strong>Ticket ` + this.ticketSelect.codigo +`</strong> ha sido cambiado a estado <strong>EN PROCESO</strong>.`,
+              'success'
+            );
+            this.cargarTicket(this.ticketSelect.id)
           },
           error: (message) => {
+            Swal.close();
             Swal.fire('Error', `No se ha podido cerrar el <strong>Ticket ` + this.ticketSelect.codigo +`</strong>.`, 'error');
           },
         });
@@ -179,28 +184,39 @@ export class TicketDetailPageComponent implements OnInit, AfterViewInit {
       estado: 'CERRADO'
     }
     Swal.fire({
-      title: 'ADVERTENCIA',
+      title: '¿CERRAR?',
       html: `¿Estás seguro de <strong>CERRAR</strong> el <strong>Ticket ` + this.ticketSelect.codigo +`</strong> recuerde que si lo cierra no se podra reabrir.`,
-      icon: 'warning',
+      icon: 'question',
       showCancelButton: true,
       focusConfirm: false,
       reverseButtons: true,
       confirmButtonText: 'Si, Cerrar!',
       cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#3F51B5',
+      cancelButtonColor: '#FF5252',
     }).then((result) => {
       if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Cerrando . . . ',
+          allowOutsideClick: false,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          willOpen: () => {
+            Swal.showLoading();
+          }
+        });
         this.ticketsService.updateCloseTicket(this.ticketSelect.id, modelo).subscribe({
           next: (data) => {
-              Swal.fire(
-                'Ticket Cerrado!',
-                `El <strong>Ticket ` + this.ticketSelect.codigo +`</strong> ha sido cerrado correctamente.`,
-                'success'
-              );
-              this.cargarTicket(this.ticketSelect.id)
+            Swal.close();
+            Swal.fire(
+              `Ticket ` + this.ticketSelect.codigo +` Cerrado!`,
+              `El <strong>Ticket ` + this.ticketSelect.codigo +`</strong> ha sido cerrado correctamente.`,
+              'success'
+            );
+            this.cargarTicket(this.ticketSelect.id)
           },
           error: (message) => {
+            Swal.close();
             Swal.fire('Error', `No se ha podido cerrar el <strong>Ticket ` + this.ticketSelect.codigo +`</strong>.`, 'error');
           },
         });

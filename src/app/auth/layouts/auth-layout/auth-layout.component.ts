@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Subscription, filter, map } from 'rxjs';
 import { ActivationEnd, Router } from '@angular/router';
 
@@ -8,9 +8,11 @@ import { ActivationEnd, Router } from '@angular/router';
   templateUrl: './auth-layout.component.html',
   styleUrls: ['./auth-layout.component.css']
 })
-export class AuthLayoutComponent {
+export class AuthLayoutComponent implements OnInit{
   public tituloSubs: Subscription;
   public titulo: string = '';
+  imageUrl: string = '';
+  anioActual: number = new Date().getFullYear();
 
   constructor(
     @Inject(BreakpointObserver) private observer: BreakpointObserver,
@@ -23,6 +25,10 @@ export class AuthLayoutComponent {
         document.title = `Mesa de Ayuda - ${titulo}`;
       }
     )
+  }
+
+  ngOnInit(): void {
+    this.imageUrl = 'https://soporte.mspz3.gob.ec:8083/api/tickets/logo/logo.png';
   }
 
   getArgumentosRuta() {

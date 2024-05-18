@@ -18,17 +18,6 @@ export class ImageService {
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
-
-  saveImage(formData: FormData, id: string): Observable<any> {
-    const headers = this.getHeaders();
-    return this.httpClient.post(`${this.filesURL}files/${id}`, formData, {headers});
-  }
-
-  getImages(id: string): Observable<any> {
-    const headers = this.getHeaders();
-    return this.httpClient.get(`${this.filesURL}files/${id}`, {headers});
-  }
-
   saveLogo(file: File): Observable<any> {
     const headers = this.getHeaders();
     const formData = new FormData();

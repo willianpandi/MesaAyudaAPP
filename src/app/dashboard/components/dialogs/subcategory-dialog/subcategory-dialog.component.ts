@@ -21,6 +21,12 @@ export class SubcategoryDialogComponent {
   iconAccion: string = 'add_circle';
   listCategories: Category[] = [];
 
+
+  opcionesEstado = [
+    { valor: true, etiqueta: 'ACTIVO' },
+    { valor: false, etiqueta: 'INACTIVO' }
+  ];
+
   constructor(
     private dialogReferencia: MatDialogRef<SubcategoryDialogComponent>,
     private fb: FormBuilder,
@@ -33,6 +39,7 @@ export class SubcategoryDialogComponent {
       nombre: ['', Validators.required],
       tiempo: ['', [Validators.required, Validators.min(1)]],
       category: ['', Validators.required],
+      estado: ['', Validators.required],
     });
     this.categoryService.lista().subscribe(
       (data) => {
@@ -55,6 +62,7 @@ export class SubcategoryDialogComponent {
       nombre: this.formSubCategory.value.nombre,
       tiempo: this.formSubCategory.value.tiempo,
       category: this.formSubCategory.value.category,
+      estado: this.formSubCategory.value.estado,
     };
 
     if (this.dataSubCategory === null) {
@@ -114,6 +122,7 @@ export class SubcategoryDialogComponent {
         nombre: this.dataSubCategory.nombre,
         tiempo: this.dataSubCategory.tiempo,
         category: this.dataSubCategory.category.id,
+        estado: this.dataSubCategory.estado,
       });
       this.tituloAccion = 'Editar';
       this.botonAccion = 'Actualizar';

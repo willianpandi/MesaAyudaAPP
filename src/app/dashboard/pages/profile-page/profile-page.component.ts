@@ -19,7 +19,7 @@ export class ProfilePageComponent {
     this.users = this.authService.currentUser();
 
     this.informacionBasica = [
-      { label: 'Número de Cédula', data: this.users.usuario },
+      { label: 'N° Cédula', data: this.users.usuario },
       { label: 'Nombre Completo', data: this.users.nombre },
       { label: 'Puesto', data: this.users.puesto },
       { label: 'F. Ingreso', data: this.users.f_ingreso },
@@ -27,8 +27,8 @@ export class ProfilePageComponent {
     this.informacionContacto = [
       { label: 'Correo Personal', data: this.users.correo_personal },
       { label: 'Correo Institucional', data: this.users.correo_institucional },
-      { label: 'Número Celular', data: this.users.celular },
-      { label: 'Número Teléfono', data: this.users.telefono },
+      { label: 'N° Celular', data: this.users.celular },
+      { label: 'N° Teléfono', data: this.users.telefono },
     ];
     this.informacionAdicional = [
       { label: 'Grupo Ocupacional', data: this.users.g_Ocupacional },

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http'
 import { Observable, catchError, map, tap, throwError } from 'rxjs';
-import { SmallEstableishment } from '../interfaces/districts';
+import { District, SmallEstableishment } from '../interfaces/districts';
 import { environment } from '../../../environments/environments';
 import { Estableishment } from '../interfaces/estableishments';
 import { EstableishmentsReports } from '../interfaces/reports';
@@ -23,13 +23,19 @@ export class DistrictService {
       return new HttpHeaders().set('Authorization', `Bearer ${token}`);
     }
 
-    public lista(): Observable<any[]> {
-      const headers = this.getHeaders();
+    public lista(): Observable<District[]> {
+      return this.httpClient.get<District[]>(`${this.districtsURL}all-active`)
+      .pipe(
+        catchError((err) => throwError(() => err.error.message))
+      );
+    }
 
-        return this.httpClient.get<any[]>(`${this.districtsURL}all`, {headers})
-        .pipe(
-          catchError((err) => throwError(() => err.error.message))
-        );
+    public listaAll(): Observable<District[]> {
+      const headers = this.getHeaders();
+      return this.httpClient.get<District[]>(`${this.districtsURL}all`, {headers})
+      .pipe(
+        catchError((err) => throwError(() => err.error.message))
+      );
     }
 
     public count(): Observable<{totalCountDistrict: number}>{
@@ -87,15 +93,4 @@ export class DistrictService {
           catchError((err) => throwError(() => err.error.message))
         );
     }
-
-    public delete(id: string): Observable<any> {
-          const headers = this.getHeaders();
-
-        return this.httpClient.delete<any>(`${this.districtsURL}delete/${id}`, {headers})
-        .pipe(
-          catchError((err) => throwError(() => err.error.message))
-        );
-    }
-
-
 }

@@ -7,6 +7,8 @@
         *ngIf="userTickets.length > 0"
         [data]="userTickets"
         [columns]="tableColumnTickets"
+        [config]="tableConfig"
+        (action)="onTableAction($event)"
       ></app-table>
     </mat-card-content>
   </mat-card>

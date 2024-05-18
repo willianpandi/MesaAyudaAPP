@@ -45,57 +45,25 @@ export class CategoriesPageComponent implements OnInit {
   }
   setTableColumns() {
     this.tableColumnsCategory = [
+      { label: 'Estado', def: 'estado', dataKey: 'estado', isSticky: true, dataType: 'boolean'},
       { label: 'Nombre', def: 'nombre', dataKey: 'nombre' },
-      {
-        label: 'Descripción del Problema',
-        def: 'descripcion',
-        dataKey: 'descripcion',
-      },
-      {
-        label: 'Creado',
-        def: 'createdAt',
-        dataKey: 'createdAt',
-        dataType: 'date',
-        formatt: 'dd/MM/yyyy - HH:mm',
-      },
-      {
-        label: 'Actualizado',
-        def: 'updateAt',
-        dataKey: 'updateAt',
-        dataType: 'date',
-        formatt: 'dd/MM/yyyy - HH:mm',
-      },
+      { label: 'Descripción del Problema', def: 'descripcion', dataKey: 'descripcion', },
+      { label: 'Creado',def: 'createdAt', dataKey: 'createdAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm', },
+      { label: 'Actualizado', def: 'updateAt', dataKey: 'updateAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm', },
     ];
 
     this.tableColumnsSubCategory = [
+      { label: 'Estado', def: 'estado', dataKey: 'estado', isSticky: true, dataType: 'boolean' },
       { label: 'Nombre', def: 'nombre', dataKey: 'nombre' },
       { label: 'Categoría', def: 'category.nombre', dataKey: 'category.nombre', dataType: 'object' },
-      {
-        label: 'Tiempo Estimado',
-        def: 'tiempo',
-        dataKey: 'tiempo',
-        dataType: 'minutes',
-        formatt: 'HH:mm'
-      },
-      {
-        label: 'Creado',
-        def: 'createdAt',
-        dataKey: 'createdAt',
-        dataType: 'date',
-        formatt: 'dd/MM/yyyy - HH:mm',
-      },
-      {
-        label: 'Actualizado',
-        def: 'updateAt',
-        dataKey: 'updateAt',
-        dataType: 'date',
-        formatt: 'dd/MM/yyyy - HH:mm',
-      },
+      {  label: 'Tiempo Estimado', def: 'tiempo', dataKey: 'tiempo', dataType: 'minutes', formatt: 'HH:mm' },
+      { label: 'Creado', def: 'createdAt', dataKey: 'createdAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm', },
+      { label: 'Actualizado', def: 'updateAt', dataKey: 'updateAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm', },
     ];
   }
 
   setData(): void {
-    this.categoryService.lista().subscribe(
+    this.categoryService.listaAll().subscribe(
       (data) => {
         this.categoryList = data;
       },
@@ -115,11 +83,6 @@ export class CategoriesPageComponent implements OnInit {
       case Table.EDITAR:
         this.onEdit(tableAction.row);
         break;
-
-      case Table.ELIMINAR:
-        this.onDelete(tableAction.row);
-        break;
-
       default:
         break;
     }
@@ -155,47 +118,12 @@ export class CategoriesPageComponent implements OnInit {
         }
       });
   }
-  onDelete(category: Category) {
-    Swal.fire({
-      title: 'ADVERTENCIA',
-      html: `¿Estás seguro de eliminar la categoría <strong>` + category.nombre + `</strong>?, recuerde que se eliminaran los datos de subcategorías relacionadas.`,
-      icon: 'warning',
-      showCancelButton: true,
-      focusConfirm: false,
-      reverseButtons: true,
-      confirmButtonText: 'Si, Eliminar!',
-      cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.categoryService.delete(category.id).subscribe({
-          next: () => {
-              Swal.fire(
-                'Eliminado!',
-                `La categoría <strong>` + category.nombre + `</strong> se ha sido eliminado correctamente.`,
-                'success'
-              );
-              this.setData();
-          },
-          error: (message) => {
-            Swal.fire('Error', `No se ha eliminado la categoría <strong>` + category.nombre + `</strong>, por que mantiene una relación con Tickets.`, 'error');
-          },
-        });
-      }
-    });
-  }
 
   onTableAction2(tableAction2: TableAction) {
     switch (tableAction2.action) {
       case Table.EDITAR:
         this.onEditSub(tableAction2.row);
         break;
-
-      case Table.ELIMINAR:
-        this.onDeleteSub(tableAction2.row);
-        break;
-
       default:
         break;
     }
@@ -205,7 +133,7 @@ export class CategoriesPageComponent implements OnInit {
     this.dialog
       .open(SubcategoryDialogComponent, {
         disableClose: true,
-        width: '800px',
+        width: '700px',
       })
       .afterClosed()
       .subscribe((resultado) => {
@@ -228,35 +156,5 @@ export class CategoriesPageComponent implements OnInit {
           this.setData();
         }
       });
-  }
-  onDeleteSub(subcategory: SubCategory) {
-    Swal.fire({
-      title: 'ADVERTENCIA',
-      html: `¿Estás seguro de eliminar la sub-categoría <strong>` + subcategory.nombre + `</strong> que pertenece a la categoría <strong>`+ subcategory.category.nombre +` </strong>?`,
-      icon: 'warning',
-      showCancelButton: true,
-      focusConfirm: false,
-      reverseButtons: true,
-      confirmButtonText: 'Si, Eliminar!',
-      cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.subCategoryService.delete(subcategory.id).subscribe({
-          next: () => {
-              Swal.fire(
-                'Eliminado!',
-                `La sub-categoría <strong>` + subcategory.nombre + `</strong> ha sido eliminado correctamente.`,
-                'success'
-              );
-              this.setData();
-          },
-          error: (message) => {
-            Swal.fire('Error', `No se ha eliminado la sub-categoría <strong>` + subcategory.nombre + `</strong>.`, 'error');
-          },
-        });
-      }
-    });
   }
 }

@@ -1,7 +1,12 @@
-<div class="limiter">
-  <div class="container-login100" style="background-image: url('../../../../assets/images/bg-01.avif');" >
-
-    <router-outlet />
+<div class="limiter" >
+  <div class="container-login100" style="background-image: url('../../../../assets/images/fondo.svg');" >
+      <router-outlet></router-outlet>
+      <br>
+      <div class="footer">
+        <p>Derechos de autor &copy; {{anioActual}} Mesa de Ayuda - MSP - CZ3 - GZTICs. Todos los derechos reservados.</p>
+        <p>Desarrollado por: Willian Pandi</p>
+        <img [src]="imageUrl" alt="mesa_ayuda" style="max-height: 30px;" />
+      </div>
 
   </div>
 </div>

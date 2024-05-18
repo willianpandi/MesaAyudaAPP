@@ -36,7 +36,9 @@ export class CreateTicketComponent implements OnInit{
     );
     this.formCreatTicket = this.fb.group({
       cedula: ['', [Validators.required,Validators.minLength(10)]],
+      nombre: ['', Validators.required],
       correo_electronico: ['', [Validators.required, Validators.pattern(this.validatorsService.emailPattern)]],
+      telefono: ['', [Validators.required,Validators.minLength(10)]],
     })
   }
 
@@ -52,10 +54,10 @@ export class CreateTicketComponent implements OnInit{
     const modelo = {
       cedula: this.formCreatTicket.value.cedula,
       correo_electronico: this.formCreatTicket.value.correo_electronico,
+      nombre: this.formCreatTicket.value.nombre,
+      telefono: this.formCreatTicket.value.telefono,
 
       estado: this.ticket.estado,
-      nombre: this.ticket.nombre,
-      telefono: this.ticket.telefono,
       category: this.ticket.category.id,
       subcategory: this.ticket.subcategory.id,
       requerimiento: this.ticket.requerimiento,
@@ -68,17 +70,27 @@ export class CreateTicketComponent implements OnInit{
       soporteAsignado: this.ticket.soporteAsignado,
 
     };
-    console.log(modelo);
+    Swal.fire({
+      title: 'Creando . . . ',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      timerProgressBar: true,
+      willOpen: () => {
+        Swal.showLoading();
+      }
+    });
     this.ticketsService.createTicket(modelo).subscribe({
       next: (data) => {
+        Swal.close();
         Swal.fire({
-          title: 'Ticket Creado',
+          title: `Ticket ${data.codigo} Creado`,
           icon: 'success',
-          html: `<strong>Ticket de Ayuda</strong> creado correctamente`,
+          html: `<strong>Solicitud de Ticket de Ayuda ${data.codigo}</strong> creado correctamente`,
         });
         this.dialogReferencia.close('creado');
       },
       error: (e) => {
+        Swal.close();
         Swal.fire({
           title: 'Ticket No Creado',
           icon: 'error',

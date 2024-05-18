@@ -21,6 +21,12 @@ export class EstableishmentDialogComponent implements OnInit {
   iconAccion: string = 'add_circle';
   listaDistrict: District[] = [];
 
+
+  opcionesEstado = [
+    { valor: true, etiqueta: 'ACTIVO' },
+    { valor: false, etiqueta: 'INACTIVO' }
+  ];
+
   constructor(
     private dialogReferencia: MatDialogRef<EstableishmentDialogComponent>,
     private fb: FormBuilder,
@@ -33,6 +39,7 @@ export class EstableishmentDialogComponent implements OnInit {
       district: ['', Validators.required],
       codigo: ['', Validators.required],
       nombre: ['', Validators.required],
+      estado: ['', Validators.required],
     });
     this.districtService.lista().subscribe(
       (data) => {
@@ -56,6 +63,7 @@ export class EstableishmentDialogComponent implements OnInit {
       district: this.formEstableishment.value.district,
       codigo: this.formEstableishment.value.codigo,
       nombre: this.formEstableishment.value.nombre,
+      estado: this.formEstableishment.value.estado,
     };
 
     if (this.dataEstablecimiento == null) {
@@ -118,6 +126,7 @@ export class EstableishmentDialogComponent implements OnInit {
         district: this.dataEstablecimiento.district.id,
         codigo: this.dataEstablecimiento.codigo,
         nombre: this.dataEstablecimiento.nombre,
+        estado: this.dataEstablecimiento.estado,
       });
       this.tituloAccion = 'Editar';
       this.botonAccion = 'Actualizar';

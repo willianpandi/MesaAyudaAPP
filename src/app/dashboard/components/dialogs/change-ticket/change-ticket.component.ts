@@ -46,9 +46,18 @@ export class ChangeTicketComponent implements OnInit {
     const modelo = {
       subcategory: this.departamento.value,
     }
+    Swal.fire({
+      title: 'Cambiando . . . ',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      timerProgressBar: true,
+      willOpen: () => {
+        Swal.showLoading();
+      }
+    });
     this.ticketsService.updateDepartTicket(this.dataTicket, modelo).subscribe({
       next: (data) => {
-        console.log(data);
+        Swal.close();
 
         Swal.fire({
           position: 'bottom-end',
@@ -61,6 +70,9 @@ export class ChangeTicketComponent implements OnInit {
         this.dialogReferencia.close('cambiar');
       },
       error: (e) => {
+        Swal.close();
+
+
         Swal.fire({
           position: 'bottom-end',
           icon: 'error',

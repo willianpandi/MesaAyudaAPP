@@ -9,8 +9,8 @@ const routes: Routes = [
     path: '',
     component: AuthLayoutComponent,
     children: [
-      { path: 'panel', component: OpenPageComponent, data: {titulo: 'TICKET'}},
-      { path: 'login', component: LoginPageComponent, data: {titulo: 'LOGIN'}},
+      { path: 'panel', component: OpenPageComponent, data: {titulo: 'Ticket'}},
+      { path: 'login', component: LoginPageComponent, data: {titulo: 'Login'}},
       { path: '**', redirectTo: 'panel' },
     ]
   }

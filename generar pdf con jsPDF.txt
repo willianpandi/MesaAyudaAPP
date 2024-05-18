@@ -1,0 +1,47 @@
+generar pdf con jsPDF:
+<button mat-raised-button color="primary" (click)="generatePdf()">Generar PDF</button>
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+import { Component, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import * as jsPDF from 'jspdf';
+
+@Component({
+  selector: 'app-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.css']
+})
+export class TableComponent {
+  dataSource = new MatTableDataSource<any>([ /* tus datos aquí */ ]);
+  tableDisplayColumns = [ /* tus columnas aquí */ ];
+
+  @ViewChild('table') table: any; // Referencia al elemento <table> del mat-table
+
+  generatePdf(): void {
+    const doc = new jsPDF();
+
+    // Obtener los datos del mat-table
+    const tableData = [];
+    this.dataSource.data.forEach((row: any) => {
+      const rowData = [];
+      this.tableDisplayColumns.forEach((column: any) => {
+        rowData.push(row[column.def]);
+      });
+      tableData.push(rowData);
+    });
+
+    // Crear la tabla en el PDF
+    doc.autoTable({
+      head: [this.tableDisplayColumns.map((column: any) => column.label)], // Cabeceras
+      body: tableData // Datos
+    });
+
+    // Guardar el PDF
+    doc.save('table.pdf');
+  }
+}
+
+//////////////////////////////////////////////////////////////////
+npm install jspdf --save
+

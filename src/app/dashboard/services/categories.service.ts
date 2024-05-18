@@ -21,10 +21,18 @@ export class CategoryService {
 
 
     public lista(): Observable<Category[]> {
-        return this.httpClient.get<Category[]>(`${this.categoryURL}all`)
+        return this.httpClient.get<Category[]>(`${this.categoryURL}all-active`)
         .pipe(
           catchError((err) => throwError(() => err.error.message))
         );
+    }
+
+    public listaAll(): Observable<Category[]> {
+      const headers = this.getHeaders();
+      return this.httpClient.get<Category[]>(`${this.categoryURL}all`, {headers})
+      .pipe(
+        catchError((err) => throwError(() => err.error.message))
+      );
     }
 
     public findSubcategories(id: string): Observable<SmallSubCategory[]> {
@@ -56,14 +64,4 @@ export class CategoryService {
           catchError((err) => throwError(() => err.error.message))
         );
     }
-
-    public delete(id: string): Observable<any> {
-          const headers = this.getHeaders();
-
-        return this.httpClient.delete<any>(`${this.categoryURL}delete/${id}`, {headers})
-        .pipe(
-          catchError((err) => throwError(() => err.error.message))
-        );
-    }
-
 }

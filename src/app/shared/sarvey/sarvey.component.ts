@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ValidatorsService } from '../service/validators.service';
 import { UserService } from '../../dashboard/services/users.service';
@@ -20,7 +20,7 @@ export class SarveyComponent implements OnInit {
   formTicketSarvey!: FormGroup;
   listUsersSoports: User[] = [];
   ticketSelect!: Ticket;
-
+  soporte!: string;
 
   constructor(
     private fb: FormBuilder,
@@ -28,7 +28,7 @@ export class SarveyComponent implements OnInit {
     private usersService: UserService,
     private validatorsService: ValidatorsService,
     private activatedRoute: ActivatedRoute,
-
+    private router: Router,
   ){
     this.usersService.listaSoportes().subscribe(
       (data) => {
@@ -54,10 +54,9 @@ export class SarveyComponent implements OnInit {
 
     this.formTicketSarvey = this.fb.group({
       satisfaccion: ['', Validators.required],
-      sugerencias: ['', Validators.required],
+      sugerencias: [''],
       a_oportuna: ['', Validators.required],
       s_problema: ['', Validators.required],
-      soportePresente: ['', Validators.required],
     });
   }
 
@@ -73,24 +72,46 @@ export class SarveyComponent implements OnInit {
     this.formTicketSarvey.reset();
   }
 
+
+
   ticketSarvey(){
+    if (this.ticketSelect.soporteReasignado) {
+      this.soporte = this.ticketSelect.soporteReasignado
+    } else {
+      this.soporte = this.ticketSelect.soporteAsignado
+    }
+
     const modelo = {
       satisfaccion:  this.formTicketSarvey.value.satisfaccion,
       sugerencias: this.formTicketSarvey.value.sugerencias,
       a_oportuna: this.formTicketSarvey.value.a_oportuna,
       s_problema: this.formTicketSarvey.value.s_problema,
-      soportePresente: this.formTicketSarvey.value.soportePresente,
+      soportePresente: this.soporte,
     }
+    Swal.fire({
+      title: 'Guardando . . . ',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      timerProgressBar: true,
+      willOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
     this.ticketsService.update(this.ticketSelect.id, modelo).subscribe({
       next: (data) => {
+        Swal.close();
+
         Swal.fire(
           'Encuesta Guardada!',
           `Encuesta de Satisfacción del <strong>Ticket ` + this.ticketSelect.codigo +`</strong> guardado correctamente. <strong>Gracias por su Tiempo</strong>.`,
           'success'
         );
-        this.cargarTicket(this.ticketSelect.id)
+        this.router.navigateByUrl(`auth/panel`)
       },
       error: (message) => {
+        Swal.close();
+
         Swal.fire('Error', `No se ha podido guardar la encuesta de satisfacción del <strong>Ticket ` + this.ticketSelect.codigo +`</strong>.`, 'error');
       },
     })

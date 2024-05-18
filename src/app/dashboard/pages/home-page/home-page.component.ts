@@ -95,7 +95,7 @@ export class HomePageComponent implements OnInit {
       this.setTableColumns();
       this.setDataSupport();
     }
-    console.log({usuario: this.user});
+    // console.log({usuario: this.user});
   }
 
   setTableColumns() {
@@ -202,10 +202,6 @@ export class HomePageComponent implements OnInit {
         this.onEdit(tableAction.row);
         break;
 
-      case Table.ELIMINAR:
-        this.onDelete(tableAction.row);
-        break;
-
       default:
         break;
     }
@@ -215,36 +211,6 @@ export class HomePageComponent implements OnInit {
     this.router.navigateByUrl(`dashboard/ticket-detail/${id}`)
   };
 
-  onDelete(ticket: Ticket) {
-    Swal.fire({
-      title: 'ADVERTENCIA',
-      text: '¿Estás seguro de eliminar el ticket?',
-      icon: 'warning',
-      showCancelButton: true,
-      focusConfirm: false,
-      reverseButtons: true,
-      confirmButtonText: 'Si, Eliminar!',
-      cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.ticketService.delete(ticket.id).subscribe({
-          next: ( resp ) => {
-              Swal.fire(
-                'Eliminado!',
-                'Su ticket ha sido eliminado correctamente.',
-                'success'
-              );
-              this.setDataAdmin();
-          },
-          error: (message) => {
-            Swal.fire('Error', message, 'error');
-          },
-        });
-      }
-    });
-  };
 
   filterDate(){
     const fechaInicio: Date = this.range.value.inicio!;

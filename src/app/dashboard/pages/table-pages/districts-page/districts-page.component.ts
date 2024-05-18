@@ -49,6 +49,7 @@ export class DistrictsPageComponent implements OnInit {
   }
   setTableColumns() {
     this.tableColumnsDistricts = [
+      { label: 'Estado', def: 'estado', dataKey: 'estado', isSticky: true, dataType: 'boolean'},
       { label: 'Código', def: 'codigo', dataKey: 'codigo' },
       { label: 'Nombre EOD', def: 'nombre', dataKey: 'nombre' },
       { label: 'Provincia', def: 'provincia', dataKey: 'provincia' },
@@ -56,6 +57,7 @@ export class DistrictsPageComponent implements OnInit {
       { label: 'Actualizado', def: 'updateAt', dataKey: 'updateAt', dataType: 'date', formatt: 'dd/MM/yyyy - HH:mm' },
     ];
     this.tableColumnsEstableishments = [
+      { label: 'Estado', def: 'estado', dataKey: 'estado', isSticky: true, dataType: 'boolean'},
       { label: 'Código', def: 'codigo', dataKey: 'codigo' },
       { label: 'Nombre Unidad/Gestión', def: 'nombre', dataKey: 'nombre' },
       { label: 'Código EOD', def: 'district.codigo', dataKey: 'district.codigo', dataType: 'object' },
@@ -66,7 +68,7 @@ export class DistrictsPageComponent implements OnInit {
   }
 
   setData(): void {
-    this.districtService.lista().subscribe(
+    this.districtService.listaAll().subscribe(
       (data)=> {
         this.districtsList = data;
       },
@@ -86,11 +88,6 @@ export class DistrictsPageComponent implements OnInit {
       case Table.EDITAR:
         this.onEdit(tableAction.row);
         break;
-
-      case Table.ELIMINAR:
-        this.onDelete(tableAction.row);
-        break;
-
       default:
         break;
     }
@@ -119,48 +116,12 @@ export class DistrictsPageComponent implements OnInit {
       }
     })
   }
-  onDelete(distrito: District) {
-    Swal.fire({
-      title: 'ADVERTENCIA',
-      html: `¿Estás seguro de eliminar el EOD <strong>` + distrito.nombre +`</strong>?, recuerde que se eliminaran los datos de Unidades/Gestiones relacionados.`,
-      icon: 'warning',
-      showCancelButton: true,
-      focusConfirm: false,
-      reverseButtons: true,
-      confirmButtonText: 'Si, Eliminar!',
-      cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.districtService.delete(distrito.id).subscribe({
-          next: () => {
-
-              Swal.fire(
-                'Eliminado!',
-                `El EOD <strong>` + distrito.nombre +`</strong> ha sido eliminado correctamente.`,
-                'success'
-              );
-              this.setData();
-          },
-          error: (message) => {
-            Swal.fire('Error', `No se ha eliminado el EOD <strong>` + distrito.nombre + `</strong>.`, 'error');
-          },
-        });
-      }
-    });
-  }
 
   onTableAction2(tableAction2: TableAction) {
     switch (tableAction2.action) {
       case Table.EDITAR:
         this.onEditEst(tableAction2.row);
         break;
-
-      case Table.ELIMINAR:
-        this.onDeleteEst(tableAction2.row);
-        break;
-
       default:
         break;
     }
@@ -187,35 +148,5 @@ export class DistrictsPageComponent implements OnInit {
         this.setData();
       }
     })
-  }
-  onDeleteEst(establecimiento: Estableishment) {
-    Swal.fire({
-      title: 'ADVERTENCIA',
-      html: `¿Estás seguro de eliminar la Unidad/Gestión <strong>` + establecimiento.nombre + `</strong>?, recuerde que se eliminaran las relaciones con usuarios.`,
-      icon: 'warning',
-      showCancelButton: true,
-      focusConfirm: false,
-      reverseButtons: true,
-      confirmButtonText: 'Si, Eliminar!',
-      cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.estableishmentService.delete(establecimiento.id).subscribe({
-          next: () => {
-              Swal.fire(
-                'Eliminado!',
-                `La Unidad/Gestión <strong>` + establecimiento.nombre + `</strong> ha sido eliminado correctamente.`,
-                'success'
-              );
-              this.setData();
-          },
-          error: (message) => {
-            Swal.fire(`Error', 'No se ha eliminado la Unidad/Gestión <strong>` + establecimiento.nombre + `</strong> , por que mantiene una relacion usuarios.`, 'error');
-          },
-        });
-      }
-    });
   }
 }

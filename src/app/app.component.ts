@@ -34,7 +34,7 @@ export class AppComponent {
         return;
 
       case AuthStatus.notAuthenticated:
-        this.router.navigateByUrl('/auth/panel');
+        this.router.navigateByUrl('/auth/login');
         return;
 
 

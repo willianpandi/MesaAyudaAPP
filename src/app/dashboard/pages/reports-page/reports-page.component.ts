@@ -42,7 +42,6 @@ export class ReportsPageComponent implements OnInit {
   tableColumnsTicketsReasig: TableColumn[] = [];
   tableColumnsTicketsEstableishments: TableColumn[] = [];
   tableConfig: TableConfig = {
-    showActions: true,
     showFilter: true,
     showDowload: true,
     isPaginable: true,
@@ -145,7 +144,7 @@ export class ReportsPageComponent implements OnInit {
 
   setTableColumns() {
     this.tableColumnsReportsSubCategory = [
-      { label: 'Departamento', def: 'subcategoria', dataKey: 'subcategoria', isSticky: true, },
+      { label: 'Departamento', def: 'subcategoria', dataKey: 'subcategoria',},
       { label: 'Abiertos', def: 'ticketsAbiertos', dataKey: 'ticketsAbiertos' },
       { label: 'En Proceso', def: 'ticketsEnProceso', dataKey: 'ticketsEnProceso' },
       { label: 'Cerrados', def: 'ticketsCerrados', dataKey: 'ticketsCerrados' },
@@ -328,7 +327,6 @@ export class ReportsPageComponent implements OnInit {
     const fechaSeleccionada = this.dateSupport.value;
     const mes = fechaSeleccionada ? fechaSeleccionada.format('MM') : null;
     const anio = fechaSeleccionada ? fechaSeleccionada.format('YYYY') : null;
-    console.log(mes);
 
     this.userService.reports(mes, anio).subscribe(
       (data) => {

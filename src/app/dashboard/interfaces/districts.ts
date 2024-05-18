@@ -2,6 +2,9 @@ import { Estableishment } from './estableishments';
 
 export interface District {
   id:              string;
+  createdAt:       string;
+  updateAt:        string;
+  estado:          boolean;
   codigo:          string;
   nombre:          string;
   provincia:       Provincia;

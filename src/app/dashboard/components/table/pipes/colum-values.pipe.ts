@@ -6,7 +6,7 @@ import { DatePipe } from '@angular/common';
   name: 'columValue',
 })
 export class ColumValuePipe implements PipeTransform {
-  constructor(){}
+  constructor() {}
 
   transform(row: any, column: TableColumn): string {
     let displayValue = row[column.dataKey];
@@ -16,7 +16,7 @@ export class ColumValuePipe implements PipeTransform {
         if (column.formatt !== undefined) {
           displayValue = new DatePipe('en-US').transform(
             displayValue,
-            column.formatt
+            column.formatt,
           );
         }
         break;
@@ -43,6 +43,12 @@ export class ColumValuePipe implements PipeTransform {
           const hours = Math.floor(displayValue / 60);
           const remainingMinutes = displayValue % 60;
           displayValue = `${hours}h : ${remainingMinutes}min`;
+        }
+        break;
+
+      case 'sarvey':
+        if (displayValue !== null && displayValue !== undefined) {
+          displayValue = `Realizado`;
         }
         break;
 

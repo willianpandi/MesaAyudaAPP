@@ -39,4 +39,46 @@
     </mat-card>
   </div>
 
+  <div class="col-12"><mat-divider></mat-divider></div>
+
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Tickets Cerrados Asignados</span>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <app-table-detail
+          *ngIf="closeTicketsList.length > 0"
+          [data]="closeTicketsList"
+          [columns]="tableColumnsTicketsClose"
+          [config]="tableConfig"
+          (action)="onTableAction($event)"
+        >
+        </app-table-detail>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="col-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-toolbar>
+          <span>Tickets Cerrados Reasignados</span>
+        </mat-toolbar>
+      </mat-card-header>
+      <mat-card-content>
+        <app-table-detail
+          *ngIf="reasigCloseTicketsList.length > 0"
+          [data]="reasigCloseTicketsList"
+          [columns]="tableColumnsTicketsClose"
+          [config]="tableConfig"
+          (action)="onTableAction($event)"
+        >
+        </app-table-detail>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
 </div>

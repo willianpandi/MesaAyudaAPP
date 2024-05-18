@@ -5,7 +5,7 @@
     <div class="grid">
       <div class="col-12 lg:col-4">
         <mat-form-field appearance="outline">
-          <mat-label>Número de Cédula</mat-label>
+          <mat-label>Número Cédula</mat-label>
           <input matInput
             formControlName="cedula"
             placeholder="Ex. 0123456789"
@@ -25,6 +25,16 @@
 
       <div class="col-12 lg:col-8">
         <mat-form-field appearance="outline">
+          <mat-label>Nombre y Apellido</mat-label>
+          <input matInput formControlName="nombre" autocomplete="off" placeholder="Ex. Jose Cabrera"/>
+          <mat-hint *ngIf="isValidField('nombre')">{{getFieldError("nombre")}}</mat-hint>
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+      </div>
+
+
+      <div class="col-12 lg:col-8">
+        <mat-form-field appearance="outline">
           <mat-label>Correo Electrónico</mat-label>
           <input matInput formControlName="correo_electronico" autocomplete="off"  placeholder="Ex. nombre@gmail.com" />
           <mat-hint *ngIf="isValidField('correo_electronico')">{{
@@ -33,6 +43,26 @@
           <mat-icon matSuffix>email</mat-icon>
         </mat-form-field>
       </div>
+
+      <div class="col-12 lg:col-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Número Celular</mat-label>
+          <input
+          matInput
+          formControlName="telefono"
+          placeholder="Ex. 0987654321"
+          type="text"
+          #input2
+          maxlength="10"
+        />
+        <mat-hint class="hint" align="end"
+          >{{ input2.value.length }}/10</mat-hint
+        >
+        <mat-hint *ngIf="isValidField('telefono')">{{ getFieldError("telefono") }}</mat-hint>
+          <mat-icon matSuffix>smartphone</mat-icon>
+        </mat-form-field>
+      </div>
+
 
     </div>
   </form>

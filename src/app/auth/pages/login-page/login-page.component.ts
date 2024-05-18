@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ValidatorsService } from '../../../shared/service/validators.service';
-import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2'
 
 @Component({
@@ -16,7 +15,6 @@ export class LoginPageComponent {
     private fb = inject( FormBuilder );
     private authService = inject(AuthService);
     private router = inject( Router);
-    private dialog = inject( MatDialog );
     private validatorsService = inject(ValidatorsService);
   hide = true;
 
@@ -36,17 +34,35 @@ export class LoginPageComponent {
 
   login(){
     const { username, password } = this.formLogin.value;
-
+    Swal.fire({
+      title: 'Cargando . . . ',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      timerProgressBar: true,
+      willOpen: () => {
+        Swal.showLoading();
+      }
+    });
     this.authService.login(username, password)
       .subscribe(  {
-        next: () => {this.router.navigateByUrl('/dashboard'), this.formLogin.reset();},
+        next: () => {Swal.close(); this.router.navigateByUrl('/dashboard'), this.formLogin.reset();},
 
-        error: (message) => {
-          Swal.fire({
-          title: 'Credenciales Invalidas',
-          icon: 'error',
-          html: `Por favor, ingrese correctamente sus credenciales. <strong>`+message+`</strong>`,
-        })
+        error: (err) => {
+          Swal.close();
+
+          if (err === undefined) {
+            Swal.fire({
+              title: 'Error de Servidor',
+              icon: 'error',
+              html: `<strong>API NO DISPONIBLE</strong> en este momento. Por favor, inténtalo de nuevo más tarde.`,
+            })
+          } else {
+            Swal.fire({
+              title: 'Credenciales Invalidas',
+              icon: 'error',
+              html: `Por favor, ingrese correctamente sus credenciales. <strong>`+err+`</strong>`,
+            })
+          }
         }
       })
   }

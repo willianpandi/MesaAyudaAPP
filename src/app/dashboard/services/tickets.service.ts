@@ -46,6 +46,13 @@ export class TicketService {
       .pipe(catchError((err) => throwError(() => err.error.message)));
   }
 
+  public listTicketsReasigClose(): Observable<Ticket[]> {
+    const headers = this.getHeaders();
+    return this.httpClient
+      .get<Ticket[]>(`${this.ticketURL}reasig-close-tickets`, { headers })
+      .pipe(catchError((err) => throwError(() => err.error.message)));
+  }
+
   public reports(mes?: any, anio?: any): Observable<TicketsReports[]> {
     const headers = this.getHeaders();
     let params = new HttpParams();
@@ -138,14 +145,6 @@ export class TicketService {
     const headers = this.getHeaders();
     return this.httpClient
       .patch<Ticket>(`${this.ticketURL}edit-departamento/${id}`, ticket, { headers })
-      .pipe(catchError((err) => throwError(() => err.error.message)));
-  }
-
-  public delete(id: string): Observable<any> {
-    const headers = this.getHeaders();
-
-    return this.httpClient
-      .delete<any>(`${this.ticketURL}delete/${id}`, { headers })
       .pipe(catchError((err) => throwError(() => err.error.message)));
   }
 }

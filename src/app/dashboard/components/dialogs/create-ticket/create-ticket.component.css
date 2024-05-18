@@ -11,3 +11,11 @@ mat-label {
   font-family: Poppins-SemiBold;
   font-size: 16px;
 }
+
+mat-hint{
+  color: red;
+}
+
+.hint{
+  color: black;
+}

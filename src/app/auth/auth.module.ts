@@ -19,6 +19,7 @@ import { TableModule } from '../dashboard/components/table/table.module';
     LoginPageComponent,
     AuthLayoutComponent,
     TicketDialogComponent,
+
   ],
   imports: [
     CommonModule,

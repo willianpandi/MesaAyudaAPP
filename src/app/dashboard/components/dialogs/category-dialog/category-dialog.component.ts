@@ -17,6 +17,11 @@ export class CategoryDialogComponent implements OnInit {
   botonAccion: string = 'Guardar';
   iconAccion: string = 'add_circle';
 
+  opcionesEstado = [
+    { valor: true, etiqueta: 'ACTIVO' },
+    { valor: false, etiqueta: 'INACTIVO' }
+  ];
+
   constructor(
     private dialogReferencia: MatDialogRef<CategoryDialogComponent>,
     private fb: FormBuilder,
@@ -27,6 +32,7 @@ export class CategoryDialogComponent implements OnInit {
     this.formCategory= this.fb.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
+      estado: ['', Validators.required],
     });
   }
 
@@ -42,6 +48,7 @@ export class CategoryDialogComponent implements OnInit {
     const modelo = {
       nombre: this.formCategory.value.nombre,
       descripcion: this.formCategory.value.descripcion,
+      estado: this.formCategory.value.estado,
     };
 
     if (this.dataCategory === null) {
@@ -100,6 +107,7 @@ export class CategoryDialogComponent implements OnInit {
       this.formCategory.patchValue({
         nombre: this.dataCategory.nombre,
         descripcion: this.dataCategory.descripcion,
+        estado: this.dataCategory.estado,
       });
       this.tituloAccion = 'Editar';
       this.botonAccion = 'Actualizar';

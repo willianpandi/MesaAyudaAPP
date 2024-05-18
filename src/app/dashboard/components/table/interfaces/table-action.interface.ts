@@ -1,7 +1,7 @@
 export enum Table {
   EDITAR,
-  ELIMINAR,
   DETALLE,
+  ENCUESTA
 }
 
 export interface TableAction<T = any> {

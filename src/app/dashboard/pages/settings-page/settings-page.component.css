@@ -33,6 +33,11 @@ mat-label {
 button{
   width: 100%;
 }
+
+mat-hint{
+  color: red;
+}
+
 .hint{
   color: black;
 }

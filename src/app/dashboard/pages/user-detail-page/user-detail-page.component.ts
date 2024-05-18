@@ -13,6 +13,7 @@ import { Estableishment } from '../../interfaces/estableishments';
 import { Category } from '../../interfaces/category';
 import { CategoryService } from '../../services/categories.service';
 
+
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
 
@@ -43,6 +44,7 @@ export class UserDetailPageComponent implements OnInit {
   listEstablesihments: Estableishment[] = [];
   listCategories: Category[] = [];
   maxDate: Date;
+  usuarioSoporte: boolean = false;
 
   opcionesEstado = [
     { valor: true, etiqueta: 'ACTIVO' },
@@ -215,6 +217,9 @@ export class UserDetailPageComponent implements OnInit {
     this.userService.detail(id).subscribe((user) => {
       this.userSelect = user;
       if (this.userSelect) {
+        if (this.userSelect.rol === "SOPORTE") {
+          this.usuarioSoporte = true;
+        }
         this.formUserDetail.patchValue({
           usuario: this.userSelect.usuario,
           nombre: this.userSelect.nombre,
@@ -302,8 +307,8 @@ export class UserDetailPageComponent implements OnInit {
       reverseButtons: true,
       confirmButtonText: 'Si, Quitar!',
       cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#3F51B5',
+      cancelButtonColor: '#FF5252',
     }).then((result) => {
       if (result.isConfirmed) {
         this.userService.removeEstableishment(this.userSelect.id, modelo).subscribe({
@@ -377,8 +382,8 @@ export class UserDetailPageComponent implements OnInit {
       reverseButtons: true,
       confirmButtonText: 'Si, Quitar!',
       cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#3F51B5',
+      cancelButtonColor: '#FF5252',
     }).then((result) => {
       if (result.isConfirmed) {
         this.userService.removeCategoryt(this.userSelect.id, modelo).subscribe({

@@ -50,12 +50,24 @@ export class ReassignedTicketsComponent {
     const modelo = {
       soporteReasignado: this.formReasigTicket.value.soporteReasignado,
     }
+    Swal.fire({
+      title: 'Reasignando . . . ',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      timerProgressBar: true,
+      willOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
     this.ticketsService.updateReasigTicket(this.dataTicket, modelo).subscribe({
       next: (data) => {
+        Swal.close();
+
         Swal.fire({
           position: 'bottom-end',
           icon: 'success',
-          title: 'Ticket Reasignado',
+          title: `Ticket Reasignado`,
           html: `Ticket reseasignado correctamente al usuario soporte: <strong>` +this.formReasigTicket.value.soporteReasignado + `</strong>.`,
           showConfirmButton: false,
           timer: 2500,
@@ -63,6 +75,8 @@ export class ReassignedTicketsComponent {
         this.dialogReferencia.close('reasignado');
       },
       error: (e) => {
+        Swal.close();
+
         Swal.fire({
           position: 'bottom-end',
           icon: 'error',

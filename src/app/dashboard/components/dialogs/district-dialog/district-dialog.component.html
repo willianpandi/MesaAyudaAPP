@@ -14,7 +14,7 @@
         </mat-form-field>
       </div>
 
-<div class="col-12 md:col-8 lg:col-8">
+      <div class="col-12 md:col-4 lg:col-4">
         <mat-form-field appearance="outline">
           <mat-label>Provincia</mat-label>
           <mat-select formControlName="provincia">
@@ -27,6 +27,19 @@
             getFieldError("provincia")
           }}</mat-hint>
           <mat-icon matSuffix>place</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 md:col-4 lg:col-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="estado">
+            <mat-option *ngFor="let opcion of opcionesEstado | order: 'etiqueta'" [value]="opcion.valor">
+              {{ opcion.etiqueta }}
+            </mat-option>
+          </mat-select>
+          <mat-hint *ngIf="isValidField('estado')">{{ getFieldError("estado") }}</mat-hint>
+          <mat-icon matSuffix>highlight_off</mat-icon>
         </mat-form-field>
       </div>
 

@@ -5,6 +5,7 @@ import { ActivationEnd, Router } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
 import { ImageService } from '../../../service/ImageService.service';
 import { Subscription, filter, map } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   templateUrl: './dashboard-layout.component.html',
@@ -69,7 +70,8 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
-    this.imageUrl = 'http://localhost:8000/api/tickets/logo/logo.png';
+    // this.imageUrl = 'http://localhost:8000/api/tickets/logo/logo.png';
+    this.imageUrl = 'https://soporte.mspz3.gob.ec:8083/api/tickets/logo/logo.png';
     this.verificarRol();
   }
 
@@ -104,7 +106,22 @@ export class DashboardLayoutComponent implements OnInit, AfterViewInit {
   }
 
   onLogout(): void{
-    this.authService.logout();
+    Swal.fire({
+      title: '¿SALIR?',
+      html: `¿Esta seguro que quiere salir?`,
+      icon: 'question',
+      showCancelButton: true,
+      focusConfirm: false,
+      reverseButtons: true,
+      confirmButtonText: 'Si, Salir!',
+      cancelButtonText: 'No',
+      confirmButtonColor: '#3F51B5',
+      cancelButtonColor: '#FF5252',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.authService.logout();
+      }
+    });
   }
 }
 

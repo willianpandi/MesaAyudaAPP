@@ -12,7 +12,7 @@ export class Error404PageComponent {
   ){}
 
   goback(){
-    this.router.navigate(['/dashboard'])
+    this.router.navigate(['/auth/login'])
   }
 
 }

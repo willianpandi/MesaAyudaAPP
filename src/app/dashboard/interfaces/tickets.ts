@@ -6,7 +6,7 @@ export interface Ticket {
   createdAt:          string;
   updateAt:           string;
   reasignadoAt:       string;
-  cierreAt:           string;
+  cierreAt:           Date;
   codigo:             number;
   cedula:             string;
   nombre:             string;
@@ -30,11 +30,9 @@ export interface Ticket {
   soportePresente:    string;
   soporteComentario:  string;
   category:           Category;
-  files:              Files[];
+  file:               Files;
   tiempoOcupado:      number;
-
 }
-
 
 export interface Files {
   id:        string;
@@ -43,3 +41,12 @@ export interface Files {
   archivo:   string;
 }
 
+
+export interface TicketsUser {
+  id:                 string;
+  codigo:             number;
+  estado:             string;
+  soporteAsignado:    string;
+  soporteReasignado:  string;
+  satisfaccion:       string;
+}

@@ -73,14 +73,17 @@ export class TableComponent implements AfterViewInit{
     if (this.tableConfig.showActions ) {
       this.tableDisplayColumns.push('actions')
     }
+    if (this.tableConfig.showActions2 ) {
+      this.tableDisplayColumns.push('actions2')
+    }
   }
 
   onEdit(row: any) {
     this.action.emit({ action: Table.EDITAR, row });
   }
 
-  onDelete(row: any) {
-    this.action.emit({ action: Table.ELIMINAR, row });
+  onSarvey(row: any) {
+    this.action.emit({ action: Table.ENCUESTA, row });
   }
 
   exportToCsv(data: any[], filename: string) {
@@ -96,6 +99,7 @@ export class TableComponent implements AfterViewInit{
         ...(item.subcategory && { subcategory: item.subcategory.nombre }),
         ...(item.estableishment && { estableishment: item.estableishment.nombre }),
         ...(item.district && { district: item.district.nombre }),
+        ...(item.file && { file: item.file.archivo }),
         ...(establecimientoIDs.length > 0 && { estableishments: establecimientoIDs }),
         ...(categoriaIDs.length > 0 && { categories: categoriaIDs }),
         ...(subcategoriaIDs.length > 0 && { subcategories: subcategoriaIDs }),
